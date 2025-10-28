@@ -1,34 +1,32 @@
 {
-  "menuItems": [
+  "items": [
     {
-      "label": "Home",
-      "path": "/",
-      "icon": "home"
+      "label": "HOME",
+      "path": "/"
     },
     {
-      "label": "About",
-      "path": "/about",
-      "icon": "info"
+      "label": "PROFILES",
+      "path": "/profiles"
     },
     {
-      "label": "Services",
-      "path": "/services",
-      "icon": "briefcase"
+      "label": "PRODUCTS",
+      "path": "/products"
     },
     {
-      "label": "Portfolio",
-      "path": "/portfolio",
-      "icon": "folder"
+      "label": "SERVICES",
+      "path": "/services"
     },
     {
-      "label": "Blog",
-      "path": "/blog",
-      "icon": "edit"
+      "label": "NEWS",
+      "path": "/news"
     },
     {
-      "label": "Contact",
-      "path": "/contact",
-      "icon": "mail"
+      "label": "REFERENCES",
+      "path": "/references"
+    },
+    {
+      "label": "CONTACT",
+      "path": "/contact"
     }
   ]
 }

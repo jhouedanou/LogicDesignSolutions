@@ -1,11 +1,11 @@
 <template>
-  <StaticPageRenderer slug="index" />
+  <StaticPageRenderer slug="product-detail" />
 </template>
 
 <script setup lang="ts">
 import { useHead } from '#imports'
 
 useHead({
-  title: 'Home'
+  title: 'Product Detail'
 })
 </script>

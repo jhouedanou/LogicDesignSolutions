@@ -45,19 +45,27 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-
-import { useFooterData } from '~/composables/useData'
+import { useFetch } from '#imports'
 
 const fallbackFooter = {
   siteName: 'LogicDesignSolutions',
   copyright: 'Logic Design Solutions',
   designerName: 'Digital Consulting',
   designerUrl: '#',
-  menuItems: [],
-  socialLinks: []
+  menuItems: [] as Array<{ label: string; path: string }>,
+  socialLinks: [] as Array<{ name: string; icon: string; url: string }>
 }
 
-const { data: footerResponse } = await useFooterData()
+const { data: footerResponse } = useFetch('/api/footer')
 
-const footer = computed(() => footerResponse.value ?? fallbackFooter)
+const footer = computed(() => {
+  const payload = footerResponse.value ?? {}
+
+  return {
+    ...fallbackFooter,
+    ...payload,
+    menuItems: payload.menuItems ?? fallbackFooter.menuItems,
+    socialLinks: payload.socialLinks ?? fallbackFooter.socialLinks
+  }
+})
 </script>

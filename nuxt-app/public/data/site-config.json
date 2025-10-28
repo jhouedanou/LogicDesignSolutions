@@ -1,40 +1,40 @@
 {
-  "site": {
-    "name": "Logic Design Solutions",
-    "title": "Logic Design Solutions - Innovative Digital Solutions",
-    "description": "Professional web development, design, and digital solutions for modern businesses",
-    "url": "https://logicdesignsolutions.com",
-    "language": "en",
-    "locale": "en_US"
+  "siteName": "LogicDesignSolutions",
+  "tagline": "FPGA & IP Design Experts",
+  "phone": "+33 (0)1 45 92 24 47",
+  "email": "contact@logic-design-solutions.com",
+  "address": "105 Boulevard de la Resistance, 93460 Gournay sur Marne, France",
+  "callLabel": "Call Us",
+  "contactButtonText": "Contact Us",
+  "mobileContact": {
+    "secondaryEmail": "contact@logic-design-solutions.com",
+    "secondaryPhone": "+33 (0)1 45 92 24 47"
   },
-  "seo": {
-    "defaultTitle": "Logic Design Solutions",
-    "titleTemplate": "%s | Logic Design Solutions",
-    "keywords": [
-      "web development",
-      "design",
-      "digital solutions",
-      "software development",
-      "ui/ux design"
-    ]
-  },
-  "contact": {
-    "email": "contact@logicdesignsolutions.com",
-    "phone": "+1 (555) 123-4567",
-    "supportEmail": "support@logicdesignsolutions.com"
-  },
-  "social": {
-    "facebook": "https://facebook.com",
-    "twitter": "https://twitter.com",
-    "linkedin": "https://linkedin.com",
-    "instagram": "https://instagram.com",
-    "github": "https://github.com"
-  },
-  "features": {
-    "newsletter": true,
-    "darkMode": true,
-    "multiLanguage": false,
-    "blog": true,
-    "ecommerce": false
-  }
+  "social": [
+    {
+      "name": "Twitter",
+      "icon": "twitter",
+      "url": "#"
+    },
+    {
+      "name": "Facebook",
+      "icon": "facebook-square",
+      "url": "#"
+    },
+    {
+      "name": "Pinterest",
+      "icon": "pinterest-p",
+      "url": "#"
+    },
+    {
+      "name": "Instagram",
+      "icon": "instagram",
+      "url": "#"
+    },
+    {
+      "name": "LinkedIn",
+      "icon": "linkedin",
+      "url": "#"
+    }
+  ]
 }
