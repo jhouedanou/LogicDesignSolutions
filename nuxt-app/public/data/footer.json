@@ -1,0 +1,50 @@
+{
+  "company": {
+    "name": "Logic Design Solutions",
+    "description": "Building innovative digital solutions with cutting-edge technology and creative design.",
+    "logo": "/logo.png"
+  },
+  "quickLinks": [
+    { "label": "Home", "path": "/" },
+    { "label": "About Us", "path": "/about" },
+    { "label": "Services", "path": "/services" },
+    { "label": "Portfolio", "path": "/portfolio" },
+    { "label": "Blog", "path": "/blog" },
+    { "label": "Contact", "path": "/contact" },
+    { "label": "Privacy Policy", "path": "/privacy" },
+    { "label": "Terms of Service", "path": "/terms" }
+  ],
+  "contact": {
+    "email": "contact@logicdesignsolutions.com",
+    "phone": "+1 (555) 123-4567",
+    "address": "123 Innovation Drive, Tech City, TC 12345",
+    "hours": "Mon - Fri: 9:00 AM - 6:00 PM"
+  },
+  "social": [
+    {
+      "name": "Facebook",
+      "url": "https://facebook.com",
+      "icon": "facebook"
+    },
+    {
+      "name": "Twitter",
+      "url": "https://twitter.com",
+      "icon": "twitter"
+    },
+    {
+      "name": "LinkedIn",
+      "url": "https://linkedin.com",
+      "icon": "linkedin"
+    },
+    {
+      "name": "Instagram",
+      "url": "https://instagram.com",
+      "icon": "instagram"
+    },
+    {
+      "name": "GitHub",
+      "url": "https://github.com",
+      "icon": "github"
+    }
+  ]
+}

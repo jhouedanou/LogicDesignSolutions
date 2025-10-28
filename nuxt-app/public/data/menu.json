@@ -1,0 +1,34 @@
+{
+  "menuItems": [
+    {
+      "label": "Home",
+      "path": "/",
+      "icon": "home"
+    },
+    {
+      "label": "About",
+      "path": "/about",
+      "icon": "info"
+    },
+    {
+      "label": "Services",
+      "path": "/services",
+      "icon": "briefcase"
+    },
+    {
+      "label": "Portfolio",
+      "path": "/portfolio",
+      "icon": "folder"
+    },
+    {
+      "label": "Blog",
+      "path": "/blog",
+      "icon": "edit"
+    },
+    {
+      "label": "Contact",
+      "path": "/contact",
+      "icon": "mail"
+    }
+  ]
+}
