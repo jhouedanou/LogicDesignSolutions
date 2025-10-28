@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kintex Ultra Scale Plus NVMe Host IP - Logic Design Solutions</title>
+    <!-- favicons Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicons/favicon-16x16.png" />
+    <link rel="manifest" href="assets/images/favicons/site.webmanifest" />
+    <meta name="description" content="Kintex Ultra Scale Plus NVMe Host IP - High-performance NVMe IP solution for FPGA applications" />
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/vendors/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/vendors/animate/animate.min.css" />
+    <link rel="stylesheet" href="assets/vendors/animate/custom-animate.css" />
+    <link rel="stylesheet" href="assets/vendors/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="assets/vendors/jarallax/jarallax.css" />
+    <link rel="stylesheet" href="assets/vendors/jquery-magnific-popup/jquery.magnific-popup.css" />
+    <link rel="stylesheet" href="assets/vendors/odometer/odometer.min.css" />
+    <link rel="stylesheet" href="assets/vendors/swiper/swiper.min.css" />
+    <link rel="stylesheet" href="assets/vendors/smartbiz-icons/style.css">
+    <link rel="stylesheet" href="assets/vendors/owl-carousel/owl.carousel.min.css" />
+    <link rel="stylesheet" href="assets/vendors/owl-carousel/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="assets/vendors/bootstrap-select/css/bootstrap-select.min.css" />
+    <link rel="stylesheet" href="assets/vendors/jquery-ui/jquery-ui.css" />
+
+    <!-- template styles -->
+    <link rel="stylesheet" href="assets/css/smartbiz.css" />
+    <link rel="stylesheet" href="assets/css/smartbiz-responsive.css" />
+    <link rel="stylesheet" href="assets/css/logic-custom.css" />
+</head>
+
+<body class="custom-cursor">
+
+    <div class="custom-cursor__cursor"></div>
+    <div class="custom-cursor__cursor-two"></div>
+
+    <!--Start Preloader-->
+    <div class="loader js-preloader">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <!--End Preloader-->
+
+    <div class="page-wrapper">
+        <header class="main-header-two">
+            <nav class="main-menu main-menu-two">
+                <div class="main-menu-two__wrapper">
+                    <div class="main-menu-two__wrapper-inner">
+                        <div class="main-menu-two__left">
+                            <div class="main-menu-two__logo">
+                                <a href="index.html" style="font-size: 32px; font-weight: 700; font-style: italic; color: #000;">LogicDesignSolutions</a>
+                            </div>
+                            <div class="main-menu-two__main-menu-box">
+                                <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
+                                <ul class="main-menu__list">
+                                    <li>
+                                        <a href="index.html">HOME</a>
+                                    </li>
+                                    <li>
+                                        <a href="profiles.html">PROFILES</a>
+                                    </li>
+                                    <li class="current">
+                                        <a href="products.html">PRODUCTS</a>
+                                    </li>
+                                    <li>
+                                        <a href="services.html">SERVICES</a>
+                                    </li>
+                                    <li>
+                                        <a href="news.html">NEWS</a>
+                                    </li>
+                                    <li>
+                                        <a href="references.html">REFERENCES</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="main-menu-two__right">
+                            <div class="main-menu-two__call">
+                                <div class="main-menu-two__call-icon">
+                                    <span class="icon-telephone-call"></span>
+                                </div>
+                                <div class="main-menu-two__call-content">
+                                    <p class="main-menu-two__call-sub-title">Call Us</p>
+                                    <h5 class="main-menu-two__call-number"><a href="tel:+33145922447">+33 (0)1 45 92 24 47</a>
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="main-menu-two__btn-box">
+                                <a href="contact.html" class="main-menu-two__btn thm-btn">Contact Us<span
+                                        class="icon-right-arrow"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="stricky-header stricked-menu main-menu main-menu-two">
+            <div class="sticky-header__content"></div>
+        </div>
+
+        <!--Page Header Start-->
+        <section class="page-header">
+            <div class="page-header-bg" style="background-image: url(assets/images/backgrounds/logic-slider-2.png)">
+            </div>
+            <div class="container">
+                <div class="page-header__inner">
+                    <ul class="thm-breadcrumb list-unstyled">
+                        <li><a href="index.html">Home</a></li>
+                        <li>-</li>
+                        <li><a href="products.html">Products</a></li>
+                        <li>-</li>
+                        <li>Product Details</li>
+                    </ul>
+                    <h2 class="page-header__title">Product Details</h2>
+                </div>
+            </div>
+        </section>
+        <!--Page Header End-->
+
+        <!--Product Details Start-->
+        <section class="news-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-8 col-lg-7">
+                        <div class="news-details__left">
+                            <div class="news-details__content">
+                                <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+                                    <p class="news-details__text-1" style="margin: 0;"><span style="color: var(--lds-primary); font-weight: bold;">AMD NVME HOST RECORDER IP</span> / High-Performance / Gen3 PCIe</p>
+                                </div>
+
+                                <h3 class="news-details__title-1">Kintex Ultra Scale Plus NVMe Host IP</h3>
+                                
+                                <div style="float: left; width: 50%; margin-right: 30px; margin-bottom: 20px;">
+                                    <img src="assets/images/news/NMVE_HOST_K7U-844x1024.jpg" alt="Kintex Ultra Scale Plus NVMe Host IP" style="width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                                </div>
+                                
+                                <h3 class="news-details__title-2">Product Overview</h3>
+                                <p class="news-details__text-1">The LDS NVME HOST IP has been designed for both beginners and experts in NVMe to drive NVMe PCIe SSD. This comprehensive IP solution provides flexible interfaces and simplified management for FPGA-based storage applications.</p>
+                                
+                                <h3 class="news-details__title-2">Key Features</h3>
+                                <p class="news-details__text-2">The LDS NVME HOST IP provides two interfaces:</p>
+                                <ul class="news-details__points list-unstyled">
+                                    <li>
+                                        <div class="icon">
+                                            <span class="icon-check-2"></span>
+                                        </div>
+                                        <div class="text">
+                                            <p><strong>CPU Interface</strong> - Optimized for long sequential recording or reading operations</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="icon">
+                                            <span class="icon-check-2"></span>
+                                        </div>
+                                        <div class="text">
+                                            <p><strong>FIFO Interface</strong> - Designed for I/O intensive data transfer applications</p>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <div style="clear: both;"></div>
+
+                                <h3 class="news-details__title-2">Technical Specifications</h3>
+                                <p class="news-details__text-2">The register file interface simplifies the management of the IP for CPU interface or State Machine interface using AXI bus:</p>
+                                
+                                <ul class="news-details__points list-unstyled">
+                                    <li>
+                                        <div class="icon"><span class="icon-check-2"></span></div>
+                                        <div class="text"><p>PCIe RP and EP register configuration is done automatically</p></div>
+                                    </li>
+                                    <li>
+                                        <div class="icon"><span class="icon-check-2"></span></div>
+                                        <div class="text"><p>NVMe register configuration is done automatically</p></div>
+                                    </li>
+                                    <li>
+                                        <div class="icon"><span class="icon-check-2"></span></div>
+                                        <div class="text"><p>Able to manage 8 Name Spaces</p></div>
+                                    </li>
+                                    <li>
+                                        <div class="icon"><span class="icon-check-2"></span></div>
+                                        <div class="text"><p>Able to manage up to 16 IO Queue to enable Multi-users</p></div>
+                                    </li>
+                                    <li>
+                                        <div class="icon"><span class="icon-check-2"></span></div>
+                                        <div class="text"><p>Able to manage 512Bytes or 4096Bytes sector size</p></div>
+                                    </li>
+                                    <li>
+                                        <div class="icon"><span class="icon-check-2"></span></div>
+                                        <div class="text"><p>Configurable IO Queue buffer size: 32KB, 64KB, 128KB, 256KB, 512KB or 1024KB</p></div>
+                                    </li>
+                                    <li>
+                                        <div class="icon"><span class="icon-check-2"></span></div>
+                                        <div class="text"><p>Easy connection to embedded Root Port PCIe IP through AXI bus</p></div>
+                                    </li>
+                                    <li>
+                                        <div class="icon"><span class="icon-check-2"></span></div>
+                                        <div class="text"><p>FAT32 / EXFAT available as an option</p></div>
+                                    </li>
+                                </ul>
+
+                                <h3 class="news-details__title-2">Performance</h3>
+                                <p class="news-details__text-2">When using a PCIe RP IP configured in Gen3, the system frequency is at 125MHz/256-Bits.</p>
+                                <p class="news-details__text-2">When using a PCIe RP IP configured in Gen2, the system frequency is at 125MHz/128-Bits.</p>
+
+                                <h3 class="news-details__title-2">Customization & Support</h3>
+                                <p class="news-details__text-2">The source code format is available for ease of customization. The customization can be done by Logic Design Solutions and <strong>DO254</strong> documentation is available on request.</p>
+                                
+                                <p class="news-details__text-2">This IP can be customized according to specific needs (application-specific requirement). Any other pre-designed functions can be integrated into the FPGA. FPGA density and I/O requirements can be defined according to customer specification.</p>
+                            </div>
+
+                            <div class="news-details__bottom">
+                                <p class="news-details__tags">
+                                    <span>Tags:</span>
+                                    <a href="#">NVMe</a>
+                                    <a href="#">PCIe Gen3</a>
+                                    <a href="#">Kintex UltraScale+</a>
+                                    <a href="#">AMD</a>
+                                    <a href="#">FPGA IP</a>
+                                    <a href="#">Storage</a>
+                                </p>
+                                <div class="news-details__social-list">
+                                    <a href="#"><i class="fab fa-facebook"></i></a>
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                </div>
+                            </div>
+
+                            <div class="news-details__pagenation-box">
+                                <ul class="list-unstyled news-details__pagenation">
+                                    <li>Previous Product
+                                        <a href="#" style="margin-left: 10px;">NVME HOST ZYNQ ULTRASCALE PLUS IP</a>
+                                    </li>
+                                    <li>Next Product
+                                        <a href="#" style="margin-left: 10px;">ARTIX Ultra Scale Plus NVME HOST IP</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="sidebar">
+                            <div class="sidebar__single sidebar__category">
+                                <h3 class="sidebar__title">Product Categories</h3>
+                                <ul class="sidebar__category-list list-unstyled">
+                                    <li class="active"><a href="product-category.html">NVMe Host IP<span>(8)</span></a></li>
+                                    <li><a href="product-category.html">SATA Host IP<span>(6)</span></a></li>
+                                    <li><a href="product-category.html">SATA Device IP<span>(4)</span></a></li>
+                                    <li><a href="product-category.html">ARINC 429 IP<span>(3)</span></a></li>
+                                    <li><a href="product-category.html">Ethernet MAC IP<span>(5)</span></a></li>
+                                    <li><a href="product-category.html">File System IP<span>(4)</span></a></li>
+                                    <li><a href="product-category.html">Communication IP<span>(7)</span></a></li>
+                                </ul>
+                            </div>
+
+                            <div class="sidebar__single have-any-project">
+                                <div class="have-any-project__bg"
+                                    style="background-image: url(assets/images/backgrounds/contact-us-bg.jpg);">
+                                </div>
+                                <h3 class="have-any-project__title">Need Custom
+                                    <br> IP Solution?
+                                    <br> Contact Us
+                                </h3>
+                                <div class="have-any-project__btn-box">
+                                    <a href="contact.html" class="have-any-project__btn thm-btn">Get Quote<span
+                                            class="icon-right-arrow"></span></a>
+                                </div>
+                            </div>
+
+                            <div class="sidebar__single sidebar__tags">
+                                <h3 class="sidebar__title">Related Tags</h3>
+                                <div class="sidebar__tags-list">
+                                    <a href="#">NVMe</a>
+                                    <a href="#">PCIe</a>
+                                    <a href="#">Gen3</a>
+                                    <a href="#">Kintex</a>
+                                    <a href="#">UltraScale+</a>
+                                    <a href="#">AMD</a>
+                                    <a href="#">Storage</a>
+                                    <a href="#">IP Core</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Product Details End-->
+
+        <!--Site Footer Two Start-->
+        <footer class="site-footer-two">
+            <div class="site-footer-two__bottom">
+                <div class="container">
+                    <div class="site-footer-two__bottom-inner">
+                        <div class="site-footer-two__logo">
+                            <a href="index.html" style="font-size: 24px; font-weight: 700; font-style: italic; color: #ffffff;">LogicDesignSolutions</a>
+                        </div>
+                        <p class="site-footer-two__bottom-text">Copyright © Logic Design Solution
+                            All
+                            Rights Reserved - Design by <a style="color:#999999;"  href="">Digital Consulting</a></p>
+                        <ul class="list-unstyled site-footer-two__bottom-menu">
+                            <li><a href="profiles.html">Profiles</a></li>
+                            <li><a href="products.html">Products</a></li>
+                            <li><a href="faq.html">FAQ</a></li>
+                        </ul>
+                        <div class="site-footer-two__social" style="display: flex; gap: 15px; justify-content: center;">
+                            <a href="#" style="color: #ffffff; font-size: 20px;"><i class="fab fa-facebook"></i></a>
+                            <a href="#" style="color: #ffffff; font-size: 20px;"><i class="fab fa-twitter"></i></a>
+                            <a href="#" style="color: #ffffff; font-size: 20px;"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" style="color: #ffffff; font-size: 20px;"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--Site Footer End-->
+
+    </div><!-- /.page-wrapper -->
+
+    <div class="mobile-nav__wrapper">
+        <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+        <div class="mobile-nav__content">
+            <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
+
+            <div class="logo-box">
+                <a href="index.html" style="font-size: 24px; font-weight: 700; font-style: italic; color: #000;">LogicDesignSolutions</a>
+            </div>
+            <div class="mobile-nav__container"></div>
+
+            <ul class="mobile-nav__contact list-unstyled">
+                <li>
+                    <i class="fa fa-envelope"></i>
+                    <a href="mailto:contact@logic-design-solutions.com">contact@logic-design-solutions.com</a>
+                </li>
+                <li>
+                    <i class="fa fa-phone-alt"></i>
+                    <a href="tel:+33145922447">+33 (0)1 45 92 24 47</a>
+                </li>
+            </ul>
+            <div class="mobile-nav__top">
+                <div class="mobile-nav__social">
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="#" class="fab fa-facebook-square"></a>
+                    <a href="#" class="fab fa-pinterest-p"></a>
+                    <a href="#" class="fab fa-instagram"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-popup">
+        <div class="search-popup__overlay search-toggler"></div>
+        <div class="search-popup__content">
+            <form action="#">
+                <label for="search" class="sr-only">search here</label>
+                <input type="text" id="search" placeholder="Search Here..." />
+                <button type="submit" aria-label="search submit" class="thm-btn">
+                    <i class="icon-search-1"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="icon-up-arrow"></i></a>
+
+    <script src="assets/vendors/jquery/jquery-3.6.0.min.js"></script>
+    <script src="assets/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendors/jarallax/jarallax.min.js"></script>
+    <script src="assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js"></script>
+    <script src="assets/vendors/jquery-appear/jquery.appear.min.js"></script>
+    <script src="assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js"></script>
+    <script src="assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="assets/vendors/jquery-validate/jquery.validate.min.js"></script>
+    <script src="assets/vendors/odometer/odometer.min.js"></script>
+    <script src="assets/vendors/swiper/swiper.min.js"></script>
+    <script src="assets/vendors/wnumb/wNumb.min.js"></script>
+    <script src="assets/vendors/wow/wow.js"></script>
+    <script src="assets/vendors/isotope/isotope.js"></script>
+    <script src="assets/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="assets/vendors/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script src="assets/vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="assets/vendors/timepicker/timePicker.js"></script>
+    <script src="assets/vendors/jquery.circle-type/jquery.circleType.js"></script>
+    <script src="assets/vendors/jquery.circle-type/jquery.lettering.min.js"></script>
+
+    <!-- template js -->
+    <script src="assets/js/smartbiz.js"></script>
+</body>
+
+</html>
