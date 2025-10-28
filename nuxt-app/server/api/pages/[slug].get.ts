@@ -1,7 +1,5 @@
-import { readFileSync } from 'fs'
-import { resolve } from 'path'
-
 import { createError } from 'h3'
+import { useStorage } from '#imports'
 
 const SUPPORTED_SLUGS = new Set([
   'index',
@@ -47,16 +45,12 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const filePath = resolve(process.cwd(), '..', `${slug}.html`)
+  const fileContent = await readFromServerAssets(slug)
 
-  let fileContent: string
-
-  try {
-    fileContent = readFileSync(filePath, 'utf-8')
-  } catch (error) {
+  if (!fileContent) {
     throw createError({
       statusCode: 500,
-      statusMessage: `Failed to read source file for slug "${slug}"`
+      statusMessage: `Static page asset for slug "${slug}" is missing`
     })
   }
 
@@ -101,3 +95,23 @@ export default defineEventHandler(async (event) => {
     html: sanitized.trim()
   }
 })
+
+const readFromServerAssets = async (slug: string) => {
+  const storage = useStorage('assets:server')
+  const key = `static-pages/${slug}.html`
+  const asset = await storage.getItem(key)
+
+  if (!asset) {
+    return null
+  }
+
+  if (typeof asset === 'string') {
+    return asset
+  }
+
+  if (typeof asset === 'object' && asset !== null && 'toString' in asset) {
+    return (asset as { toString: (encoding?: string) => string }).toString('utf-8')
+  }
+
+  return null
+}
