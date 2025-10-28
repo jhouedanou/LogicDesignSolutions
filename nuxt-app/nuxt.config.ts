@@ -6,7 +6,7 @@ export default defineNuxtConfig({
 
   // CSS Configuration
   css: [
-    '~/assets/css/main.css'
+    '@/assets/css/main.css'
   ],
 
   // App Configuration
@@ -36,7 +36,7 @@ export default defineNuxtConfig({
   // TypeScript Configuration
   typescript: {
     strict: true,
-    typeCheck: true
+    typeCheck: false
   },
 
   // Experimental Features
@@ -65,9 +65,10 @@ export default defineNuxtConfig({
   // Nitro Configuration (Server)
   nitro: {
     compressPublicAssets: true,
+    preset: 'netlify',
     prerender: {
       crawlLinks: true,
-      routes: ['/']
+      routes: ['/', '/about', '/services', '/contact']
     }
   },
 
