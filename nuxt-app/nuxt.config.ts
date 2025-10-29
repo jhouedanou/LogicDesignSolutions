@@ -50,11 +50,6 @@ export default defineNuxtConfig({
     transpile: []
   },
 
-  // Optimization
-  optimization: {
-    minimize: true
-  },
-
   // Router Configuration
   router: {
     options: {
@@ -74,6 +69,9 @@ export default defineNuxtConfig({
 
   // Modules
   modules: [],
+
+  // Directory Configuration
+  srcDir: 'app',
 
   // Vite Configuration
   vite: {

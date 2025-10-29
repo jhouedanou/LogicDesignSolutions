@@ -7,14 +7,14 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "sync:static-pages": "node scripts/sync-static-pages.cjs"
+    "postinstall": "nuxt prepare"
   },
   "dependencies": {
     "nuxt": "^4.2.0",
     "vue": "^3.5.22"
   },
   "devDependencies": {
+    "@types/node": "^24.9.2",
     "typescript": "^5.7.2",
     "vue-tsc": "^2.1.10"
   }
