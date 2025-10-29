@@ -1,8 +1,5 @@
 <template>
   <div class="custom-cursor">
-    <div class="custom-cursor__cursor"></div>
-    <div class="custom-cursor__cursor-two"></div>
-
     <!--Start Preloader-->
     <div class="loader js-preloader">
       <div></div>
@@ -581,6 +578,8 @@
 
     <a href="#" data-target="html" class="scroll-to-target scroll-to-top"><i class="fas fa-arrow-up"></i></a>
 
+    <!-- Custom Cursor Component -->
+    <CustomCursor />
   </div>
 </template>
 
