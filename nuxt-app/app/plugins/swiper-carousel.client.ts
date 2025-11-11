@@ -1,17 +1,22 @@
 export default defineNuxtPlugin((nuxtApp) => {
   // Fonction pour initialiser tous les Swiper carousels
   const initSwiperCarousels = () => {
-    if (typeof window === 'undefined' || !window.jQuery || !window.Swiper) {
+    if (typeof window === 'undefined') {
       return;
     }
 
-    const $ = window.jQuery;
+    const globalWindow = window as typeof window & { jQuery?: any; Swiper?: any }
+    if (!globalWindow.jQuery || !globalWindow.Swiper) {
+      return;
+    }
+
+    const $ = globalWindow.jQuery;
 
     // Attendre que le DOM soit prêt
     setTimeout(() => {
       if ($(".thm-swiper__slider").length) {
-        $(".thm-swiper__slider").each(function () {
-          const elm = $(this);
+        $(".thm-swiper__slider").each((_: number, element: Element) => {
+          const elm = $(element as HTMLElement);
           
           // Éviter la double initialisation
           if (elm.hasClass('swiper-initialized')) {
@@ -21,7 +26,7 @@ export default defineNuxtPlugin((nuxtApp) => {
           try {
             const options = elm.data('swiper-options');
             if (options) {
-              new window.Swiper(elm[0], options);
+              new globalWindow.Swiper(elm[0], options);
               elm.addClass('swiper-initialized');
             }
           } catch (error) {

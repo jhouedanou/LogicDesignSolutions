@@ -163,7 +163,7 @@
                             <span class="icon-arrows"></span>
                           </div>
                           <div class="text">
-                            <p align="justify">{{ feature.text }}</p>
+                            <p align="justify">{{ feature.description }}</p>
                           </div>
                         </li>
                       </ul>
@@ -175,7 +175,7 @@
                             <span class="icon-arrows"></span>
                           </div>
                           <div class="text">
-                            <p align="justify">{{ feature.text }}</p>
+                            <p align="justify">{{ feature.description }}</p>
                           </div>
                         </li>
                       </ul>

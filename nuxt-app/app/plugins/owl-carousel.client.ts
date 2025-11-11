@@ -8,8 +8,8 @@ export default defineNuxtPlugin(() => {
         const $ = (window as any).$
 
         // Initialize all carousels with data-owl-options attribute
-        $('.thm-owl__carousel').each(function () {
-          const $this = $(this)
+        $('.thm-owl__carousel').each((_: number, element: Element) => {
+          const $this = $(element as HTMLElement)
           
           // Check if already initialized
           if ($this.hasClass('owl-loaded')) {

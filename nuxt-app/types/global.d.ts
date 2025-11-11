@@ -1,5 +1,7 @@
 // Global type declarations for external libraries and composables
 
+import type { Ref } from 'vue'
+
 declare global {
   interface Window {
     jQuery: any
@@ -114,6 +116,70 @@ declare module '~/composables/useWordPressAPI' {
     item: WordPressProduct | WordPressPost,
     mediaCache?: Map<number, string>
   ): Promise<string>
+}
+
+// Declare useContent composable
+declare module '#app' {
+  interface NuxtApp {
+    $useContent: typeof useContent
+  }
+}
+
+interface HeroContent {
+  title: string
+  subtitle: string
+  description: string
+  cta: string
+  image: string
+}
+
+interface AboutFeature {
+  id: number
+  title: string
+  description: string
+}
+
+interface AboutContent {
+  tagline: string
+  title: string
+  contentTitle: string
+  description: string
+  features: AboutFeature[]
+  cta: string
+  award: string
+  companyName: string
+}
+
+interface BrandsContent {
+  title: string
+  description: string
+  partners: Array<Record<string, any>>
+}
+
+declare global {
+  function useContent(): {
+    hero: Ref<HeroContent>
+    about: Ref<AboutContent>
+    news: Ref<Array<Record<string, any>>>
+    brands: Ref<BrandsContent>
+    site: Ref<{
+      siteName: string
+      email: string
+      phone: string
+      address: string
+      description: string
+      callLabel: string
+      contactButtonText: string
+    }>
+    navigation: Ref<{
+      mainMenu: Array<{ label: string; path: string }>
+      footerMenu: Array<{ title: string; url: string }>
+    }>
+    footer: Ref<{
+      copyright: string
+      socialLinks: Array<{ name: string; url: string; icon: string }>
+    }>
+  }
 }
 
 export {}
