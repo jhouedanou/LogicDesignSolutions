@@ -58,10 +58,11 @@ export default defineNuxtConfig({
   // Nitro Configuration (Server)
   nitro: {
     compressPublicAssets: true,
-    preset: 'static',
+    preset: 'vercel',
     prerender: {
       crawlLinks: false,
-      routes: ['/', '/about', '/services', '/contact', '/products', '/news', '/faq', '/product-category']
+      routes: ['/', '/about', '/services', '/contact', '/products', '/news', '/faq', '/product-category'],
+      ignore: ['/sitemap.xml', '/robots.txt']
     }
   },
 
