@@ -1,4 +1,4 @@
-import { p as publicAssetsURL } from '../routes/renderer.mjs';
+import { p as publicAssetsURL } from '../nitro/nitro.mjs';
 
 const _imports_1 = publicAssetsURL("/assets/images/news/NMVE_HOST_K7U-844x1024.jpg");
 const _imports_2 = publicAssetsURL("/assets/images/news/ARINC_429_IP-924x1024.jpg");

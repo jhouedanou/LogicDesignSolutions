@@ -1,5 +1,5 @@
 import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'vue-bundle-renderer/runtime';
-import { j as joinRelativeURL, u as useRuntimeConfig, g as getResponseStatusText, a as getResponseStatus, b as defineRenderHandler, e as getQuery, c as createError, f as destr, h as getRouteRules, i as useNitroApp } from '../nitro/nitro.mjs';
+import { b as buildAssetsURL, u as useRuntimeConfig, g as getResponseStatusText, a as getResponseStatus, e as defineRenderHandler, p as publicAssetsURL, f as getQuery, c as createError, h as destr, i as getRouteRules, j as useNitroApp } from '../nitro/nitro.mjs';
 import { renderToString } from 'vue/server-renderer';
 import { createHead as createHead$1, propsToString, renderSSRHead } from 'unhead/server';
 import { stringify, uneval } from 'devalue';
@@ -89,21 +89,6 @@ const appSpaLoaderTag = "div";
 const appSpaLoaderAttrs = {"id":"__nuxt-loader"};
 
 const appId = "nuxt-app";
-
-function baseURL() {
-  return useRuntimeConfig().app.baseURL;
-}
-function buildAssetsDir() {
-  return useRuntimeConfig().app.buildAssetsDir;
-}
-function buildAssetsURL(...path) {
-  return joinRelativeURL(publicAssetsURL(), buildAssetsDir(), ...path);
-}
-function publicAssetsURL(...path) {
-  const app = useRuntimeConfig().app;
-  const publicBase = app.cdnURL || app.baseURL;
-  return path.length ? joinRelativeURL(publicBase, ...path) : publicBase;
-}
 
 const APP_ROOT_OPEN_TAG = `<${appRootTag}${propsToString(appRootAttrs)}>`;
 const APP_ROOT_CLOSE_TAG = `</${appRootTag}>`;
@@ -426,5 +411,5 @@ const renderer$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty
   default: renderer
 }, Symbol.toStringTag, { value: 'Module' }));
 
-export { baseURL as b, headSymbol as h, publicAssetsURL as p, renderer$1 as r, useHead as u };
+export { headSymbol as h, renderer$1 as r, useHead as u };
 //# sourceMappingURL=renderer.mjs.map

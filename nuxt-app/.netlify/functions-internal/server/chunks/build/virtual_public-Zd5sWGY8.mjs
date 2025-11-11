@@ -1,4 +1,4 @@
-import { p as publicAssetsURL } from '../routes/renderer.mjs';
+import { p as publicAssetsURL } from '../nitro/nitro.mjs';
 
 const _imports_0 = publicAssetsURL("/assets/images/news/nvme_host_agilex_7_r_tile-672x1024.jpg");
 

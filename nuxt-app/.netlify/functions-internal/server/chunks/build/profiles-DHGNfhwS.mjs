@@ -1,10 +1,8 @@
 import { defineComponent, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrRenderStyle, ssrRenderAttr } from 'vue/server-renderer';
 import { _ as _imports_0 } from './virtual_public-BdpABuC_.mjs';
-import { p as publicAssetsURL } from '../routes/renderer.mjs';
+import { p as publicAssetsURL } from '../nitro/nitro.mjs';
 import { u as useHead } from './composables-DFgJCqKW.mjs';
-import 'vue-bundle-renderer/runtime';
-import '../nitro/nitro.mjs';
 import 'node:http';
 import 'node:https';
 import 'node:events';
@@ -12,11 +10,15 @@ import 'node:buffer';
 import 'node:fs';
 import 'node:path';
 import 'node:crypto';
+import 'node:url';
+import 'ipx';
+import './server.mjs';
+import 'vue-router';
+import '../routes/renderer.mjs';
+import 'vue-bundle-renderer/runtime';
 import 'unhead/server';
 import 'devalue';
 import 'unhead/utils';
-import './server.mjs';
-import 'vue-router';
 
 const _imports_1 = publicAssetsURL("/assets/images/resources/about-two-img-1.jpg");
 const _sfc_main = /* @__PURE__ */ defineComponent({

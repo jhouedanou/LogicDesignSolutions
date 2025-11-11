@@ -8,6 +8,8 @@ import 'node:buffer';
 import 'node:fs';
 import 'node:path';
 import 'node:crypto';
+import 'node:url';
+import 'ipx';
 
 const footer_get = defineEventHandler(() => {
   try {

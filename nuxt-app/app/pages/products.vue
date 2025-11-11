@@ -63,9 +63,12 @@
                     <div class="news-one__img-box">
                       <div class="news-one__img">
                         <NuxtLink :to="`/product-detail?id=${product.id}`">
-                          <img 
-                            :src="getProductImage(product)" 
-                            :alt="stripHtml(product.title.rendered)" 
+                          <NuxtImg
+                            :src="getProductImage(product)"
+                            :alt="stripHtml(product.title.rendered)"
+                            preset="card"
+                            loading="lazy"
+                            sizes="xs:100vw sm:100vw md:50vw lg:33vw"
                           />
                         </NuxtLink>
                       </div>

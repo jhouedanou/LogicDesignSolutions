@@ -12,6 +12,8 @@ import 'node:buffer';
 import 'node:fs';
 import 'node:path';
 import 'node:crypto';
+import 'node:url';
+import 'ipx';
 import 'unhead/server';
 import 'devalue';
 import 'unhead/utils';

@@ -55,11 +55,13 @@
                                 
                                 <!-- Featured Image -->
                                 <div v-if="productImage" style="float: left; width: 50%; margin-right: 30px; margin-bottom: 20px;">
-                                    <img 
-                                        :src="productImage" 
-                                        :alt="stripHtml(product.title.rendered)" 
+                                    <NuxtImg
+                                        :src="productImage"
+                                        :alt="stripHtml(product.title.rendered)"
+                                        preset="featured"
+                                        loading="eager"
                                         style="width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"
-                                    >
+                                    />
                                 </div>
                                 
                                 <!-- Product Content (Dynamic from WordPress) -->
@@ -108,11 +110,13 @@
                                 <ul class="sidebar__post-list list-unstyled">
                                     <li v-for="relProd in relatedProducts.slice(0, 3)" :key="relProd.id">
                                         <div class="sidebar__post-image">
-                                            <img 
-                                                :src="getProductImage(relProd)" 
+                                            <NuxtImg
+                                                :src="getProductImage(relProd)"
                                                 :alt="stripHtml(relProd.title.rendered)"
+                                                preset="thumbnail"
+                                                loading="lazy"
                                                 style="width: 70px; height: 70px; object-fit: cover; border-radius: 5px;"
-                                            >
+                                            />
                                         </div>
                                         <div class="sidebar__post-content">
                                             <h3>

@@ -12,6 +12,8 @@ import 'node:buffer';
 import 'node:fs';
 import 'node:path';
 import 'node:crypto';
+import 'node:url';
+import 'ipx';
 import '../routes/renderer.mjs';
 import 'vue-bundle-renderer/runtime';
 import 'unhead/server';

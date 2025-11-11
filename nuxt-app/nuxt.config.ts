@@ -65,7 +65,57 @@ export default defineNuxtConfig({
   },
 
   // Modules
-  modules: [],
+  modules: [
+    '@nuxt/image'
+  ],
+
+  // Image Configuration
+  image: {
+    format: ['webp', 'jpeg'],
+    quality: 80,
+    screens: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536
+    },
+    presets: {
+      thumbnail: {
+        modifiers: {
+          format: 'webp',
+          width: 300,
+          height: 300,
+          quality: 80
+        }
+      },
+      card: {
+        modifiers: {
+          format: 'webp',
+          width: 500,
+          height: 350,
+          quality: 80
+        }
+      },
+      hero: {
+        modifiers: {
+          format: 'webp',
+          width: 1200,
+          height: 600,
+          quality: 80
+        }
+      },
+      featured: {
+        modifiers: {
+          format: 'webp',
+          width: 1920,
+          height: 1080,
+          quality: 80
+        }
+      }
+    }
+  },
 
   // Directory Configuration
   srcDir: 'app',

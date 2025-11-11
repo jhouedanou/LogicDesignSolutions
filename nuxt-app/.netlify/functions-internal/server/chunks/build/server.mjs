@@ -1,6 +1,5 @@
 import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { hasInjectionContext, inject, getCurrentInstance, defineAsyncComponent, defineComponent, h, computed, unref, shallowRef, provide, shallowReactive, ref, Suspense, Fragment, createApp, toRef, onErrorCaptured, onServerPrefetch, createVNode, resolveDynamicComponent, reactive, effectScope, isReadonly, isRef, isShallow, isReactive, toRaw, mergeProps, getCurrentScope, withCtx, nextTick, useSSRContext } from 'vue';
-import { k as hasProtocol, l as isScriptProtocol, m as joinURL, w as withQuery, s as sanitizeStatusCode, n as getContext, $ as $fetch, o as createHooks, p as executeAsync, c as createError$1, t as toRouteMatcher, q as createRouter$1, r as defu } from '../nitro/nitro.mjs';
-import { b as baseURL } from '../routes/renderer.mjs';
+import { k as hasProtocol, l as isScriptProtocol, m as joinURL, w as withQuery, s as sanitizeStatusCode, n as getContext, $ as $fetch, o as baseURL, q as createHooks, r as executeAsync, c as createError$1, t as toRouteMatcher, v as createRouter$1, x as defu } from '../nitro/nitro.mjs';
 import { useRoute as useRoute$1, RouterView, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
 import { ssrRenderSuspense, ssrRenderComponent, ssrRenderVNode } from 'vue/server-renderer';
 import 'node:http';
@@ -10,10 +9,8 @@ import 'node:buffer';
 import 'node:fs';
 import 'node:path';
 import 'node:crypto';
-import 'vue-bundle-renderer/runtime';
-import 'unhead/server';
-import 'devalue';
-import 'unhead/utils';
+import 'node:url';
+import 'ipx';
 
 if (!globalThis.$fetch) {
   globalThis.$fetch = $fetch.create({
@@ -418,7 +415,7 @@ const _routes = [
   {
     name: "products",
     path: "/products",
-    component: () => import('./products-C86lWjL3.mjs')
+    component: () => import('./products-blfz3SsD.mjs')
   },
   {
     name: "profiles",
@@ -443,7 +440,7 @@ const _routes = [
   {
     name: "product-detail",
     path: "/product-detail",
-    component: () => import('./product-detail-BCrGNdlv.mjs')
+    component: () => import('./product-detail-zyErL84V.mjs')
   },
   {
     name: "product-category",

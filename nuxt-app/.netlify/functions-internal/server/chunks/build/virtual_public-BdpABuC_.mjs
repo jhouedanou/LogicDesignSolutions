@@ -1,4 +1,4 @@
-import { p as publicAssetsURL } from '../routes/renderer.mjs';
+import { p as publicAssetsURL } from '../nitro/nitro.mjs';
 
 const _imports_0 = publicAssetsURL("/assets/images/resources/im1.jpeg");
 

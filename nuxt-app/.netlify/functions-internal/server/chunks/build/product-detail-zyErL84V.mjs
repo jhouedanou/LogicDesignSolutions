@@ -1,8 +1,8 @@
 import { _ as __nuxt_component_0 } from './nuxt-link-BzAABopN.mjs';
+import { b as useWPProduct, u as useWPProductCategories, a as useWPProducts, _ as __nuxt_component_1 } from './useWordPressAPI-DdR3nAdp.mjs';
 import { defineComponent, withAsyncContext, computed, ref, mergeProps, unref, withCtx, createTextVNode, createVNode, toDisplayString, useSSRContext } from 'vue';
-import { ssrRenderAttrs, ssrRenderStyle, ssrRenderComponent, ssrRenderList, ssrInterpolate, ssrRenderAttr, ssrRenderClass } from 'vue/server-renderer';
+import { ssrRenderAttrs, ssrRenderStyle, ssrRenderComponent, ssrRenderList, ssrInterpolate, ssrRenderClass } from 'vue/server-renderer';
 import { u as useRoute } from './server.mjs';
-import { b as useWPProduct, u as useWPProductCategories, a as useWPProducts } from './useWordPressAPI-C2XvUkhM.mjs';
 import { u as useHead } from './composables-DFgJCqKW.mjs';
 import '../nitro/nitro.mjs';
 import 'node:http';
@@ -12,12 +12,14 @@ import 'node:buffer';
 import 'node:fs';
 import 'node:path';
 import 'node:crypto';
+import 'node:url';
+import 'ipx';
+import 'vue-router';
 import '../routes/renderer.mjs';
 import 'vue-bundle-renderer/runtime';
 import 'unhead/server';
 import 'devalue';
 import 'unhead/utils';
-import 'vue-router';
 
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "product-detail",
@@ -78,6 +80,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     });
     return (_ctx, _push, _parent, _attrs) => {
       const _component_NuxtLink = __nuxt_component_0;
+      const _component_NuxtImg = __nuxt_component_1;
       _push(`<div${ssrRenderAttrs(mergeProps({ class: "product-detail-page" }, _attrs))}><section class="page-header"><div class="page-header-bg" style="${ssrRenderStyle({ "background-image": "url(/assets/images/backgrounds/logic-slider-2.png)" })}"></div><div class="container"><div class="page-header__inner"><ul class="thm-breadcrumb list-unstyled"><li><a href="/">Home</a></li><li>-</li><li><a href="/products">Products</a></li><li>-</li><li>Product Details</li></ul><h2 class="page-header__title">Product Details</h2></div></div></section><section class="news-details"><div class="container">`);
       if (unref(pending)) {
         _push(`<div class="text-center" style="${ssrRenderStyle({ "padding": "60px" })}"><p>Loading product details...</p></div>`);
@@ -120,7 +123,15 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         }
         _push(`<h3 class="news-details__title-1">${unref(product).title.rendered ?? ""}</h3>`);
         if (unref(productImage)) {
-          _push(`<div style="${ssrRenderStyle({ "float": "left", "width": "50%", "margin-right": "30px", "margin-bottom": "20px" })}"><img${ssrRenderAttr("src", unref(productImage))}${ssrRenderAttr("alt", stripHtml(unref(product).title.rendered))} style="${ssrRenderStyle({ "width": "100%", "height": "auto", "border-radius": "10px", "box-shadow": "0 4px 6px rgba(0,0,0,0.1)" })}"></div>`);
+          _push(`<div style="${ssrRenderStyle({ "float": "left", "width": "50%", "margin-right": "30px", "margin-bottom": "20px" })}">`);
+          _push(ssrRenderComponent(_component_NuxtImg, {
+            src: unref(productImage),
+            alt: stripHtml(unref(product).title.rendered),
+            preset: "featured",
+            loading: "eager",
+            style: { "width": "100%", "height": "auto", "border-radius": "10px", "box-shadow": "0 4px 6px rgba(0,0,0,0.1)" }
+          }, null, _parent));
+          _push(`</div>`);
         } else {
           _push(`<!---->`);
         }
@@ -152,7 +163,15 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         if (unref(relatedProducts).length > 0) {
           _push(`<div class="sidebar__single sidebar__post"><h3 class="sidebar__title">Related Products</h3><ul class="sidebar__post-list list-unstyled"><!--[-->`);
           ssrRenderList(unref(relatedProducts).slice(0, 3), (relProd) => {
-            _push(`<li><div class="sidebar__post-image"><img${ssrRenderAttr("src", getProductImage(relProd))}${ssrRenderAttr("alt", stripHtml(relProd.title.rendered))} style="${ssrRenderStyle({ "width": "70px", "height": "70px", "object-fit": "cover", "border-radius": "5px" })}"></div><div class="sidebar__post-content"><h3>`);
+            _push(`<li><div class="sidebar__post-image">`);
+            _push(ssrRenderComponent(_component_NuxtImg, {
+              src: getProductImage(relProd),
+              alt: stripHtml(relProd.title.rendered),
+              preset: "thumbnail",
+              loading: "lazy",
+              style: { "width": "70px", "height": "70px", "object-fit": "cover", "border-radius": "5px" }
+            }, null, _parent));
+            _push(`</div><div class="sidebar__post-content"><h3>`);
             _push(ssrRenderComponent(_component_NuxtLink, {
               to: `/product-detail?id=${relProd.id}`
             }, null, _parent));
@@ -242,4 +261,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=product-detail-BCrGNdlv.mjs.map
+//# sourceMappingURL=product-detail-zyErL84V.mjs.map

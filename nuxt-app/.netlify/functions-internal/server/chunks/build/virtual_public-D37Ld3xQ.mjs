@@ -1,4 +1,4 @@
-import { p as publicAssetsURL } from '../routes/renderer.mjs';
+import { p as publicAssetsURL } from '../nitro/nitro.mjs';
 
 const _imports_1 = publicAssetsURL("/assets/images/brand/AMD_Embedded_Select.png");
 const _imports_2 = publicAssetsURL("/assets/images/brand/Member-Badge-1-1.png");
