@@ -1,4 +1,4 @@
-import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { hasInjectionContext, getCurrentInstance, defineAsyncComponent, defineComponent, h, inject, computed, unref, shallowRef, provide, shallowReactive, ref, Suspense, Fragment, createApp, toRef, onErrorCaptured, onServerPrefetch, createVNode, resolveDynamicComponent, reactive, effectScope, isReadonly, isRef, isShallow, isReactive, toRaw, mergeProps, getCurrentScope, withCtx, nextTick, useSSRContext } from 'vue';
+import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { hasInjectionContext, inject, getCurrentInstance, defineAsyncComponent, defineComponent, h, computed, unref, shallowRef, provide, shallowReactive, ref, Suspense, Fragment, createApp, toRef, onErrorCaptured, onServerPrefetch, createVNode, resolveDynamicComponent, reactive, effectScope, isReadonly, isRef, isShallow, isReactive, toRaw, mergeProps, getCurrentScope, withCtx, nextTick, useSSRContext } from 'vue';
 import { k as hasProtocol, l as isScriptProtocol, m as joinURL, w as withQuery, s as sanitizeStatusCode, n as getContext, $ as $fetch, o as createHooks, p as executeAsync, c as createError$1, t as toRouteMatcher, q as createRouter$1, r as defu } from '../nitro/nitro.mjs';
 import { b as baseURL } from '../routes/renderer.mjs';
 import { useRoute as useRoute$1, RouterView, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
@@ -387,12 +387,12 @@ const _routes = [
   {
     name: "faq",
     path: "/faq",
-    component: () => import('./faq-DkK9iSIv.mjs')
+    component: () => import('./faq-C1cL0gXJ.mjs')
   },
   {
     name: "news",
     path: "/news",
-    component: () => import('./news-DaFhb6oX.mjs')
+    component: () => import('./news-CGm8Z9sB.mjs')
   },
   {
     name: "test",
@@ -402,53 +402,53 @@ const _routes = [
   {
     name: "about",
     path: "/about",
-    component: () => import('./about-C4BRbsN9.mjs')
+    component: () => import('./about-DBsM7jZM.mjs')
   },
   {
     name: "index",
     path: "/",
     meta: __nuxt_page_meta || {},
-    component: () => import('./index-Bj_zq8y8.mjs')
+    component: () => import('./index-CxGm8I2K.mjs')
   },
   {
     name: "contact",
     path: "/contact",
-    component: () => import('./contact-BJZmkXeI.mjs')
+    component: () => import('./contact-aALjsLJM.mjs')
   },
   {
     name: "products",
     path: "/products",
-    component: () => import('./products-DOWRYGRo.mjs')
+    component: () => import('./products-GcjUo8OT.mjs')
   },
   {
     name: "profiles",
     path: "/profiles",
-    component: () => import('./profiles-BO7jOQx2.mjs')
+    component: () => import('./profiles-DHGNfhwS.mjs')
   },
   {
     name: "services",
     path: "/services",
-    component: () => import('./services-BkaDM9Nt.mjs')
+    component: () => import('./services-DFrV-eDm.mjs')
   },
   {
     name: "references",
     path: "/references",
-    component: () => import('./references-CsyF4Bic.mjs')
+    component: () => import('./references-B80R3erh.mjs')
   },
   {
     name: "news-detail",
     path: "/news-detail",
-    component: () => import('./news-detail-5LT1zWgw.mjs')
+    component: () => import('./news-detail-DDO96eMT.mjs')
   },
   {
     name: "product-detail",
     path: "/product-detail",
-    component: () => import('./product-detail-CxDx13jK.mjs')
+    component: () => import('./product-detail-gdaZsnL3.mjs')
   },
   {
     name: "product-category",
     path: "/product-category",
-    component: () => import('./product-category-as1tIryp.mjs')
+    component: () => import('./product-category-B3uKvD3V.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {
@@ -577,7 +577,7 @@ const plugin = /* @__PURE__ */ defineNuxtPlugin({
     let __temp, __restore;
     let routerBase = (/* @__PURE__ */ useRuntimeConfig()).app.baseURL;
     const history = routerOptions.history?.(routerBase) ?? createMemoryHistory(routerBase);
-    const routes2 = routerOptions.routes ? ([__temp, __restore] = executeAsync(() => routerOptions.routes(_routes)), __temp = await __temp, __restore(), __temp) ?? _routes : _routes;
+    const routes = routerOptions.routes ? ([__temp, __restore] = executeAsync(() => routerOptions.routes(_routes)), __temp = await __temp, __restore(), __temp) ?? _routes : _routes;
     let startPosition;
     const router = createRouter({
       ...routerOptions,
@@ -598,7 +598,7 @@ const plugin = /* @__PURE__ */ defineNuxtPlugin({
         }
       },
       history,
-      routes: routes2
+      routes
     });
     nuxtApp.vueApp.use(router);
     const previousRoute = shallowRef(router.currentRoute.value);
@@ -791,20 +791,14 @@ const revive_payload_server_MVtmlZaQpj6ApFmshWfUWl5PehCebzaBf2NuRMiIbms = /* @__
 const components_plugin_4kY4pyzJIYX99vmMAAIorFf3CnAaptHitJgf7JxiED8 = /* @__PURE__ */ defineNuxtPlugin({
   name: "nuxt:global-components"
 });
-const prerender_server_sqIxOBipVr4FbVMA9kqWL0wT8FPop6sKAXLVfifsJzk = /* @__PURE__ */ defineNuxtPlugin(async () => {
-  {
-    return;
-  }
-});
 const plugins = [
   unhead_k2P3m_ZDyjlr2mMYnoDPwavjsDN8hBlk9cFai0bbopU,
   plugin,
   revive_payload_server_MVtmlZaQpj6ApFmshWfUWl5PehCebzaBf2NuRMiIbms,
-  components_plugin_4kY4pyzJIYX99vmMAAIorFf3CnAaptHitJgf7JxiED8,
-  prerender_server_sqIxOBipVr4FbVMA9kqWL0wT8FPop6sKAXLVfifsJzk
+  components_plugin_4kY4pyzJIYX99vmMAAIorFf3CnAaptHitJgf7JxiED8
 ];
 const layouts = {
-  default: defineAsyncComponent(() => import('./default-DzJrJ2B3.mjs').then((m) => m.default || m))
+  default: defineAsyncComponent(() => import('./default-CbciNiy0.mjs').then((m) => m.default || m))
 };
 const LayoutLoader = defineComponent({
   name: "LayoutLoader",
@@ -1068,8 +1062,8 @@ const _sfc_main$1 = {
     const statusMessage = _error.statusMessage ?? (is404 ? "Page Not Found" : "Internal Server Error");
     const description = _error.message || _error.toString();
     const stack = void 0;
-    const _Error404 = defineAsyncComponent(() => import('./error-404-IfMTFQSZ.mjs'));
-    const _Error = defineAsyncComponent(() => import('./error-500-DhT96FEb.mjs'));
+    const _Error404 = defineAsyncComponent(() => import('./error-404-Dq7z4i04.mjs'));
+    const _Error = defineAsyncComponent(() => import('./error-500-D9oFadIx.mjs'));
     const ErrorTemplate = is404 ? _Error404 : _Error;
     return (_ctx, _push, _parent, _attrs) => {
       _push(ssrRenderComponent(unref(ErrorTemplate), mergeProps({ statusCode: unref(statusCode), statusMessage: unref(statusMessage), description: unref(description), stack: unref(stack) }, _attrs), null, _parent));
@@ -1150,5 +1144,5 @@ let entry;
 }
 const entry$1 = (ssrContext) => entry(ssrContext);
 
-export { _export_sfc as _, useNuxtApp as a, useRuntimeConfig as b, nuxtLinkDefaults as c, entry$1 as default, navigateTo as n, resolveRouteObject as r, useRouter as u };
+export { _export_sfc as _, useRouter as a, useNuxtApp as b, useRuntimeConfig as c, nuxtLinkDefaults as d, entry$1 as default, navigateTo as n, resolveRouteObject as r, useRoute as u };
 //# sourceMappingURL=server.mjs.map
