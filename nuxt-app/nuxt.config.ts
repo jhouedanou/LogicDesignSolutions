@@ -6,7 +6,7 @@ export default defineNuxtConfig({
 
   // CSS Configuration
   css: [
-    // Theme CSS are loaded via default.vue layout
+    '~/assets/scss/main.scss'
   ],
 
   // App Configuration
@@ -82,7 +82,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@use "~/assets/css/_variables.scss" as *;'
+          additionalData: '@use "~/assets/scss/_variables.scss" as *;'
         }
       }
     },

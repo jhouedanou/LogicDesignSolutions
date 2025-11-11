@@ -1,0 +1,10 @@
+// ============================================
+// Main SCSS Entry Point
+// ============================================
+// This file imports all SCSS partials
+// ============================================
+
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'global' as *;
+@use 'custom' as *;

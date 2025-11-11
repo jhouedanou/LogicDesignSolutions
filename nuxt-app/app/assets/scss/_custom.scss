@@ -1,0 +1,285 @@
+// ============================================
+// Custom Styles for Logic Design Solutions (SCSS)
+// ============================================
+
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ============================================
+// Button Overrides
+// ============================================
+
+.thm-btn {
+  background-color: $lds-primary !important;
+
+  &:hover {
+    background-color: #0090c5 !important;
+  }
+}
+
+// ============================================
+// Logo & Header
+// ============================================
+
+.main-menu-two__logo a {
+  font-family: 'Roboto Condensed', sans-serif !important;
+}
+
+.main-header-two__top {
+  background-color: $background-light;
+}
+
+// ============================================
+// Links & Navigation
+// ============================================
+
+a {
+  color: $lds-primary;
+}
+
+.main-menu__list {
+  > li {
+    > a:hover {
+      color: $lds-primary !important;
+    }
+
+    &.current > a {
+      color: $lds-primary !important;
+    }
+
+    // Menu item spacing
+    & + li {
+      margin-left: 15px !important;
+    }
+  }
+}
+
+.main-menu-two {
+  .main-menu__list {
+    > li {
+      > a {
+        font-size: 17px !important;
+
+        &:hover,
+        &.current {
+          color: $lds-primary !important;
+        }
+      }
+    }
+  }
+
+  .main-menu__list > li + li {
+    margin-left: 15px !important;
+  }
+
+  margin-top: 20px;
+
+  &__wrapper {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+// Sticky header
+.stricky-header {
+  &.stricked-menu {
+    margin-top: 0 !important;
+  }
+
+  .main-menu__list {
+    > li {
+      > a:hover,
+      &.current > a {
+        color: $lds-primary !important;
+      }
+    }
+
+    > li + li {
+      margin-left: 15px !important;
+    }
+  }
+}
+
+.main-header-two__contact-list a,
+.main-header-two__social a:hover {
+  color: $lds-primary;
+}
+
+// ============================================
+// Titles & Typography
+// ============================================
+
+.section-title {
+  &__title,
+  &-two__title {
+    color: #1a1a1a;
+  }
+
+  &__tagline,
+  &-two__tagline {
+    color: $lds-primary;
+  }
+}
+
+// ============================================
+// Footer
+// ============================================
+
+.site-footer-two {
+  background-color: $lds-dark;
+}
+
+.icon-right-arrow {
+  color: #fff;
+}
+
+// ============================================
+// Slider
+// ============================================
+
+.main-slider-two {
+  &__sub-title {
+    font-size: 72px !important;
+    padding: 20px 40px !important;
+    line-height: 1.2 !important;
+  }
+
+  &__content {
+    padding-top: 20px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+    margin-top: -80px !important;
+  }
+}
+
+// ============================================
+// Page Header
+// ============================================
+
+.page-header {
+  padding: 130px 0 110px !important;
+
+  &__inner {
+    padding: 0 !important;
+  }
+}
+
+// ============================================
+// Products/News Cards
+// ============================================
+
+.news-one {
+  &__single {
+    @include flex-center;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  &__img-box {
+    height: 250px !important;
+    overflow: hidden !important;
+  }
+
+  &__img img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  &__title {
+    font-size: 18px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 10px !important;
+    margin-top: 0 !important;
+    width: 100% !important;
+    clear: both !important;
+
+    a {
+      font-size: 18px !important;
+    }
+  }
+
+  &__content {
+    flex-grow: 1 !important;
+    @include flex-center;
+    min-height: 80px !important;
+    padding: 20px !important;
+    display: block !important;
+
+    * {
+      float: none !important;
+    }
+  }
+
+  &__meta {
+    margin-bottom: 10px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+
+    li {
+      display: inline-block !important;
+    }
+  }
+
+  &__text {
+    margin-bottom: 15px !important;
+    color: #6e7387 !important;
+    line-height: 1.6 !important;
+    width: 100% !important;
+    clear: both !important;
+  }
+
+  &__bottom {
+    margin-top: 0 !important;
+    width: 100% !important;
+    clear: both !important;
+  }
+
+  &__read-more a {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+  }
+}
+
+// ============================================
+// News Details Section
+// ============================================
+
+.news-details {
+  .row > [class*="col-"] {
+    margin-bottom: 30px !important;
+  }
+}
+
+// ============================================
+// Pagination
+// ============================================
+
+.pg-pagination {
+  li.count.active a {
+    background-color: $lds-primary !important;
+    color: #ffffff !important;
+    border-color: $lds-primary !important;
+
+    &:hover {
+      background-color: #0090c5 !important;
+    }
+  }
+}
+
+// ============================================
+// Brand Logos
+// ============================================
+
+.brand-one,
+.brand-two {
+  .swiper-slide img {
+    height: 120px;
+    width: auto;
+    object-fit: contain;
+    margin: 0 auto;
+    display: block;
+  }
+}
