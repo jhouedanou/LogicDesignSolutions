@@ -2,7 +2,7 @@
   <div class="products-page">
     <!-- Page Header Start -->
     <section class="page-header">
-      <div class="page-header-bg" style="background-image: url(/assets/images/backgrounds/logic-slider-2.png)"></div>
+      <div class="page-header-bg" style="background-image: url(/assets/images/backgrounds/logic-slider-2.webp)"></div>
       <div class="container">
         <div class="page-header__inner">
           <ul class="thm-breadcrumb list-unstyled">
@@ -66,7 +66,7 @@
                           <NuxtImg
                             :src="getProductImage(product)"
                             :alt="stripHtml(product.title.rendered)"
-                            preset="productCard"
+                            preset="productThumb"
                             loading="lazy"
                             sizes="xs:100vw sm:100vw md:50vw lg:33vw"
                           />

@@ -69,7 +69,7 @@
 
           <div class="item main-slider-two__slide-1">
             <div class="main-slider-two__bg"
-              style="background-image: url(/assets/images/backgrounds/logic-slider-1.png);">
+              style="background-image: url(/assets/images/backgrounds/logic-slider-1.webp);">
             </div><!-- /.slider-one__bg -->
             <div class="main-slider-two__shape-1"></div>
             <div class="main-slider-two__shape-2"></div>
@@ -90,7 +90,7 @@
 
           <div class="item main-slider-two__slide-2">
             <div class="main-slider-two__bg"
-              style="background-image: url(/assets/images/backgrounds/logic-slider-2.png);">
+              style="background-image: url(/assets/images/backgrounds/logic-slider-2.webp);">
             </div><!-- /.slider-one__bg -->
             <div class="main-slider-two__shape-1"></div>
             <div class="main-slider-two__shape-2"></div>
@@ -111,7 +111,7 @@
 
           <div class="item main-slider-two__slide-3">
             <div class="main-slider-two__bg"
-              style="background-image: url(/assets/images/backgrounds/logic-slider-3.png);">
+              style="background-image: url(/assets/images/backgrounds/logic-slider-3.webp);">
             </div><!-- /.slider-one__bg -->
             <div class="main-slider-two__shape-1"></div>
             <div class="main-slider-two__shape-2"></div>

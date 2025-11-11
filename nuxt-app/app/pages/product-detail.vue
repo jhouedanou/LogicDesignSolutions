@@ -2,7 +2,7 @@
   <div class="product-detail-page">
     <!-- Page Header Start -->
     <section class="page-header">
-            <div class="page-header-bg" style="background-image: url(/assets/images/backgrounds/logic-slider-2.png)">
+            <div class="page-header-bg" style="background-image: url(/assets/images/backgrounds/logic-slider-2.webp)">
             </div>
             <div class="container">
                 <div class="page-header__inner">
