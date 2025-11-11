@@ -1,4 +1,4 @@
-import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { hasInjectionContext, getCurrentInstance, defineComponent, h, inject, computed, unref, shallowRef, provide, shallowReactive, ref, Suspense, Fragment, createApp, toRef, onErrorCaptured, onServerPrefetch, createVNode, resolveDynamicComponent, reactive, effectScope, isReadonly, isRef, isShallow, isReactive, toRaw, defineAsyncComponent, mergeProps, getCurrentScope, withCtx, nextTick, useSSRContext } from 'vue';
+import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { hasInjectionContext, getCurrentInstance, defineAsyncComponent, defineComponent, h, inject, computed, unref, shallowRef, provide, shallowReactive, ref, Suspense, Fragment, createApp, toRef, onErrorCaptured, onServerPrefetch, createVNode, resolveDynamicComponent, reactive, effectScope, isReadonly, isRef, isShallow, isReactive, toRaw, mergeProps, getCurrentScope, withCtx, nextTick, useSSRContext } from 'vue';
 import { k as hasProtocol, l as isScriptProtocol, m as joinURL, w as withQuery, s as sanitizeStatusCode, n as getContext, $ as $fetch, o as createHooks, p as executeAsync, c as createError$1, t as toRouteMatcher, q as createRouter$1, r as defu } from '../nitro/nitro.mjs';
 import { b as baseURL } from '../routes/renderer.mjs';
 import { useRoute as useRoute$1, RouterView, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
@@ -380,7 +380,15 @@ async function getRouteRules(arg) {
     return defu({}, ..._routeRulesMatcher.matchAll(path).reverse());
   }
 }
+const __nuxt_page_meta = {
+  layout: false
+};
 const _routes = [
+  {
+    name: "faq",
+    path: "/faq",
+    component: () => import('./faq-DkK9iSIv.mjs')
+  },
   {
     name: "news",
     path: "/news",
@@ -399,12 +407,13 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-BDzsVMJs.mjs')
+    meta: __nuxt_page_meta || {},
+    component: () => import('./index-Bj_zq8y8.mjs')
   },
   {
     name: "contact",
     path: "/contact",
-    component: () => import('./contact-DkdIAJdU.mjs')
+    component: () => import('./contact-BJZmkXeI.mjs')
   },
   {
     name: "products",
@@ -414,32 +423,32 @@ const _routes = [
   {
     name: "profiles",
     path: "/profiles",
-    component: () => import('./profiles-Ds3411gb.mjs')
+    component: () => import('./profiles-BO7jOQx2.mjs')
   },
   {
     name: "services",
     path: "/services",
-    component: () => import('./services-CcMXRdRY.mjs')
+    component: () => import('./services-BkaDM9Nt.mjs')
   },
   {
     name: "references",
     path: "/references",
-    component: () => import('./references-CtKSw5J0.mjs')
+    component: () => import('./references-CsyF4Bic.mjs')
   },
   {
     name: "news-detail",
     path: "/news-detail",
-    component: () => import('./news-detail-H0olq6vI.mjs')
+    component: () => import('./news-detail-5LT1zWgw.mjs')
   },
   {
     name: "product-detail",
     path: "/product-detail",
-    component: () => import('./product-detail-C-9ZQeYO.mjs')
+    component: () => import('./product-detail-CxDx13jK.mjs')
   },
   {
     name: "product-category",
     path: "/product-category",
-    component: () => import('./product-category-C1OUI-_-.mjs')
+    component: () => import('./product-category-as1tIryp.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {
@@ -794,7 +803,9 @@ const plugins = [
   components_plugin_4kY4pyzJIYX99vmMAAIorFf3CnAaptHitJgf7JxiED8,
   prerender_server_sqIxOBipVr4FbVMA9kqWL0wT8FPop6sKAXLVfifsJzk
 ];
-const layouts = {};
+const layouts = {
+  default: defineAsyncComponent(() => import('./default-DzJrJ2B3.mjs').then((m) => m.default || m))
+};
 const LayoutLoader = defineComponent({
   name: "LayoutLoader",
   inheritAttrs: false,

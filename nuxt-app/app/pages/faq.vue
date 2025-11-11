@@ -1,5 +1,5 @@
 <template>
-  <div class="page-wrapper">
+  <div>
     <section class="page-header">
       <div class="page-header__bg" style="background-image: url(/assets/images/backgrounds/page-header-bg.jpg);"></div>
       <div class="container">

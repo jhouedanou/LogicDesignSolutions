@@ -1,6 +1,6 @@
 <template>
-  <ClientOnly>
-    <div class="static-page static-page--services">
+  <div>
+    
 <section class="page-header">
             <div class="page-header-bg" style="background-image: url(/assets/images/backgrounds/logic-slider-2.png)">
             </div>
@@ -83,7 +83,7 @@
                             "spaceBetween": 100,
                             "slidesPerView": 3
                         }
-                    {{ "}}" }}'>
+                    }}'>
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
                                 <img src="/assets/images/brand/AMD_Embedded_Select.png" alt="AMD Embedded Select Partner">
@@ -110,7 +110,6 @@
         </section>
         <!--Brand Two End-->
     </div>
-  </ClientOnly>
 </template>
 
 <script setup lang="ts">
@@ -123,4 +122,3 @@ useHead({
   ]
 })
 </script>
-

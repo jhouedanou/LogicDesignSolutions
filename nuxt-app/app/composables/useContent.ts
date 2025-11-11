@@ -1,3 +1,4 @@
+import { ref, computed } from 'vue'
 import contentData from '../server/utils/translations.json'
 
 export const useContent = () => {

@@ -45,27 +45,17 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useFetch } from '#imports'
 
-const fallbackFooter = {
-  siteName: 'LogicDesignSolutions',
-  copyright: 'Logic Design Solutions',
-  designerName: 'Digital Consulting',
-  designerUrl: '#',
-  menuItems: [] as Array<{ label: string; path: string }>,
-  socialLinks: [] as Array<{ name: string; icon: string; url: string }>
-}
-
-const { data: footerResponse } = useFetch('/api/footer')
+const { site, navigation, footer: footerData } = useContent()
 
 const footer = computed(() => {
-  const payload = footerResponse.value ?? {}
-
   return {
-    ...fallbackFooter,
-    ...payload,
-    menuItems: payload.menuItems ?? fallbackFooter.menuItems,
-    socialLinks: payload.socialLinks ?? fallbackFooter.socialLinks
+    siteName: site.value?.siteName || 'LogicDesignSolutions',
+    copyright: footerData.value?.copyright || 'Copyright © Logic Design Solution All Rights Reserved - Design by Digital Consulting',
+    designerName: 'Digital Consulting',
+    designerUrl: '#',
+    menuItems: navigation.value?.footerMenu || [],
+    socialLinks: footerData.value?.socialLinks || []
   }
 })
 </script>

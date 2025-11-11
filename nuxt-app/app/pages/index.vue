@@ -1,7 +1,7 @@
 <template>
   <div class="custom-cursor">
     <!--Start Preloader-->
-    <div class="loader js-preloader">
+    <div v-if="isLoading" class="loader js-preloader">
       <div></div>
       <div></div>
       <div></div>
@@ -407,6 +407,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { useHead } from '#imports'
 
 definePageMeta({
@@ -414,6 +415,44 @@ definePageMeta({
 })
 
 const { hero, about, news, site, brands } = useContent()
+const isLoading = ref(true)
+
+onMounted(() => {
+  // Hide preloader after content is ready
+  setTimeout(() => {
+    isLoading.value = false
+  }, 500)
+
+  // Initialize Owl Carousel after DOM is ready
+  if (typeof window !== 'undefined' && (window as any).$) {
+    const $ = (window as any).$
+
+    // Wait for owl carousel script to be loaded
+    const initCarousel = () => {
+      if ($.fn.owlCarousel) {
+        $('.main-slider-two__carousel').owlCarousel({
+          loop: true,
+          items: 1,
+          navText: ['<span class="icon-left-arrow"></span>', '<span class="icon-right-arrow"></span>'],
+          margin: 0,
+          dots: true,
+          nav: false,
+          animateOut: 'slideOutDown',
+          animateIn: 'fadeIn',
+          active: true,
+          smartSpeed: 1000,
+          autoplay: true,
+          autoplayTimeout: 7000,
+          autoplayHoverPause: false
+        })
+      } else {
+        setTimeout(initCarousel, 100)
+      }
+    }
+
+    setTimeout(initCarousel, 500)
+  }
+})
 
 useHead({
   title: 'Logic Design Solutions - FPGA Design Services & IP Solutions',
@@ -448,25 +487,25 @@ useHead({
     { rel: 'stylesheet', href: '/assets/css/logic-custom.css' }
   ],
   script: [
-    { src: '/assets/vendors/jquery/jquery-3.6.0.min.js', tagPosition: 'bodyClose' },
-    { src: '/assets/vendors/bootstrap/js/bootstrap.bundle.min.js', tagPosition: 'bodyClose' },
-    { src: '/assets/vendors/jarallax/jarallax.min.js', tagPosition: 'bodyClose' },
-    { src: '/assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js', tagPosition: 'bodyClose' },
-    { src: '/assets/vendors/jquery-appear/jquery.appear.min.js', tagPosition: 'bodyClose' },
-    { src: '/assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js', tagPosition: 'bodyClose' },
-    { src: '/assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js', tagPosition: 'bodyClose' },
-    { src: '/assets/vendors/jquery-validate/jquery.validate.min.js', tagPosition: 'bodyClose' },
-    { src: '/assets/vendors/odometer/odometer.min.js', tagPosition: 'bodyClose' },
-    { src: '/assets/vendors/swiper/swiper.min.js', tagPosition: 'bodyClose' },
-    { src: '/assets/vendors/wnumb/wNumb.min.js', tagPosition: 'bodyClose' },
-    { src: '/assets/vendors/wow/wow.js', tagPosition: 'bodyClose' },
-    { src: '/assets/vendors/isotope/isotope.js', tagPosition: 'bodyClose' },
-    { src: '/assets/vendors/owl-carousel/owl.carousel.min.js', tagPosition: 'bodyClose' },
-    { src: '/assets/vendors/bootstrap-select/js/bootstrap-select.min.js', tagPosition: 'bodyClose' },
-    { src: '/assets/vendors/jquery-ui/jquery-ui.js', tagPosition: 'bodyClose' },
-    { src: '/assets/vendors/jquery.circle-type/jquery.circleType.js', tagPosition: 'bodyClose' },
-    { src: '/assets/vendors/jquery.circle-type/jquery.lettering.min.js', tagPosition: 'bodyClose' },
-    { src: '/assets/js/smartbiz.js', tagPosition: 'bodyClose' }
+    { src: '/assets/vendors/jquery/jquery-3.6.0.min.js' },
+    { src: '/assets/vendors/bootstrap/js/bootstrap.bundle.min.js' },
+    { src: '/assets/vendors/jarallax/jarallax.min.js' },
+    { src: '/assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js' },
+    { src: '/assets/vendors/jquery-appear/jquery.appear.min.js' },
+    { src: '/assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js' },
+    { src: '/assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js' },
+    { src: '/assets/vendors/jquery-validate/jquery.validate.min.js' },
+    { src: '/assets/vendors/odometer/odometer.min.js' },
+    { src: '/assets/vendors/swiper/swiper.min.js' },
+    { src: '/assets/vendors/wnumb/wNumb.min.js' },
+    { src: '/assets/vendors/wow/wow.js' },
+    { src: '/assets/vendors/isotope/isotope.js' },
+    { src: '/assets/vendors/owl-carousel/owl.carousel.min.js' },
+    { src: '/assets/vendors/bootstrap-select/js/bootstrap-select.min.js' },
+    { src: '/assets/vendors/jquery-ui/jquery-ui.js' },
+    { src: '/assets/vendors/jquery.circle-type/jquery.circleType.js' },
+    { src: '/assets/vendors/jquery.circle-type/jquery.lettering.min.js' },
+    { src: '/assets/js/smartbiz.js' }
   ]
 })
 </script>

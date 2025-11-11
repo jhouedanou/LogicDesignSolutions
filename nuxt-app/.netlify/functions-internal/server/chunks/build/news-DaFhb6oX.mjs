@@ -1,8 +1,9 @@
 import { _ as __nuxt_component_0 } from './nuxt-link-DuaGE48n.mjs';
 import { defineComponent, mergeProps, withCtx, createTextVNode, createVNode, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrRenderStyle, ssrRenderComponent, ssrRenderAttr } from 'vue/server-renderer';
-import { p as publicAssetsURL } from '../routes/renderer.mjs';
-import { _ as _imports_1, a as _imports_2, b as _imports_3, c as _imports_4, d as _imports_5 } from './virtual_public-DriDACYm.mjs';
+import { _ as _imports_0 } from './virtual_public-Zd5sWGY8.mjs';
+import { _ as _imports_1 } from './virtual_public-N2Kn3j-V.mjs';
+import { _ as _imports_2, a as _imports_3, b as _imports_4, c as _imports_5 } from './virtual_public-DriDACYm.mjs';
 import { u as useHead } from './composables-CjoCzYJX.mjs';
 import { _ as _export_sfc } from './server.mjs';
 import '../nitro/nitro.mjs';
@@ -13,13 +14,12 @@ import 'node:buffer';
 import 'node:fs';
 import 'node:path';
 import 'node:crypto';
+import '../routes/renderer.mjs';
 import 'vue-bundle-renderer/runtime';
 import 'unhead/server';
 import 'devalue';
 import 'unhead/utils';
 import 'vue-router';
-
-const _imports_0 = publicAssetsURL("/assets/images/news/nvme_host_agilex_7_r_tile-672x1024.jpg");
 
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "news",

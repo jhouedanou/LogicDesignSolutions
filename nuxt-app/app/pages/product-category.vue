@@ -1,6 +1,6 @@
 <template>
-  <ClientOnly>
-    <div class="static-page static-page--product-category">
+  <div>
+    
 <section class="page-header">
             <div class="page-header-bg" style="background-image: url(/assets/images/backgrounds/logic-slider-2.png)">
             </div>
@@ -249,7 +249,6 @@
         </section>
         <!--Product Category End-->
     </div>
-  </ClientOnly>
 </template>
 
 <script setup lang="ts">
@@ -262,4 +261,3 @@ useHead({
   ]
 })
 </script>
-

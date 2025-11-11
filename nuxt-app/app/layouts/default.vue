@@ -4,7 +4,13 @@
     <AppPreloader />
 
     <div class="page-wrapper">
-      <AppHeader />
+      <header class="main-header-two">
+        <AppMenu />
+      </header>
+
+      <div class="stricky-header stricked-menu main-menu main-menu-two">
+        <div class="sticky-header__content"></div>
+      </div>
 
       <main class="main-content">
         <slot />
@@ -25,7 +31,7 @@
             to="/"
             style="font-size: 24px; font-weight: 700; font-style: italic; color: #000;"
           >
-            {{ site.siteName }}
+            {{ site?.siteName }}
           </NuxtLink>
         </div>
 
@@ -34,12 +40,12 @@
         <ul class="mobile-nav__contact list-unstyled">
           <li>
             <i class="fa fa-envelope"></i>
-            <a :href="`mailto:${site.email}`">{{ site.email }}</a>
+            <a :href="`mailto:${site?.email}`">{{ site?.email }}</a>
           </li>
           <li>
             <i class="fa fa-phone-alt"></i>
-            <a :href="`tel:${site.mobileContact.secondaryPhone.replace(/\s/g, '')}`">
-              {{ site.mobileContact.secondaryPhone }}
+            <a :href="`tel:${site?.phone?.replace(/\s/g, '')}`">
+              {{ site?.phone }}
             </a>
           </li>
         </ul>
@@ -78,36 +84,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useFetch, useHead } from '#imports'
+import { useHead } from '#imports'
 
-const fallbackSite = {
-  siteName: 'LogicDesignSolutions',
-  email: 'contact@logic-design-solutions.com',
-  mobileContact: {
-    secondaryEmail: 'contact@logic-design-solutions.com',
-    secondaryPhone: '+33 (0)1 45 92 24 47'
-  },
-  social: [
-    { name: 'Twitter', icon: 'twitter', url: '#' },
-    { name: 'Facebook', icon: 'facebook-square', url: '#' },
-    { name: 'Pinterest', icon: 'pinterest-p', url: '#' },
-    { name: 'Instagram', icon: 'instagram', url: '#' },
-    { name: 'LinkedIn', icon: 'linkedin', url: '#' }
-  ]
-}
+const { site, footer } = useContent()
 
-const { data: siteResponse } = useFetch('/api/site-config')
-
-const site = computed(() => ({
-  ...fallbackSite,
-  ...(siteResponse.value ?? {}),
-  mobileContact: {
-    ...fallbackSite.mobileContact,
-    ...(siteResponse.value?.mobileContact ?? {})
-  }
-}))
-
-const socialLinks = computed(() => site.value.social ?? fallbackSite.social)
+const socialLinks = computed(() => footer.value?.socialLinks ?? [])
 
 useHead({
   titleTemplate: (titleChunk) => {
