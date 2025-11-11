@@ -201,12 +201,23 @@ type WordPressProductCategory = {
 const route = useRoute()
 const productId = route.query.id as string
 
-if (!productId) {
-  navigateTo('/products')
-}
+// Initialize product as null to prevent undefined requests
+let product: any = null
+let error: any = null
+let pending = false
 
-// Fetch product details
-const { data: product, error, pending } = await useWPProduct(productId)
+// Only fetch if productId is defined and valid
+if (productId && productId !== 'undefined' && productId.trim()) {
+  const result = await useWPProduct(productId)
+  product = result.data
+  error = result.error
+  pending = result.pending
+} else {
+  // Product ID is missing, redirect to products page
+  if (process.client) {
+    navigateTo('/products')
+  }
+}
 
 // Fetch all categories to match with product
 const { data: allCategories } = await useWPProductCategories()

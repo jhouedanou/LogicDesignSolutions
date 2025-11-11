@@ -59,8 +59,8 @@ export default defineNuxtConfig({
     compressPublicAssets: true,
     preset: 'netlify',
     prerender: {
-      crawlLinks: true,
-      routes: ['/', '/about', '/services', '/contact']
+      crawlLinks: false,
+      routes: ['/', '/about', '/services', '/contact', '/products', '/news', '/faq', '/product-category']
     }
   },
 

@@ -82,7 +82,32 @@ export const useWPProducts = async (perPage = 100, page = 1) => {
     const response = await fetch(
       `${WP_API_BASE}/product?per_page=${perPage}&page=${page}&_embed`
     )
-    
+
+    // Check for HTTP errors (503, 508, 404, etc.)
+    if (!response.ok) {
+      console.warn(`WordPress API error: ${response.status} ${response.statusText}`)
+      return {
+        data: [],
+        error: { message: `HTTP ${response.status}`, status: response.status },
+        pending: false,
+        totalCount: 0,
+        totalPages: 1
+      }
+    }
+
+    // Check if response is JSON (avoid parsing HTML error pages)
+    const contentType = response.headers.get('content-type')
+    if (!contentType?.includes('application/json')) {
+      console.warn('WordPress API returned non-JSON response')
+      return {
+        data: [],
+        error: { message: 'Invalid content type' },
+        pending: false,
+        totalCount: 0,
+        totalPages: 1
+      }
+    }
+
     const data = await response.json()
     const totalCount = parseInt(response.headers.get('X-WP-Total') || '0')
     const totalPages = parseInt(response.headers.get('X-WP-TotalPages') || '1')
@@ -95,7 +120,7 @@ export const useWPProducts = async (perPage = 100, page = 1) => {
       totalPages
     }
   } catch (err) {
-    console.error('Error fetching WordPress products:', err)
+    console.warn('Error fetching WordPress products:', err instanceof Error ? err.message : err)
     return {
       data: [],
       error: err,
@@ -110,18 +135,50 @@ export const useWPProducts = async (perPage = 100, page = 1) => {
  * Fetch a single product by ID
  */
 export const useWPProduct = async (id: number | string) => {
+  // Validate id before making request
+  if (!id || id === 'undefined' || (typeof id === 'string' && !id.trim())) {
+    console.warn('useWPProduct called with invalid/empty id:', id)
+    return {
+      data: null,
+      error: { message: 'Invalid product ID' },
+      pending: false
+    }
+  }
+
   try {
-    const { data, error } = await useFetch<WordPressProduct>(
+    const response = await fetch(
       `${WP_API_BASE}/product/${id}?_embed`
     )
 
+    // Check for HTTP errors (404, 503, 508, etc.)
+    if (!response.ok) {
+      console.warn(`WordPress API error for product ${id}: ${response.status} ${response.statusText}`)
+      return {
+        data: null,
+        error: { message: `HTTP ${response.status}`, status: response.status },
+        pending: false
+      }
+    }
+
+    // Check if response is JSON
+    const contentType = response.headers.get('content-type')
+    if (!contentType?.includes('application/json')) {
+      console.warn(`WordPress API returned non-JSON response for product ${id}`)
+      return {
+        data: null,
+        error: { message: 'Invalid content type' },
+        pending: false
+      }
+    }
+
+    const data = await response.json()
     return {
-      data: data.value,
-      error: error.value,
+      data: data || null,
+      error: null,
       pending: false
     }
   } catch (err) {
-    console.error(`Error fetching WordPress product ${id}:`, err)
+    console.warn(`Error fetching WordPress product ${id}:`, err instanceof Error ? err.message : err)
     return {
       data: null,
       error: err,
@@ -135,17 +192,39 @@ export const useWPProduct = async (id: number | string) => {
  */
 export const useWPProductCategories = async () => {
   try {
-    const { data, error } = await useFetch<WordPressProductCategory[]>(
+    const response = await fetch(
       `${WP_API_BASE}/product_cat?per_page=100`
     )
 
+    // Check for HTTP errors
+    if (!response.ok) {
+      console.warn(`WordPress API error: ${response.status} ${response.statusText}`)
+      return {
+        data: [],
+        error: { message: `HTTP ${response.status}` },
+        pending: false
+      }
+    }
+
+    // Check if response is JSON
+    const contentType = response.headers.get('content-type')
+    if (!contentType?.includes('application/json')) {
+      console.warn('WordPress API returned non-JSON response for categories')
+      return {
+        data: [],
+        error: { message: 'Invalid content type' },
+        pending: false
+      }
+    }
+
+    const data = await response.json()
     return {
-      data: data.value || [],
-      error: error.value,
+      data: Array.isArray(data) ? data : [],
+      error: null,
       pending: false
     }
   } catch (err) {
-    console.error('Error fetching WordPress product categories:', err)
+    console.warn('Error fetching WordPress product categories:', err instanceof Error ? err.message : err)
     return {
       data: [],
       error: err,
