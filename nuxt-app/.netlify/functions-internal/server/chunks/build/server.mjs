@@ -418,7 +418,7 @@ const _routes = [
   {
     name: "products",
     path: "/products",
-    component: () => import('./products-GcjUo8OT.mjs')
+    component: () => import('./products-C86lWjL3.mjs')
   },
   {
     name: "profiles",
@@ -443,7 +443,7 @@ const _routes = [
   {
     name: "product-detail",
     path: "/product-detail",
-    component: () => import('./product-detail-gdaZsnL3.mjs')
+    component: () => import('./product-detail-BCrGNdlv.mjs')
   },
   {
     name: "product-category",

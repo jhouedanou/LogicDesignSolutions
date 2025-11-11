@@ -2,7 +2,7 @@ import { _ as __nuxt_component_0 } from './nuxt-link-BzAABopN.mjs';
 import { defineComponent, ref, withAsyncContext, computed, watch, mergeProps, withCtx, createTextVNode, unref, createVNode, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrRenderStyle, ssrRenderComponent, ssrInterpolate, ssrRenderList, ssrRenderAttr, ssrRenderClass } from 'vue/server-renderer';
 import { _ as _export_sfc, u as useRoute, a as useRouter } from './server.mjs';
-import { u as useWPProductCategories, a as useWPProducts } from './useWordPressAPI-WJLqC4n6.mjs';
+import { u as useWPProductCategories, a as useWPProducts } from './useWordPressAPI-C2XvUkhM.mjs';
 import { u as useHead } from './composables-DFgJCqKW.mjs';
 import '../nitro/nitro.mjs';
 import 'node:http';
@@ -214,4 +214,4 @@ _sfc_main.setup = (props, ctx) => {
 const products = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-e6702030"]]);
 
 export { products as default };
-//# sourceMappingURL=products-GcjUo8OT.mjs.map
+//# sourceMappingURL=products-C86lWjL3.mjs.map

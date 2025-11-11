@@ -39,40 +39,30 @@ defineComponent({
 });
 const WP_API_BASE = "https://logic-design-solutions.com/wp-json/wp/v2";
 const useWPProducts = async (perPage = 100, page = 1) => {
+  const url = `${WP_API_BASE}/product?per_page=${perPage}&page=${page}&_embed`;
   try {
-    const response = await fetch(
-      `${WP_API_BASE}/product?per_page=${perPage}&page=${page}&_embed`
-    );
-    if (!response.ok) {
-      console.warn(`WordPress API error: ${response.status} ${response.statusText}`);
+    const data = await $fetch(url, {
+      retry: 0,
+      timeout: 3e4
+    }).catch((err) => {
+      console.warn("useWPProducts fetch error:", err?.message || err);
+      return null;
+    });
+    if (!data || typeof data !== "object") {
       return {
         data: [],
-        error: { message: `HTTP ${response.status}`, status: response.status },
+        error: { message: "Invalid response" },
         pending: false,
         totalCount: 0,
         totalPages: 1
       };
     }
-    const contentType = response.headers.get("content-type");
-    if (!contentType?.includes("application/json")) {
-      console.warn("WordPress API returned non-JSON response");
-      return {
-        data: [],
-        error: { message: "Invalid content type" },
-        pending: false,
-        totalCount: 0,
-        totalPages: 1
-      };
-    }
-    const data = await response.json();
-    const totalCount = parseInt(response.headers.get("X-WP-Total") || "0");
-    const totalPages = parseInt(response.headers.get("X-WP-TotalPages") || "1");
     return {
-      data: data || [],
+      data: Array.isArray(data) ? data : [],
       error: null,
       pending: false,
-      totalCount,
-      totalPages
+      totalCount: 0,
+      totalPages: 1
     };
   } catch (err) {
     console.warn("Error fetching WordPress products:", err instanceof Error ? err.message : err);
@@ -94,28 +84,22 @@ const useWPProduct = async (id) => {
       pending: false
     };
   }
+  const url = `${WP_API_BASE}/product/${id}?_embed`;
   try {
-    const response = await fetch(
-      `${WP_API_BASE}/product/${id}?_embed`
-    );
-    if (!response.ok) {
-      console.warn(`WordPress API error for product ${id}: ${response.status} ${response.statusText}`);
+    const data = await $fetch(url, {
+      retry: 0,
+      timeout: 3e4
+    }).catch((err) => {
+      console.warn(`useWPProduct fetch error for ${id}:`, err?.message || err);
+      return null;
+    });
+    if (!data || typeof data !== "object") {
       return {
         data: null,
-        error: { message: `HTTP ${response.status}`, status: response.status },
+        error: { message: "Invalid response" },
         pending: false
       };
     }
-    const contentType = response.headers.get("content-type");
-    if (!contentType?.includes("application/json")) {
-      console.warn(`WordPress API returned non-JSON response for product ${id}`);
-      return {
-        data: null,
-        error: { message: "Invalid content type" },
-        pending: false
-      };
-    }
-    const data = await response.json();
     return {
       data: data || null,
       error: null,
@@ -131,28 +115,22 @@ const useWPProduct = async (id) => {
   }
 };
 const useWPProductCategories = async () => {
+  const url = `${WP_API_BASE}/product_cat?per_page=100`;
   try {
-    const response = await fetch(
-      `${WP_API_BASE}/product_cat?per_page=100`
-    );
-    if (!response.ok) {
-      console.warn(`WordPress API error: ${response.status} ${response.statusText}`);
+    const data = await $fetch(url, {
+      retry: 0,
+      timeout: 3e4
+    }).catch((err) => {
+      console.warn("useWPProductCategories fetch error:", err?.message || err);
+      return null;
+    });
+    if (!data || typeof data !== "object") {
       return {
         data: [],
-        error: { message: `HTTP ${response.status}` },
+        error: { message: "Invalid response" },
         pending: false
       };
     }
-    const contentType = response.headers.get("content-type");
-    if (!contentType?.includes("application/json")) {
-      console.warn("WordPress API returned non-JSON response for categories");
-      return {
-        data: [],
-        error: { message: "Invalid content type" },
-        pending: false
-      };
-    }
-    const data = await response.json();
     return {
       data: Array.isArray(data) ? data : [],
       error: null,
@@ -169,4 +147,4 @@ const useWPProductCategories = async () => {
 };
 
 export { useWPProducts as a, useWPProduct as b, useWPProductCategories as u };
-//# sourceMappingURL=useWordPressAPI-WJLqC4n6.mjs.map
+//# sourceMappingURL=useWordPressAPI-C2XvUkhM.mjs.map
