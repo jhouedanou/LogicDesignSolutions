@@ -389,7 +389,7 @@ const _routes = [
   {
     name: "news",
     path: "/news",
-    component: () => import('./news-CGm8Z9sB.mjs')
+    component: () => import('./news-BBbYLTPe.mjs')
   },
   {
     name: "test",
@@ -405,7 +405,7 @@ const _routes = [
     name: "index",
     path: "/",
     meta: __nuxt_page_meta || {},
-    component: () => import('./index-CxGm8I2K.mjs')
+    component: () => import('./index-TBd_Cmsh.mjs')
   },
   {
     name: "contact",
@@ -415,37 +415,37 @@ const _routes = [
   {
     name: "products",
     path: "/products",
-    component: () => import('./products-BqptWYja.mjs')
+    component: () => import('./products-EVcyqiFT.mjs')
   },
   {
     name: "profiles",
     path: "/profiles",
-    component: () => import('./profiles-DHGNfhwS.mjs')
+    component: () => import('./profiles-DCw9UagJ.mjs')
   },
   {
     name: "services",
     path: "/services",
-    component: () => import('./services-DFrV-eDm.mjs')
+    component: () => import('./services-CTOs6om-.mjs')
   },
   {
     name: "references",
     path: "/references",
-    component: () => import('./references-B80R3erh.mjs')
+    component: () => import('./references-BDv6HdaM.mjs')
   },
   {
     name: "news-detail",
     path: "/news-detail",
-    component: () => import('./news-detail-DDO96eMT.mjs')
+    component: () => import('./news-detail-Du4WA4Q2.mjs')
   },
   {
     name: "product-detail",
     path: "/product-detail",
-    component: () => import('./product-detail-B0r50HZG.mjs')
+    component: () => import('./product-detail-BN-mmAal.mjs')
   },
   {
     name: "product-category",
     path: "/product-category",
-    component: () => import('./product-category-B3uKvD3V.mjs')
+    component: () => import('./product-category-B0sQg7SX.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {

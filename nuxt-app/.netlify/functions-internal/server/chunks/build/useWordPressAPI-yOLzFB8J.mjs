@@ -371,6 +371,14 @@ const imageOptions = {
           "quality": 80
         }
       },
+      "productThumb": {
+        "modifiers": {
+          "format": "webp",
+          "width": 150,
+          "quality": 75,
+          "fit": "cover"
+        }
+      },
       "productCard": {
         "modifiers": {
           "format": "webp",
@@ -718,4 +726,4 @@ const useWPProductCategories = async () => {
 };
 
 export { __nuxt_component_1 as _, useWPProducts as a, useWPProduct as b, useWPProductCategories as u };
-//# sourceMappingURL=useWordPressAPI-DTJXHh3P.mjs.map
+//# sourceMappingURL=useWordPressAPI-yOLzFB8J.mjs.map
