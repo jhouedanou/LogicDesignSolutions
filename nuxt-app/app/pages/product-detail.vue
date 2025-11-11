@@ -179,7 +179,24 @@
 
 <script setup lang="ts">
 import { useHead } from '#imports'
-import type { WordPressProduct, WordPressProductCategory } from '~/composables/useWordPressAPI'
+
+// Types are defined in types/global.d.ts
+type WordPressProduct = {
+  id: number
+  title: { rendered: string }
+  content: { rendered: string }
+  excerpt?: { rendered: string }
+  product_cat?: number[]
+  _embedded?: {
+    'wp:featuredmedia'?: Array<{ source_url: string }>
+  }
+}
+
+type WordPressProductCategory = {
+  id: number
+  name: string
+  count: number
+}
 
 const route = useRoute()
 const productId = route.query.id as string
@@ -198,7 +215,7 @@ const { data: allCategories } = await useWPProductCategories()
 const productCategories = computed(() => {
   if (!product || !product.product_cat || !allCategories) return []
   return allCategories.filter((cat: WordPressProductCategory) => 
-    product.product_cat.includes(cat.id)
+    product.product_cat!.includes(cat.id)
   )
 })
 
@@ -214,7 +231,7 @@ const productImage = computed(() => {
 // Fetch related products (same category)
 const relatedProducts = ref<WordPressProduct[]>([])
 if (product && productCategories.value.length > 0) {
-  const categoryId = productCategories.value[0].id
+  const categoryId = productCategories.value[0]!.id
   const { data: categoryProducts } = await useWPProducts(6, 1)
   relatedProducts.value = categoryProducts.filter((p: WordPressProduct) => 
     p.id !== product.id && p.product_cat?.includes(categoryId)

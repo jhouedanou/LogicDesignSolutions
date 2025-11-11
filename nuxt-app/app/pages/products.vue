@@ -140,7 +140,23 @@
 
 <script setup lang="ts">
 import { useHead } from '#imports'
-import type { WordPressProduct, WordPressProductCategory } from '~/composables/useWordPressAPI'
+
+// Types are defined in types/global.d.ts
+type WordPressProduct = {
+  id: number
+  title: { rendered: string }
+  content: { rendered: string }
+  excerpt?: { rendered: string }
+  _embedded?: {
+    'wp:featuredmedia'?: Array<{ source_url: string }>
+  }
+}
+
+type WordPressProductCategory = {
+  id: number
+  name: string
+  count: number
+}
 
 useHead({
   title: 'Products - Logic Design Solutions',
