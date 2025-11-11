@@ -60,13 +60,13 @@
                   class="col-xl-4 col-lg-6 col-md-6 product-item"
                 >
                   <div class="news-one__single">
-                    <div class="news-one__img-box">
-                      <div class="news-one__img">
+                    <div class="news-one__img-box product-card-img-box">
+                      <div class="news-one__img product-card-img">
                         <NuxtLink :to="`/product-detail?id=${product.id}`">
                           <NuxtImg
                             :src="getProductImage(product)"
                             :alt="stripHtml(product.title.rendered)"
-                            preset="card"
+                            preset="productCard"
                             loading="lazy"
                             sizes="xs:100vw sm:100vw md:50vw lg:33vw"
                           />

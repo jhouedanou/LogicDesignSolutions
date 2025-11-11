@@ -90,6 +90,14 @@ export default defineNuxtConfig({
           quality: 80
         }
       },
+      productCard: {
+        modifiers: {
+          format: 'webp',
+          width: 212,
+          quality: 80,
+          fit: 'cover'
+        }
+      },
       card: {
         modifiers: {
           format: 'webp',

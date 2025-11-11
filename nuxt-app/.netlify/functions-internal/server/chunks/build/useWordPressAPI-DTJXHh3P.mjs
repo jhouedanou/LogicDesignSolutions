@@ -371,6 +371,14 @@ const imageOptions = {
           "quality": 80
         }
       },
+      "productCard": {
+        "modifiers": {
+          "format": "webp",
+          "width": 212,
+          "quality": 80,
+          "fit": "cover"
+        }
+      },
       "card": {
         "modifiers": {
           "format": "webp",
@@ -710,4 +718,4 @@ const useWPProductCategories = async () => {
 };
 
 export { __nuxt_component_1 as _, useWPProducts as a, useWPProduct as b, useWPProductCategories as u };
-//# sourceMappingURL=useWordPressAPI-DdR3nAdp.mjs.map
+//# sourceMappingURL=useWordPressAPI-DTJXHh3P.mjs.map

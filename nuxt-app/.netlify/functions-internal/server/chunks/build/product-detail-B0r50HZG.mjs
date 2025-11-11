@@ -1,5 +1,5 @@
 import { _ as __nuxt_component_0 } from './nuxt-link-BzAABopN.mjs';
-import { b as useWPProduct, u as useWPProductCategories, a as useWPProducts, _ as __nuxt_component_1 } from './useWordPressAPI-DdR3nAdp.mjs';
+import { b as useWPProduct, u as useWPProductCategories, a as useWPProducts, _ as __nuxt_component_1 } from './useWordPressAPI-DTJXHh3P.mjs';
 import { defineComponent, withAsyncContext, computed, ref, mergeProps, unref, withCtx, createTextVNode, createVNode, toDisplayString, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrRenderStyle, ssrRenderComponent, ssrRenderList, ssrInterpolate, ssrRenderClass } from 'vue/server-renderer';
 import { u as useRoute } from './server.mjs';
@@ -261,4 +261,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=product-detail-zyErL84V.mjs.map
+//# sourceMappingURL=product-detail-B0r50HZG.mjs.map
