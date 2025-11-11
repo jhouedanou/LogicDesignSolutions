@@ -1,9 +1,4 @@
 {
-  "builds": [
-    {
-      "src": "nuxt-app/nuxt.config.ts",
-      "use": "@vercel/nuxt"
-    }
-  ],
+  "buildCommand": "cd nuxt-app && npm run build",
   "outputDirectory": "nuxt-app/.output/public"
 }
