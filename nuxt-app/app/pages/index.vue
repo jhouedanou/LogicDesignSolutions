@@ -55,62 +55,7 @@
                     </div>
                 </div>
             </div> -->
-        <nav class="main-menu main-menu-two">
-          <div class="main-menu-two__wrapper">
-            <div class="main-menu-two__wrapper-inner">
-              <div class="main-menu-two__left">
-                <div class="main-menu-two__logo">
-                  <a href="index.html" style="font-size: 32px; font-weight: 700; font-style: italic; color: #000;">LogicDesignSolutions</a>
-                </div>
-                <div class="main-menu-two__main-menu-box">
-                  <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
-                  <ul class="main-menu__list">
-                    <li>
-                      <a href="index.html">HOME</a>
-                    </li>
-                    <li>
-                      <a href="profiles.html">PROFILES</a>
-                    </li>
-                    <li>
-                      <a href="products.html">PRODUCTS</a>
-                    </li>
-                    <li>
-                      <a href="services.html">SERVICES</a>
-                    </li>
-                    <li>
-                      <a href="news.html">NEWS</a>
-                    </li>
-                    <li>
-                      <a href="references.html">REFERENCES</a>
-                    </li>
-                    <!-- <li>
-                        <a href="contact.html">CONTACT US</a>
-                    </li>-->
-                  </ul>
-                </div>
-              </div>
-              <div class="main-menu-two__right">
-                <!-- <div class="main-menu-two__search-box">
-                    <a href="#" class="main-menu-two__search search-toggler icon-search-1"></a>
-                </div>-->
-                <div class="main-menu-two__call">
-                  <div class="main-menu-two__call-icon">
-                    <span class="icon-telephone-call"></span>
-                  </div>
-                  <div class="main-menu-two__call-content">
-                    <p class="main-menu-two__call-sub-title">Call Us</p>
-                    <h5 class="main-menu-two__call-number"><a href="tel:+33145922447">+33 (0)1 45 92 24 47</a>
-                    </h5>
-                  </div>
-                </div>
-                <div class="main-menu-two__btn-box">
-                  <a href="contact.html" class="main-menu-two__btn thm-btn">Contact Us<span
-                        class="icon-right-arrow"></span></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </nav>
+        <AppMenu />
       </header>
 
       <div class="stricky-header stricked-menu main-menu main-menu-two">
@@ -122,9 +67,9 @@
         <div class="main-slider-two__carousel owl-carousel owl-theme thm-owl__carousel"
           data-owl-options='{"loop": true, "items": 1, "navText": ["<span class=\"icon-left-arrow\"></span>","<span class=\"icon-right-arrow\"></span>"], "margin": 0, "dots": true, "nav": false, "animateOut": "slideOutDown", "animateIn": "fadeIn", "active": true, "smartSpeed": 1000, "autoplay": true, "autoplayTimeout": 7000, "autoplayHoverPause": false}'>
 
-          <div class="item main-slider-two__slide-1">
+          <div v-for="slide in hero?.slides" :key="slide.id" class="item" :class="`main-slider-two__slide-${slide.id}`">
             <div class="main-slider-two__bg"
-              style="background-image: url(/assets/images/backgrounds/logic-slider-1.png);">
+              :style="`background-image: url(${slide.image});`">
             </div><!-- /.slider-one__bg -->
             <div class="main-slider-two__shape-1"></div>
             <div class="main-slider-two__shape-2"></div>
@@ -132,53 +77,11 @@
             </div>
             <div class="container">
               <div class="main-slider-two__content">
-                <p class="main-slider-two__sub-title">FPGA Design Services</p>
-                <h2 class="main-slider-two__title">Discover our <br> product lines <br> and IP solutions</h2>
+                <p class="main-slider-two__sub-title">{{ slide.subtitle }}</p>
+                <h2 class="main-slider-two__title" v-html="slide.title"></h2>
                 <div class="main-slider-two__btn-box">
-                  <a href="products.html" class="main-slider-two__btn thm-btn">Let's Work Together<span
-                        class="icon-right-arrow"></span></a>
-                </div>
-              </div>
-              <!-- Video hidden -->
-            </div>
-          </div>
-
-          <div class="item main-slider-two__slide-2">
-            <div class="main-slider-two__bg"
-              style="background-image: url(/assets/images/backgrounds/logic-slider-2.png);">
-            </div><!-- /.slider-one__bg -->
-            <div class="main-slider-two__shape-1"></div>
-            <div class="main-slider-two__shape-2"></div>
-            <div class="main-slider-two__shape-3"><img src="/assets/images/shapes/slider-v2-shape1.png" alt="">
-            </div>
-            <div class="container">
-              <div class="main-slider-two__content">
-                <p class="main-slider-two__sub-title">FPGA Design Services</p>
-                <h2 class="main-slider-two__title">Discover our <br> product lines <br> and IP solutions</h2>
-                <div class="main-slider-two__btn-box">
-                  <a href="products.html" class="main-slider-two__btn thm-btn">Let's Work Together<span
-                        class="icon-right-arrow"></span></a>
-                </div>
-              </div>
-              <!-- Video hidden -->
-            </div>
-          </div>
-
-          <div class="item main-slider-two__slide-3">
-            <div class="main-slider-two__bg"
-              style="background-image: url(/assets/images/backgrounds/logic-slider-3.png);">
-            </div><!-- /.slider-one__bg -->
-            <div class="main-slider-two__shape-1"></div>
-            <div class="main-slider-two__shape-2"></div>
-            <div class="main-slider-two__shape-3"><img src="/assets/images/shapes/slider-v2-shape1.png" alt="">
-            </div>
-            <div class="container">
-              <div class="main-slider-two__content">
-                <p class="main-slider-two__sub-title">FPGA Design Services</p>
-                <h2 class="main-slider-two__title">Discover our <br> product lines <br> and IP solutions</h2>
-                <div class="main-slider-two__btn-box">
-                  <a href="products.html" class="main-slider-two__btn thm-btn">Let's Work Together<span
-                        class="icon-right-arrow"></span></a>
+                  <NuxtLink to="/products" class="main-slider-two__btn thm-btn">{{ slide.cta }}<span
+                        class="icon-right-arrow"></span></NuxtLink>
                 </div>
               </div>
               <!-- Video hidden -->
@@ -197,56 +100,40 @@
               <div class="about-two__content">
                 <div class="section-title text-left">
                   <div class="section-title__tagline-box">
-                    <p class="section-title__tagline">About Us</p>
+                    <p class="section-title__tagline">{{ about?.tagline }}</p>
                   </div>
-                  <h2 class="section-title__title">We help to get Solutions!</h2>
+                  <h2 class="section-title__title">{{ about?.title }}</h2>
                 </div>
                 <div class="about-two__content-title">
-                  <h3>professional activities to produce and sell goods or services for profit.</h3>
+                  <h3>{{ about?.contentTitle }}</h3>
                 </div>
                 <div class="about-two__content-text">
                   <p>
-                    Logic Design Solutions provides FPGA Design Services, NVMe IP, SATA IP, RECORDER IP, ARINC 429 IP, and DO254 methodology to FPGA customers. We engage our self to be your high standard quality solutions provider for FPGA IP and Design Services.
+                    {{ about?.description }}
                   </p>
                 </div>
                 <div class="about-two__content-inner">
                   <div class="row">
                     <div class="col-xl-6 col-lg-6 col-md-6">
                       <ul class="about-two__list list-unstyled">
-                        <li>
+                        <li v-for="feature in about?.features?.slice(0, 2)" :key="feature.id">
                           <div class="icon">
                             <span class="icon-arrows"></span>
                           </div>
                           <div class="text">
-                            <p align="justify">Logic Design Solutions has a deep knowledge of FPGA & IP design...</p>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="icon">
-                            <span class="icon-arrows"></span>
-                          </div>
-                          <div class="text">
-                            <p align="justify">Logic Design Solutions develops IP for FPGA, like NVMe IP, SATA IP, Recorder IP...</p>
+                            <p align="justify">{{ feature.text }}</p>
                           </div>
                         </li>
                       </ul>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6">
                       <ul class="about-two__list two list-unstyled">
-                        <li>
+                        <li v-for="feature in about?.features?.slice(2, 4)" :key="feature.id">
                           <div class="icon">
                             <span class="icon-arrows"></span>
                           </div>
                           <div class="text">
-                            <p align="justify">Customers' Logic Design Solutions are provided with a phone hotline and e-mail support to answer...</p>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="icon">
-                            <span class="icon-arrows"></span>
-                          </div>
-                          <div class="text">
-                            <p align="justify">Logic Design Solutions' IP are an excellent value. Our competitive pricing enables customers to decide...</p>
+                            <p align="justify">{{ feature.text }}</p>
                           </div>
                         </li>
                       </ul>
@@ -255,8 +142,8 @@
                 </div>
                 <!-- Statistics removed -->
                 <div class="about-two__content-btn">
-                  <a href="products.html" class="thm-btn">Learn About Us<span
-                        class="icon-right-arrow"></span></a>
+                  <NuxtLink to="/products" class="thm-btn">{{ about?.cta }}<span
+                        class="icon-right-arrow"></span></NuxtLink>
                 </div>
               </div>
             </div>
@@ -266,7 +153,7 @@
                   <div class="icon">
                     <span class="icon-badge"></span>
                   </div>
-                  <h3>Since 1994 <br>Logic Design Solutions</h3>
+                  <h3>{{ about?.award }} <br>{{ about?.companyName }}</h3>
                 </div>
                 <div class="about-two__img-inner">
                   <img src="/assets/images/resources/im1.jpeg" alt="Image" style="border-radius: 10px;">
@@ -288,11 +175,9 @@
         <div class="container">
           <div class="section-title-two text-center">
             <div class="section-title-two__tagline-box">
-              <p class="section-title-two__tagline">News and articles</p>
+              <p class="section-title-two__tagline">{{ news?.tagline }}</p>
             </div>
-            <h2 class="section-title-two__title">Read our latest news
-              <br> and product announcements
-            </h2>
+            <h2 class="section-title-two__title">{{ news?.title }}</h2>
           </div>
           <div class="services-two__bottom">
             <div class="services-two__carousel owl-carousel owl-theme thm-owl__carousel" data-owl-options='{
@@ -323,85 +208,23 @@
               }
             }'>
               <!--Services Two Single Start-->
-              <div class="item">
+              <div v-for="article in news?.articles" :key="article.id" class="item">
                 <div class="services-two__single">
                   <div class="services-two__img-box">
                     <div class="services-two__img">
-                      <img src="/assets/images/news/news-1.jpg" alt="Gen 5 NVMe Host IP on AGILEX 7 R-Tile">
+                      <img :src="article.image" :alt="article.title">
                     </div>
                   </div>
                   <div class="services-two__content">
                     <div class="services-two__icon">
-                      <span class="icon-teamwork"></span>
+                      <span v-if="article.id % 2 === 0" class="icon-coin-stack"></span>
+                      <span v-else class="icon-teamwork"></span>
                       <div class="services-two__icon-shape"></div>
                     </div>
-                    <h3 class="services-two__title"><a href="news.html">Gen 5 NVMe Host IP<br>on AGILEX 7 R-Tile !</a></h3>
-                    <p class="services-two__text">France, Gournay sur Marne, September 5th 2025 – The Gen5 NVME-HOST-IP on AGILEX 7 R-Tile...</p>
-                    <a href="news.html" class="services-two__btn">Read More<span
-                          class="icon-right-arrow"></span></a>
-                  </div>
-                </div>
-              </div>
-              <!--Services Two Single End-->
-              <!--Services Two Single Start-->
-              <div class="item">
-                <div class="services-two__single">
-                  <div class="services-two__img-box">
-                    <div class="services-two__img">
-                      <img src="/assets/images/news/news-2.png" alt="NVME Host IP on Kintex Ultra Scale Plus">
-                    </div>
-                  </div>
-                  <div class="services-two__content">
-                    <div class="services-two__icon">
-                      <span class="icon-coin-stack"></span>
-                      <div class="services-two__icon-shape"></div>
-                    </div>
-                    <h3 class="services-two__title"><a href="news.html">NVME Host IP on<br>Kintex Ultra Scale Plus !</a></h3>
-                    <p class="services-two__text">France, Gournay sur Marne, November 14th 2024 – The NVME-HOST-IP on Kintex Ultra Scale Plus...</p>
-                    <a href="news.html" class="services-two__btn">Read More<span
-                          class="icon-right-arrow"></span></a>
-                  </div>
-                </div>
-              </div>
-              <!--Services Two Single End-->
-              <!--Services Two Single Start-->
-              <div class="item">
-                <div class="services-two__single">
-                  <div class="services-two__img-box">
-                    <div class="services-two__img">
-                      <img src="/assets/images/news/news-3.jpg" alt="New ARINC 429 IP">
-                    </div>
-                  </div>
-                  <div class="services-two__content">
-                    <div class="services-two__icon">
-                      <span class="icon-teamwork"></span>
-                      <div class="services-two__icon-shape"></div>
-                    </div>
-                    <h3 class="services-two__title"><a href="news.html">New ARINC 429 IP</a></h3>
-                    <p class="services-two__text">France, Gournay sur Marne, November 4th 2024 – The new ARINC 429 IP from Logic Design Solutions...</p>
-                    <a href="news.html" class="services-two__btn">Read More<span
-                          class="icon-right-arrow"></span></a>
-                  </div>
-                </div>
-              </div>
-              <!--Services Two Single End-->
-              <!--Services Two Single Start-->
-              <div class="item">
-                <div class="services-two__single">
-                  <div class="services-two__img-box">
-                    <div class="services-two__img">
-                      <img src="/assets/images/news/news-4.jpg" alt="Gen4 NVME Host IP on Artix Ultra Scale Plus">
-                    </div>
-                  </div>
-                  <div class="services-two__content">
-                    <div class="services-two__icon">
-                      <span class="icon-coin-stack"></span>
-                      <div class="services-two__icon-shape"></div>
-                    </div>
-                    <h3 class="services-two__title"><a href="news.html">Gen4 NVME Host IP on<br>Artix Ultra Scale Plus !</a></h3>
-                    <p class="services-two__text">France, Gournay sur Marne, November 4th 2024 – The Gen4 NVME-HOST-IP on Artix Ultra Scale Plus...</p>
-                    <a href="news.html" class="services-two__btn">Read More<span
-                          class="icon-right-arrow"></span></a>
+                    <h3 class="services-two__title"><NuxtLink to="/news">{{ article.title }}</NuxtLink></h3>
+                    <p class="services-two__text">{{ article.description }}</p>
+                    <NuxtLink to="/news" class="services-two__btn">{{ article.cta }}<span
+                          class="icon-right-arrow"></span></NuxtLink>
                   </div>
                 </div>
               </div>
@@ -418,9 +241,9 @@
         <div class="container">
           <div class="section-title-two text-center">
             <!-- Tagline removed -->
-            <h2 class="section-title-two__title">Trusted Technology Partners</h2>
+            <h2 class="section-title-two__title">{{ brands?.title }}</h2>
           </div>
-          <p class="brand-two__text">Logic Design Solutions collaborates with leading technology providers<br> to deliver cutting-edge FPGA and IP solutions</p>
+          <p class="brand-two__text">{{ brands?.description }}</p>
           <div class="brand-one__inner">
             <div class="thm-swiper__slider swiper-container" data-swiper-options='{"spaceBetween": 100,
             "slidesPerView": 3,
@@ -496,15 +319,15 @@
           <div class="container">
             <div class="site-footer-two__bottom-inner">
               <div class="site-footer-two__logo">
-                <a href="index.html" style="font-size: 24px; font-weight: 700; font-style: italic; color: #ffffff;">LogicDesignSolutions</a>
+                <NuxtLink to="/" style="font-size: 24px; font-weight: 700; font-style: italic; color: #ffffff;">LogicDesignSolutions</NuxtLink>
               </div>
               <p class="site-footer-two__bottom-text">Copyright © Logic Design Solution
                 All
                 Rights Reserved - Design by <a style="color:#999999;"  href="">Digital Consulting</a></p>
               <ul class="list-unstyled site-footer-two__bottom-menu">
-                <li><a href="profiles.html">Profiles</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="faq.html">FAQ</a></li>
+                <li><NuxtLink to="/profiles">Profiles</NuxtLink></li>
+                <li><NuxtLink to="/products">Products</NuxtLink></li>
+                <li><NuxtLink to="/faq">FAQ</NuxtLink></li>
               </ul>
               <div class="site-footer-two__social" style="display: flex; gap: 15px; justify-content: center;">
                 <a href="#" style="color: #ffffff; font-size: 20px;"><i class="fab fa-facebook"></i></a>
@@ -528,7 +351,7 @@
         <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
 
         <div class="logo-box">
-          <a href="index.html" style="font-size: 24px; font-weight: 700; font-style: italic; color: #000;">LogicDesignSolutions</a>
+          <NuxtLink to="/" style="font-size: 24px; font-weight: 700; font-style: italic; color: #000;">LogicDesignSolutions</NuxtLink>
         </div>
         <!-- /.logo-box -->
         <div class="mobile-nav__container"></div>
@@ -586,6 +409,12 @@
 <script setup lang="ts">
 import { useHead } from '#imports'
 
+definePageMeta({
+  layout: false
+})
+
+const { hero, about, news, site, brands } = useContent()
+
 useHead({
   title: 'Logic Design Solutions - FPGA Design Services & IP Solutions',
   meta: [
@@ -593,6 +422,51 @@ useHead({
       name: 'description',
       content: 'Logic Design Solutions - FPGA Design Services, NVMe IP, SATA IP, ARINC 429 IP'
     }
+  ],
+  link: [
+    { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+    { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+    {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'
+    },
+    { rel: 'stylesheet', href: '/assets/vendors/bootstrap/css/bootstrap.min.css' },
+    { rel: 'stylesheet', href: '/assets/vendors/animate/animate.min.css' },
+    { rel: 'stylesheet', href: '/assets/vendors/animate/custom-animate.css' },
+    { rel: 'stylesheet', href: '/assets/vendors/fontawesome/css/all.min.css' },
+    { rel: 'stylesheet', href: '/assets/vendors/jarallax/jarallax.css' },
+    { rel: 'stylesheet', href: '/assets/vendors/jquery-magnific-popup/jquery.magnific-popup.css' },
+    { rel: 'stylesheet', href: '/assets/vendors/odometer/odometer.min.css' },
+    { rel: 'stylesheet', href: '/assets/vendors/swiper/swiper.min.css' },
+    { rel: 'stylesheet', href: '/assets/vendors/smartbiz-icons/style.css' },
+    { rel: 'stylesheet', href: '/assets/vendors/owl-carousel/owl.carousel.min.css' },
+    { rel: 'stylesheet', href: '/assets/vendors/owl-carousel/owl.theme.default.min.css' },
+    { rel: 'stylesheet', href: '/assets/vendors/bootstrap-select/css/bootstrap-select.min.css' },
+    { rel: 'stylesheet', href: '/assets/vendors/jquery-ui/jquery-ui.css' },
+    { rel: 'stylesheet', href: '/assets/css/smartbiz.css' },
+    { rel: 'stylesheet', href: '/assets/css/smartbiz-responsive.css' },
+    { rel: 'stylesheet', href: '/assets/css/logic-custom.css' }
+  ],
+  script: [
+    { src: '/assets/vendors/jquery/jquery-3.6.0.min.js', tagPosition: 'bodyClose' },
+    { src: '/assets/vendors/bootstrap/js/bootstrap.bundle.min.js', tagPosition: 'bodyClose' },
+    { src: '/assets/vendors/jarallax/jarallax.min.js', tagPosition: 'bodyClose' },
+    { src: '/assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js', tagPosition: 'bodyClose' },
+    { src: '/assets/vendors/jquery-appear/jquery.appear.min.js', tagPosition: 'bodyClose' },
+    { src: '/assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js', tagPosition: 'bodyClose' },
+    { src: '/assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js', tagPosition: 'bodyClose' },
+    { src: '/assets/vendors/jquery-validate/jquery.validate.min.js', tagPosition: 'bodyClose' },
+    { src: '/assets/vendors/odometer/odometer.min.js', tagPosition: 'bodyClose' },
+    { src: '/assets/vendors/swiper/swiper.min.js', tagPosition: 'bodyClose' },
+    { src: '/assets/vendors/wnumb/wNumb.min.js', tagPosition: 'bodyClose' },
+    { src: '/assets/vendors/wow/wow.js', tagPosition: 'bodyClose' },
+    { src: '/assets/vendors/isotope/isotope.js', tagPosition: 'bodyClose' },
+    { src: '/assets/vendors/owl-carousel/owl.carousel.min.js', tagPosition: 'bodyClose' },
+    { src: '/assets/vendors/bootstrap-select/js/bootstrap-select.min.js', tagPosition: 'bodyClose' },
+    { src: '/assets/vendors/jquery-ui/jquery-ui.js', tagPosition: 'bodyClose' },
+    { src: '/assets/vendors/jquery.circle-type/jquery.circleType.js', tagPosition: 'bodyClose' },
+    { src: '/assets/vendors/jquery.circle-type/jquery.lettering.min.js', tagPosition: 'bodyClose' },
+    { src: '/assets/js/smartbiz.js', tagPosition: 'bodyClose' }
   ]
 })
 </script>
@@ -607,6 +481,29 @@ useHead({
 .page-wrapper {
   width: 100%;
   overflow-x: hidden;
+}
+
+/* Hero Slider Height Limit */
+.main-slider-two {
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.main-slider-two .item {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.main-slider-two__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .custom-cursor__cursor,

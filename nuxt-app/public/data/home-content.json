@@ -1,0 +1,263 @@
+{
+  "header": {
+    "logo": "LogicDesignSolutions",
+    "navigation": [
+      {
+        "label": "HOME",
+        "href": "index.html"
+      },
+      {
+        "label": "PROFILES",
+        "href": "profiles.html"
+      },
+      {
+        "label": "PRODUCTS",
+        "href": "products.html"
+      },
+      {
+        "label": "SERVICES",
+        "href": "services.html"
+      },
+      {
+        "label": "NEWS",
+        "href": "news.html"
+      },
+      {
+        "label": "REFERENCES",
+        "href": "references.html"
+      }
+    ],
+    "callToAction": {
+      "label": "Call Us",
+      "phone": "+33 (0)1 45 92 24 47",
+      "phoneLink": "tel:+33145922447"
+    },
+    "contactButton": {
+      "text": "Contact Us",
+      "href": "contact.html",
+      "icon": "icon-right-arrow"
+    }
+  },
+  "hero": {
+    "slides": [
+      {
+        "id": 1,
+        "subtitle": "FPGA Design Services",
+        "title": "Discover our <br> product lines <br> and IP solutions",
+        "cta": {
+          "text": "Let's Work Together",
+          "href": "products.html",
+          "icon": "icon-right-arrow"
+        },
+        "backgroundImage": "/assets/images/backgrounds/logic-slider-1.png"
+      },
+      {
+        "id": 2,
+        "subtitle": "FPGA Design Services",
+        "title": "Discover our <br> product lines <br> and IP solutions",
+        "cta": {
+          "text": "Let's Work Together",
+          "href": "products.html",
+          "icon": "icon-right-arrow"
+        },
+        "backgroundImage": "/assets/images/backgrounds/logic-slider-2.png"
+      },
+      {
+        "id": 3,
+        "subtitle": "FPGA Design Services",
+        "title": "Discover our <br> product lines <br> and IP solutions",
+        "cta": {
+          "text": "Let's Work Together",
+          "href": "products.html",
+          "icon": "icon-right-arrow"
+        },
+        "backgroundImage": "/assets/images/backgrounds/logic-slider-3.png"
+      }
+    ]
+  },
+  "about": {
+    "tagline": "About Us",
+    "title": "We help to get Solutions!",
+    "subtitle": "professional activities to produce and sell goods or services for profit.",
+    "description": "Logic Design Solutions provides FPGA Design Services, NVMe IP, SATA IP, RECORDER IP, ARINC 429 IP, and DO254 methodology to FPGA customers. We engage our self to be your high standard quality solutions provider for FPGA IP and Design Services.",
+    "features": [
+      {
+        "icon": "icon-arrows",
+        "text": "Logic Design Solutions has a deep knowledge of FPGA & IP design..."
+      },
+      {
+        "icon": "icon-arrows",
+        "text": "Logic Design Solutions develops IP for FPGA, like NVMe IP, SATA IP, Recorder IP..."
+      },
+      {
+        "icon": "icon-arrows",
+        "text": "Customers' Logic Design Solutions are provided with a phone hotline and e-mail support to answer..."
+      },
+      {
+        "icon": "icon-arrows",
+        "text": "Logic Design Solutions' IP are an excellent value. Our competitive pricing enables customers to decide..."
+      }
+    ],
+    "badge": {
+      "icon": "icon-badge",
+      "text": "Since 1994 <br>Logic Design Solutions"
+    },
+    "image": "/assets/images/resources/im1.jpeg",
+    "cta": {
+      "text": "Learn About Us",
+      "href": "products.html",
+      "icon": "icon-right-arrow"
+    }
+  },
+  "news": {
+    "tagline": "News and articles",
+    "title": "Read our latest news<br> and product announcements",
+    "items": [
+      {
+        "id": 1,
+        "icon": "icon-teamwork",
+        "title": "Gen 5 NVMe Host IP<br>on AGILEX 7 R-Tile !",
+        "description": "France, Gournay sur Marne, September 5th 2025 – The Gen5 NVME-HOST-IP on AGILEX 7 R-Tile...",
+        "href": "news.html",
+        "ctaText": "Read More",
+        "image": "/assets/images/news/news-1.jpg",
+        "imageAlt": "Gen 5 NVMe Host IP on AGILEX 7 R-Tile"
+      },
+      {
+        "id": 2,
+        "icon": "icon-coin-stack",
+        "title": "NVME Host IP on<br>Kintex Ultra Scale Plus !",
+        "description": "France, Gournay sur Marne, November 14th 2024 – The NVME-HOST-IP on Kintex Ultra Scale Plus...",
+        "href": "news.html",
+        "ctaText": "Read More",
+        "image": "/assets/images/news/news-2.png",
+        "imageAlt": "NVME Host IP on Kintex Ultra Scale Plus"
+      },
+      {
+        "id": 3,
+        "icon": "icon-teamwork",
+        "title": "New ARINC 429 IP",
+        "description": "France, Gournay sur Marne, November 4th 2024 – The new ARINC 429 IP from Logic Design Solutions...",
+        "href": "news.html",
+        "ctaText": "Read More",
+        "image": "/assets/images/news/news-3.jpg",
+        "imageAlt": "New ARINC 429 IP"
+      },
+      {
+        "id": 4,
+        "icon": "icon-coin-stack",
+        "title": "Gen4 NVME Host IP on<br>Artix Ultra Scale Plus !",
+        "description": "France, Gournay sur Marne, November 4th 2024 – The Gen4 NVME-HOST-IP on Artix Ultra Scale Plus...",
+        "href": "news.html",
+        "ctaText": "Read More",
+        "image": "/assets/images/news/news-4.jpg",
+        "imageAlt": "Gen4 NVME Host IP on Artix Ultra Scale Plus"
+      }
+    ]
+  },
+  "partners": {
+    "title": "Trusted Technology Partners",
+    "description": "Logic Design Solutions collaborates with leading technology providers<br> to deliver cutting-edge FPGA and IP solutions",
+    "logos": [
+      {
+        "src": "/assets/images/brand/AMD_Embedded_Select.png",
+        "alt": "AMD Embedded Select Partner"
+      },
+      {
+        "src": "/assets/images/brand/Member-Badge-1-1.png",
+        "alt": "Intel Partner"
+      },
+      {
+        "src": "/assets/images/brand/image001.png",
+        "alt": "Technology Partner"
+      }
+    ]
+  },
+  "map": {
+    "embed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2622.7967516134676!2d2.5699478999999997!3d48.8561268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e611de797bffff%3A0xea046efe8222fe8!2sLogic%20Design%20Solutions!5e0!3m2!1sfr!2sfr!4v1696521234567!5m2!1sfr!2sfr"
+  },
+  "footer": {
+    "logo": "LogicDesignSolutions",
+    "copyright": "Copyright © Logic Design Solution All Rights Reserved - Design by Digital Consulting",
+    "designerLink": "",
+    "menu": [
+      {
+        "label": "Profiles",
+        "href": "profiles.html"
+      },
+      {
+        "label": "Products",
+        "href": "products.html"
+      },
+      {
+        "label": "FAQ",
+        "href": "faq.html"
+      }
+    ],
+    "social": [
+      {
+        "platform": "facebook",
+        "icon": "fab fa-facebook",
+        "href": "#"
+      },
+      {
+        "platform": "twitter",
+        "icon": "fab fa-twitter",
+        "href": "#"
+      },
+      {
+        "platform": "linkedin",
+        "icon": "fab fa-linkedin",
+        "href": "#"
+      },
+      {
+        "platform": "instagram",
+        "icon": "fab fa-instagram",
+        "href": "#"
+      }
+    ]
+  },
+  "mobileNav": {
+    "logo": "LogicDesignSolutions",
+    "contact": [
+      {
+        "type": "email",
+        "icon": "fa fa-envelope",
+        "text": "contact@logic-design-solutions.com",
+        "href": "mailto:contact@logic-design-solutions.com"
+      },
+      {
+        "type": "phone",
+        "icon": "fa fa-phone-alt",
+        "text": "+33 (0)1 45 92 24 47",
+        "href": "tel:+33145922447"
+      }
+    ],
+    "social": [
+      {
+        "platform": "twitter",
+        "icon": "fab fa-twitter",
+        "href": "#"
+      },
+      {
+        "platform": "facebook",
+        "icon": "fab fa-facebook-square",
+        "href": "#"
+      },
+      {
+        "platform": "pinterest",
+        "icon": "fab fa-pinterest-p",
+        "href": "#"
+      },
+      {
+        "platform": "instagram",
+        "icon": "fab fa-instagram",
+        "href": "#"
+      }
+    ]
+  },
+  "seo": {
+    "title": "Logic Design Solutions - FPGA Design Services & IP Solutions",
+    "description": "Logic Design Solutions - FPGA Design Services, NVMe IP, SATA IP, ARINC 429 IP"
+  }
+}
