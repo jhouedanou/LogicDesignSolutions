@@ -4,5 +4,6 @@
       "src": "nuxt-app/nuxt.config.ts",
       "use": "@vercel/nuxt"
     }
-  ]
+  ],
+  "outputDirectory": "nuxt-app/.output/public"
 }
