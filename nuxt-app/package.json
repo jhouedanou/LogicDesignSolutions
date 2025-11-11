@@ -6,11 +6,13 @@
     "node": ">=20.19.0"
   },
   "scripts": {
-    "build": "nuxt build",
+    "build": "npm run merge-assets && npm run convert-images && nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "merge-assets": "node merge-assets.cjs",
+    "convert-images": "node convert-images.cjs"
   },
   "dependencies": {
     "@nuxt/image": "^2.0.0",
