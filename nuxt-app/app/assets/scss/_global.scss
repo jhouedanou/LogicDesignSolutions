@@ -24,10 +24,19 @@
   --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   --shadow-hover: 0 5px 20px rgba(0, 0, 0, 0.15);
   --transition: all 0.3s ease;
+
+  // Logic Design Solutions
   --lds-primary: #00A8E1;
   --lds-secondary: #2d5a3d;
   --lds-dark: #2d2d2d;
   --lds-dark-blue: #1a3a52;
+
+  // SmartBiz Template
+  --smartbiz-font: 'Roboto Condensed', sans-serif;
+  --smartbiz-gray: #717173;
+  --smartbiz-gray-rgb: 113, 113, 115;
+  --smartbiz-white: #ffffff;
+  --smartbiz-white-rgb: 255, 255, 255;
   --smartbiz-base: #1a3a52 !important;
   --smartbiz-base-rgb: 26, 58, 82 !important;
 }
