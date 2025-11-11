@@ -67,9 +67,9 @@
         <div class="main-slider-two__carousel owl-carousel owl-theme thm-owl__carousel"
           data-owl-options='{"loop": true, "items": 1, "navText": ["<span class=\"icon-left-arrow\"></span>","<span class=\"icon-right-arrow\"></span>"], "margin": 0, "dots": true, "nav": false, "animateOut": "slideOutDown", "animateIn": "fadeIn", "active": true, "smartSpeed": 1000, "autoplay": true, "autoplayTimeout": 7000, "autoplayHoverPause": false}'>
 
-          <div v-for="slide in hero?.slides" :key="slide.id" class="item" :class="`main-slider-two__slide-${slide.id}`">
+          <div class="item main-slider-two__slide-1">
             <div class="main-slider-two__bg"
-              :style="`background-image: url(${slide.image});`">
+              style="background-image: url(/assets/images/backgrounds/logic-slider-1.png);">
             </div><!-- /.slider-one__bg -->
             <div class="main-slider-two__shape-1"></div>
             <div class="main-slider-two__shape-2"></div>
@@ -77,11 +77,53 @@
             </div>
             <div class="container">
               <div class="main-slider-two__content">
-                <p class="main-slider-two__sub-title">{{ slide.subtitle }}</p>
-                <h2 class="main-slider-two__title" v-html="slide.title"></h2>
+                <p class="main-slider-two__sub-title">FPGA Design Services</p>
+                <h2 class="main-slider-two__title">Discover our <br> product lines <br> and IP solutions</h2>
                 <div class="main-slider-two__btn-box">
-                  <NuxtLink to="/products" class="main-slider-two__btn thm-btn">{{ slide.cta }}<span
-                        class="icon-right-arrow"></span></NuxtLink>
+                  <a href="/products" class="main-slider-two__btn thm-btn">Let's Work Together<span
+                      class="icon-right-arrow"></span></a>
+                </div>
+              </div>
+              <!-- Video hidden -->
+            </div>
+          </div>
+
+          <div class="item main-slider-two__slide-2">
+            <div class="main-slider-two__bg"
+              style="background-image: url(/assets/images/backgrounds/logic-slider-2.png);">
+            </div><!-- /.slider-one__bg -->
+            <div class="main-slider-two__shape-1"></div>
+            <div class="main-slider-two__shape-2"></div>
+            <div class="main-slider-two__shape-3"><img src="/assets/images/shapes/slider-v2-shape1.png" alt="">
+            </div>
+            <div class="container">
+              <div class="main-slider-two__content">
+                <p class="main-slider-two__sub-title">FPGA Design Services</p>
+                <h2 class="main-slider-two__title">Discover our <br> product lines <br> and IP solutions</h2>
+                <div class="main-slider-two__btn-box">
+                  <a href="/products" class="main-slider-two__btn thm-btn">Let's Work Together<span
+                      class="icon-right-arrow"></span></a>
+                </div>
+              </div>
+              <!-- Video hidden -->
+            </div>
+          </div>
+
+          <div class="item main-slider-two__slide-3">
+            <div class="main-slider-two__bg"
+              style="background-image: url(/assets/images/backgrounds/logic-slider-3.png);">
+            </div><!-- /.slider-one__bg -->
+            <div class="main-slider-two__shape-1"></div>
+            <div class="main-slider-two__shape-2"></div>
+            <div class="main-slider-two__shape-3"><img src="/assets/images/shapes/slider-v2-shape1.png" alt="">
+            </div>
+            <div class="container">
+              <div class="main-slider-two__content">
+                <p class="main-slider-two__sub-title">FPGA Design Services</p>
+                <h2 class="main-slider-two__title">Discover our <br> product lines <br> and IP solutions</h2>
+                <div class="main-slider-two__btn-box">
+                  <a href="/products" class="main-slider-two__btn thm-btn">Let's Work Together<span
+                      class="icon-right-arrow"></span></a>
                 </div>
               </div>
               <!-- Video hidden -->
@@ -175,9 +217,11 @@
         <div class="container">
           <div class="section-title-two text-center">
             <div class="section-title-two__tagline-box">
-              <p class="section-title-two__tagline">{{ news?.tagline }}</p>
+              <p class="section-title-two__tagline">What we do</p>
             </div>
-            <h2 class="section-title-two__title">{{ news?.title }}</h2>
+            <h2 class="section-title-two__title">Recent <span>News</span> From
+              <br> Blog Latest News
+            </h2>
           </div>
           <div class="services-two__bottom">
             <div class="services-two__carousel owl-carousel owl-theme thm-owl__carousel" data-owl-options='{
@@ -208,23 +252,85 @@
               }
             }'>
               <!--Services Two Single Start-->
-              <div v-for="article in news?.articles" :key="article.id" class="item">
+              <div class="item">
                 <div class="services-two__single">
                   <div class="services-two__img-box">
                     <div class="services-two__img">
-                      <img :src="article.image" :alt="article.title">
+                      <img src="/assets/images/news/news-1.jpg" alt="Gen 5 NVMe Host IP on AGILEX 7 R-Tile">
                     </div>
                   </div>
                   <div class="services-two__content">
                     <div class="services-two__icon">
-                      <span v-if="article.id % 2 === 0" class="icon-coin-stack"></span>
-                      <span v-else class="icon-teamwork"></span>
+                      <span class="icon-teamwork"></span>
                       <div class="services-two__icon-shape"></div>
                     </div>
-                    <h3 class="services-two__title"><NuxtLink to="/news">{{ article.title }}</NuxtLink></h3>
-                    <p class="services-two__text">{{ article.description }}</p>
-                    <NuxtLink to="/news" class="services-two__btn">{{ article.cta }}<span
-                          class="icon-right-arrow"></span></NuxtLink>
+                    <h3 class="services-two__title"><a href="/news">Gen 5 NVMe Host IP<br>on AGILEX 7 R-Tile !</a></h3>
+                    <p class="services-two__text">France, Gournay sur Marne, September 5th 2025 – The Gen5 NVME-HOST-IP on AGILEX 7 R-Tile...</p>
+                    <a href="/news" class="services-two__btn">Read More<span
+                        class="icon-right-arrow"></span></a>
+                  </div>
+                </div>
+              </div>
+              <!--Services Two Single End-->
+              <!--Services Two Single Start-->
+              <div class="item">
+                <div class="services-two__single">
+                  <div class="services-two__img-box">
+                    <div class="services-two__img">
+                      <img src="/assets/images/news/news-2.png" alt="NVME Host IP on Kintex Ultra Scale Plus">
+                    </div>
+                  </div>
+                  <div class="services-two__content">
+                    <div class="services-two__icon">
+                      <span class="icon-coin-stack"></span>
+                      <div class="services-two__icon-shape"></div>
+                    </div>
+                    <h3 class="services-two__title"><a href="/news">NVME Host IP on<br>Kintex Ultra Scale Plus !</a></h3>
+                    <p class="services-two__text">France, Gournay sur Marne, November 14th 2024 – The NVME-HOST-IP on Kintex Ultra Scale Plus...</p>
+                    <a href="/news" class="services-two__btn">Read More<span
+                        class="icon-right-arrow"></span></a>
+                  </div>
+                </div>
+              </div>
+              <!--Services Two Single End-->
+              <!--Services Two Single Start-->
+              <div class="item">
+                <div class="services-two__single">
+                  <div class="services-two__img-box">
+                    <div class="services-two__img">
+                      <img src="/assets/images/news/news-3.jpg" alt="New ARINC 429 IP">
+                    </div>
+                  </div>
+                  <div class="services-two__content">
+                    <div class="services-two__icon">
+                      <span class="icon-teamwork"></span>
+                      <div class="services-two__icon-shape"></div>
+                    </div>
+                    <h3 class="services-two__title"><a href="/news">New ARINC 429 IP</a></h3>
+                    <p class="services-two__text">France, Gournay sur Marne, November 4th 2024 – The new ARINC 429 IP from Logic Design Solutions...</p>
+                    <a href="/news" class="services-two__btn">Read More<span
+                        class="icon-right-arrow"></span></a>
+                  </div>
+                </div>
+              </div>
+              <!--Services Two Single End-->
+              <!--Services Two Single Start-->
+              <div class="item">
+                <div class="services-two__single">
+                  <div class="services-two__img-box">
+                    <div class="services-two__img">
+                      <img src="/assets/images/news/news-4.jpg" alt="Gen4 NVME Host IP on Artix Ultra Scale Plus">
+                    </div>
+                  </div>
+                  <div class="services-two__content">
+                    <div class="services-two__icon">
+                      <span class="icon-coin-stack"></span>
+                      <div class="services-two__icon-shape"></div>
+                    </div>
+                    <h3 class="services-two__title"><a href="/news">Gen4 NVME Host IP on<br>Artix Ultra Scale Plus !</a></h3>
+                    <p class="services-two__text">France, Gournay sur Marne, November 4th 2024 – The Gen4 NVME-HOST-IP on Artix Ultra Scale Plus...</p>
+                    <a href="/news" class="services-two__btn">Read More<span
+                        class="icon-right-arrow"></span></a>
                   </div>
                 </div>
               </div>
@@ -430,6 +536,7 @@ onMounted(() => {
     // Wait for owl carousel script to be loaded
     const initCarousel = () => {
       if ($.fn.owlCarousel) {
+        // Initialize main slider carousel
         $('.main-slider-two__carousel').owlCarousel({
           loop: true,
           items: 1,
@@ -444,6 +551,35 @@ onMounted(() => {
           autoplay: true,
           autoplayTimeout: 7000,
           autoplayHoverPause: false
+        })
+
+        // Initialize services carousel
+        $('.services-two__carousel').owlCarousel({
+          loop: true,
+          autoplay: true,
+          margin: 30,
+          nav: true,
+          dots: false,
+          smartSpeed: 500,
+          autoplayTimeout: 10000,
+          navText: ['<span class="icon-left-arrow"></span>', '<span class="icon-right-arrow"></span>'],
+          responsive: {
+            0: {
+              items: 1
+            },
+            768: {
+              items: 1
+            },
+            992: {
+              items: 1
+            },
+            1200: {
+              items: 1
+            },
+            1350: {
+              items: 2
+            }
+          }
         })
       } else {
         setTimeout(initCarousel, 100)
