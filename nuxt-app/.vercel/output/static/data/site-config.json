@@ -1,0 +1,40 @@
+{
+  "siteName": "LogicDesignSolutions",
+  "tagline": "FPGA & IP Design Experts",
+  "phone": "+33 (0)1 45 92 24 47",
+  "email": "contact@logic-design-solutions.com",
+  "address": "105 Boulevard de la Resistance, 93460 Gournay sur Marne, France",
+  "callLabel": "Call Us",
+  "contactButtonText": "Contact Us",
+  "mobileContact": {
+    "secondaryEmail": "contact@logic-design-solutions.com",
+    "secondaryPhone": "+33 (0)1 45 92 24 47"
+  },
+  "social": [
+    {
+      "name": "Twitter",
+      "icon": "twitter",
+      "url": "#"
+    },
+    {
+      "name": "Facebook",
+      "icon": "facebook-square",
+      "url": "#"
+    },
+    {
+      "name": "Pinterest",
+      "icon": "pinterest-p",
+      "url": "#"
+    },
+    {
+      "name": "Instagram",
+      "icon": "instagram",
+      "url": "#"
+    },
+    {
+      "name": "LinkedIn",
+      "icon": "linkedin",
+      "url": "#"
+    }
+  ]
+}

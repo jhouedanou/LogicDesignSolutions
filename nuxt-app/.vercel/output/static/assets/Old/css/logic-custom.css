@@ -1,0 +1,229 @@
+/* Custom styles for Logic Design Solutions */
+
+:root {
+    --lds-primary: #00A8E1;
+    --lds-secondary: #2d5a3d;
+    --lds-dark: #2d2d2d;
+    --lds-dark-blue: #1a3a52;
+    
+    /* Override the template's base color with dark blue */
+    --smartbiz-base: #1a3a52 !important;
+    --smartbiz-base-rgb: 26, 58, 82 !important;
+}
+
+/* Override primary color */
+.thm-btn {
+    background-color: var(--lds-primary) !important;
+}
+
+.thm-btn:hover {
+    background-color: #0090c5 !important;
+}
+
+/* Logo styling */
+.main-menu-two__logo a {
+    font-family: 'Roboto Condensed', sans-serif !important;
+}
+
+/* Links color */
+a {
+    color: var(--lds-primary);
+}
+
+.main-menu__list > li > a:hover {
+    color: var(--lds-primary) !important;
+}
+
+/* Section titles */
+.section-title__title,
+.section-title-two__title {
+    color: #1a1a1a;
+}
+
+.section-title__tagline,
+.section-title-two__tagline {
+    color: var(--lds-primary);
+}
+
+/* Footer customization */
+.site-footer-two {
+    background-color: var(--lds-dark);
+}
+
+/* Icon colors */
+.icon-right-arrow {
+    color: #fff;
+}
+
+/* Custom adjustments for Logic Design Solutions branding */
+.main-header-two__top {
+    background-color: #f8f9fa;
+}
+
+.main-header-two__contact-list a {
+    color: var(--lds-primary);
+}
+
+.main-header-two__social a:hover {
+    color: var(--lds-primary);
+}
+
+/* Lower the main menu bar */
+.main-menu.main-menu-two {
+    margin-top: 20px;
+}
+
+.main-menu-two__wrapper {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* Remove margin-top from sticky header */
+.stricky-header.stricked-menu {
+    margin-top: 0 !important;
+}
+
+/* Menu item hover and active state - use Logic Design Solutions blue */
+.main-menu__list > li > a:hover,
+.main-menu__list > li.current > a {
+    color: var(--lds-primary) !important;
+}
+
+.main-menu-two .main-menu__list > li > a:hover,
+.main-menu-two .main-menu__list > li.current > a {
+    color: var(--lds-primary) !important;
+}
+
+/* Sticky menu hover */
+.stricky-header .main-menu__list > li > a:hover,
+.stricky-header .main-menu__list > li.current > a {
+    color: var(--lds-primary) !important;
+}
+
+/* Brand logos uniform height */
+.brand-one .swiper-slide img,
+.brand-two .swiper-slide img {
+    height: 120px;
+    width: auto;
+    object-fit: contain;
+    margin: 0 auto;
+    display: block;
+}
+
+/* Reduce main menu font size */
+.main-menu__list > li > a {
+    font-size: 14px !important;
+}
+
+.main-menu-two .main-menu__list > li > a {
+    font-size: 14px !important;
+}
+
+/* Reduce page header height */
+.page-header {
+    padding: 130px 0 110px !important;
+}
+
+.page-header__inner {
+    padding: 0 !important;
+}
+
+/* Reduce product title size */
+.news-one__title {
+    font-size: 18px !important;
+    line-height: 1.4 !important;
+}
+
+.news-one__title a {
+    font-size: 18px !important;
+}
+
+/* Uniformize product card heights */
+.news-one__single {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+}
+
+.news-one__img-box {
+    height: 250px !important;
+    overflow: hidden !important;
+}
+
+.news-one__img img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+.news-one__content {
+    flex-grow: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    min-height: 80px !important;
+}
+
+/* Add vertical spacing between product rows */
+.news-details .row > [class*="col-"] {
+    margin-bottom: 30px !important;
+}
+
+/* Pagination active page styling */
+.pg-pagination li.count.active a {
+    background-color: var(--lds-primary) !important;
+    color: #ffffff !important;
+    border-color: var(--lds-primary) !important;
+}
+
+.pg-pagination li.count.active a:hover {
+    background-color: #0090c5 !important;
+}
+
+/* News content unified block */
+.news-one__content {
+    padding: 20px !important;
+    display: block !important;
+}
+
+.news-one__meta {
+    margin-bottom: 10px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+}
+
+.news-one__meta li {
+    display: inline-block !important;
+}
+
+.news-one__title {
+    margin-bottom: 10px !important;
+    margin-top: 0 !important;
+    width: 100% !important;
+    clear: both !important;
+}
+
+.news-one__text {
+    margin-bottom: 15px !important;
+    color: #6e7387 !important;
+    line-height: 1.6 !important;
+    width: 100% !important;
+    clear: both !important;
+}
+
+.news-one__bottom {
+    margin-top: 0 !important;
+    width: 100% !important;
+    clear: both !important;
+}
+
+.news-one__read-more a {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+}
+
+/* Force vertical layout for news items */
+.news-one__single .news-one__content * {
+    float: none !important;
+}
