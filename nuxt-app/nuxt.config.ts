@@ -57,7 +57,7 @@ export default defineNuxtConfig({
   // Nitro Configuration (Server)
   nitro: {
     compressPublicAssets: true,
-    preset: 'netlify',
+    preset: 'netlify-static',
     prerender: {
       crawlLinks: false,
       routes: ['/', '/about', '/services', '/contact', '/products', '/news', '/faq', '/product-category']
