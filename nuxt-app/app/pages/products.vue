@@ -29,150 +29,58 @@
               <p style="margin-top: 20px;">Discover our comprehensive range of proven IP cores for FPGA designs. Each IP solution is thoroughly tested and optimized for performance, reliability, and ease of integration.</p>
             </div>
 
-            <div class="row">
-              <!-- Product 1 -->
-              <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="100ms">
-                <div class="news-one__single">
-                  <div class="news-one__img-box">
-                    <div class="news-one__img">
-                      <NuxtLink to="/product-detail"><img src="/assets/images/news/NVME_HOST_IP-774x1024.jpg" alt="NVMe Host IP" /></NuxtLink>
-                    </div>
-                  </div>
-                  <div class="news-one__content">
-                    <h3 class="news-one__title"><NuxtLink to="/product-detail">AGILEX 7 R-Tile Gen5 NVMe Host IP</NuxtLink></h3>
-                  </div>
-                </div>
-              </div>
+            <div v-if="pending" class="text-center" style="padding: 40px;">
+              <p>Loading products...</p>
+            </div>
 
-              <!-- Product 2 -->
-              <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="200ms">
-                <div class="news-one__single">
-                  <div class="news-one__img-box">
-                    <div class="news-one__img">
-                      <NuxtLink to="/product-detail"><img src="/assets/images/news/NMVE_HOST_K7U-844x1024.jpg" alt="Kintex NVMe" /></NuxtLink>
-                    </div>
-                  </div>
-                  <div class="news-one__content">
-                    <h3 class="news-one__title"><NuxtLink to="/product-detail">Kintex Ultra Scale Plus NVMe Host IP</NuxtLink></h3>
-                  </div>
-                </div>
-              </div>
+            <div v-else-if="error" class="text-center" style="padding: 40px; color: red;">
+              <p>Error loading products. Please try again later.</p>
+            </div>
 
-              <!-- Product 3 -->
-              <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="300ms">
+            <div v-else class="row">
+              <!-- Dynamic Products from WordPress API -->
+              <div 
+                v-for="(product, index) in products" 
+                :key="product.id"
+                class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" 
+                :data-wow-delay="`${(index % 3 + 1) * 100}ms`"
+              >
                 <div class="news-one__single">
                   <div class="news-one__img-box">
                     <div class="news-one__img">
-                      <NuxtLink to="/product-detail"><img src="/assets/images/news/ARINC_429_IP-924x1024.jpg" alt="ARINC 429" /></NuxtLink>
+                      <NuxtLink :to="`/product-detail?id=${product.id}`">
+                        <img 
+                          :src="getProductImage(product)" 
+                          :alt="stripHtml(product.title.rendered)" 
+                        />
+                      </NuxtLink>
                     </div>
                   </div>
                   <div class="news-one__content">
-                    <h3 class="news-one__title"><NuxtLink to="/product-detail">ARINC 429 IP Core</NuxtLink></h3>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Product 4 -->
-              <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="100ms">
-                <div class="news-one__single">
-                  <div class="news-one__img-box">
-                    <div class="news-one__img">
-                      <NuxtLink to="/product-detail"><img src="/assets/images/news/Artix_Ultra_Scale_Plus_NVME_HOST_IP-671x1024.jpg" alt="ARTIX NVMe" /></NuxtLink>
-                    </div>
-                  </div>
-                  <div class="news-one__content">
-                    <h3 class="news-one__title"><NuxtLink to="/product-detail">ARTIX Ultra Scale Plus NVMe Host IP</NuxtLink></h3>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Product 5 (was Product 6 in HTML) -->
-              <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="300ms">
-                <div class="news-one__single">
-                  <div class="news-one__img-box">
-                    <div class="news-one__img">
-                      <NuxtLink to="/product-detail"><img src="/assets/images/news/EXFAT_IP_Soft_Core-1024x767.jpg" alt="EXFAT IP" /></NuxtLink>
-                    </div>
-                  </div>
-                  <div class="news-one__content">
-                    <h3 class="news-one__title"><NuxtLink to="/product-detail">EXFAT IP Soft Core for NVMe</NuxtLink></h3>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Product 6 (was Product 7 in HTML) -->
-              <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="100ms">
-                <div class="news-one__single">
-                  <div class="news-one__img-box">
-                    <div class="news-one__img">
-                      <NuxtLink to="/product-detail"><img src="/assets/images/news/NVME_HOST_ZYNQ_ULTRASCALE_PLUS-936x1024.jpg" alt="Zynq NVMe" /></NuxtLink>
-                    </div>
-                  </div>
-                  <div class="news-one__content">
-                    <h3 class="news-one__title"><NuxtLink to="/product-detail">Zynq UltraScale+ NVMe Host IP</NuxtLink></h3>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Product 7 (was Product 8 in HTML - duplicate of Product 1) -->
-              <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="100ms">
-                <div class="news-one__single">
-                  <div class="news-one__img-box">
-                    <div class="news-one__img">
-                      <NuxtLink to="/product-detail"><img src="/assets/images/news/NVME_HOST_IP-774x1024.jpg" alt="NVMe Host IP" /></NuxtLink>
-                    </div>
-                  </div>
-                  <div class="news-one__content">
-                    <h3 class="news-one__title"><NuxtLink to="/product-detail">AGILEX 7 R-Tile Gen5 NVMe Host IP</NuxtLink></h3>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Product 8 (was Product 9 in HTML - duplicate of Product 2) -->
-              <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="200ms">
-                <div class="news-one__single">
-                  <div class="news-one__img-box">
-                    <div class="news-one__img">
-                      <NuxtLink to="/product-detail"><img src="/assets/images/news/NMVE_HOST_K7U-844x1024.jpg" alt="Kintex NVMe" /></NuxtLink>
-                    </div>
-                  </div>
-                  <div class="news-one__content">
-                    <h3 class="news-one__title"><NuxtLink to="/product-detail">Kintex Ultra Scale Plus NVMe Host IP</NuxtLink></h3>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Product 9 (was Product 10 in HTML - duplicate of Product 3) -->
-              <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="300ms">
-                <div class="news-one__single">
-                  <div class="news-one__img-box">
-                    <div class="news-one__img">
-                      <NuxtLink to="/product-detail"><img src="/assets/images/news/ARINC_429_IP-924x1024.jpg" alt="ARINC 429" /></NuxtLink>
-                    </div>
-                  </div>
-                  <div class="news-one__content">
-                    <h3 class="news-one__title"><NuxtLink to="/product-detail">ARINC 429 IP Core</NuxtLink></h3>
+                    <h3 class="news-one__title">
+                      <NuxtLink :to="`/product-detail?id=${product.id}`" v-html="product.title.rendered"></NuxtLink>
+                    </h3>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Pagination -->
-            <div class="news-page__pagination" style="text-align: center; margin-top: 40px;">
+            <!-- Pagination Dynamique -->
+            <div v-if="totalPages > 1" class="news-page__pagination" style="text-align: center; margin-top: 40px;">
               <ul class="pg-pagination list-unstyled" style="display: inline-flex; justify-content: center; gap: 10px;">
-                <li class="prev">
-                  <a href="#" aria-label="Previous">PREV</a>
+                <li class="prev" :class="{ disabled: currentPage === 1 }">
+                  <a @click.prevent="goToPage(currentPage - 1)" href="#" aria-label="Previous">PREV</a>
                 </li>
-                <li class="count"><a href="#">01</a></li>
-                <li class="count active"><a href="#">02</a></li>
-                <li class="count"><a href="#">03</a></li>
-                <li class="count"><a href="#">04</a></li>
-                <li class="count"><a href="#">05</a></li>
-                <li class="count"><a href="#">06</a></li>
-                <li class="count"><a href="#">07</a></li>
-                <li class="count"><a href="#">08</a></li>
-                <li class="next">
-                  <a href="#" aria-label="Next">NEXT</a>
+                <li 
+                  v-for="page in pageNumbers" 
+                  :key="page"
+                  class="count" 
+                  :class="{ active: currentPage === page }"
+                >
+                  <a @click.prevent="goToPage(page)" href="#">{{ String(page).padStart(2, '0') }}</a>
+                </li>
+                <li class="next" :class="{ disabled: currentPage === totalPages }">
+                  <a @click.prevent="goToPage(currentPage + 1)" href="#" aria-label="Next">NEXT</a>
                 </li>
               </ul>
             </div>
@@ -180,17 +88,15 @@
 
           <div class="col-xl-4 col-lg-5">
             <div class="sidebar">
-              <!-- Product Categories -->
+              <!-- Product Categories Dynamiques -->
               <div class="sidebar__single sidebar__category">
                 <h3 class="sidebar__title">Product Categories</h3>
                 <ul class="sidebar__category-list list-unstyled">
-                  <li><a href="/product-category">NVMe Host IP<span>(8)</span></a></li>
-                  <li><a href="/product-category">SATA Host IP<span>(6)</span></a></li>
-                  <li><a href="/product-category">SATA Device IP<span>(4)</span></a></li>
-                  <li><a href="/product-category">ARINC 429 IP<span>(3)</span></a></li>
-                  <li><a href="/product-category">Ethernet MAC IP<span>(5)</span></a></li>
-                  <li><a href="/product-category">File System IP<span>(4)</span></a></li>
-                  <li><a href="/product-category">Communication IP<span>(7)</span></a></li>
+                  <li v-for="category in categories" :key="category.id" v-show="category.count > 0">
+                    <NuxtLink :to="`/product-category?cat=${category.id}`">
+                      {{ category.name }}<span>({{ category.count }})</span>
+                    </NuxtLink>
+                  </li>
                 </ul>
               </div>
 
@@ -234,6 +140,7 @@
 
 <script setup lang="ts">
 import { useHead } from '#imports'
+import type { WordPressProduct, WordPressProductCategory } from '~/composables/useWordPressAPI'
 
 useHead({
   title: 'Products - Logic Design Solutions',
@@ -244,6 +151,73 @@ useHead({
     }
   ]
 })
+
+// Get current page from query params
+const route = useRoute()
+const currentPage = ref(parseInt(route.query.page as string) || 1)
+const perPage = 9 // 3 colonnes x 3 lignes
+
+// Fetch products and categories in parallel
+const [productsResult, categoriesResult] = await Promise.all([
+  useWPProducts(perPage, currentPage.value),
+  useWPProductCategories()
+])
+
+const products = ref<WordPressProduct[]>(productsResult.data || [])
+const categories = ref<WordPressProductCategory[]>(categoriesResult.data || [])
+const totalPages = ref(productsResult.totalPages || 1)
+const totalCount = ref(productsResult.totalCount || 0)
+const error = ref(productsResult.error)
+const pending = ref(false)
+
+// Helper function to get product image from embedded data
+const getProductImage = (product: WordPressProduct): string => {
+  // Try to get embedded media first
+  if (product._embedded?.['wp:featuredmedia']?.[0]?.source_url) {
+    return product._embedded['wp:featuredmedia'][0].source_url
+  }
+  
+  // Fallback to placeholder
+  return '/assets/images/news/placeholder-product.jpg'
+}
+
+// Helper function to strip HTML
+const stripHtml = (html: string): string => {
+  if (!html) return ''
+  return html.replace(/<[^>]*>/g, '')
+}
+
+// Helper function to get excerpt
+const getExcerpt = (product: WordPressProduct): string => {
+  if (!product.excerpt?.rendered) return ''
+  const text = stripHtml(product.excerpt.rendered)
+  return text.length > 120 ? text.substring(0, 120) + '...' : text
+}
+
+// Generate page numbers array for pagination
+const pageNumbers = computed(() => {
+  const pages: number[] = []
+  const maxVisible = 5
+  
+  let start = Math.max(1, currentPage.value - Math.floor(maxVisible / 2))
+  let end = Math.min(totalPages.value, start + maxVisible - 1)
+  
+  if (end - start < maxVisible - 1) {
+    start = Math.max(1, end - maxVisible + 1)
+  }
+  
+  for (let i = start; i <= end; i++) {
+    pages.push(i)
+  }
+  
+  return pages
+})
+
+// Navigate to page
+const goToPage = (page: number) => {
+  if (page < 1 || page > totalPages.value) return
+  navigateTo(`/products?page=${page}`)
+}
 </script>
 
 <style scoped>

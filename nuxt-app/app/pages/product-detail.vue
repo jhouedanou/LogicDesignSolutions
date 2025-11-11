@@ -1,7 +1,7 @@
 <template>
-  <div>
-    
-<section class="page-header">
+  <div class="product-detail-page">
+    <!-- Page Header Start -->
+    <section class="page-header">
             <div class="page-header-bg" style="background-image: url(/assets/images/backgrounds/logic-slider-2.png)">
             </div>
             <div class="container">
@@ -22,109 +22,68 @@
         <!--Product Details Start-->
         <section class="news-details">
             <div class="container">
-                <div class="row">
+                <div v-if="pending" class="text-center" style="padding: 60px;">
+                    <p>Loading product details...</p>
+                </div>
+
+                <div v-else-if="error || !product" class="text-center" style="padding: 60px; color: red;">
+                    <p>Product not found or error loading details.</p>
+                    <NuxtLink to="/products" class="thm-btn" style="margin-top: 20px;">
+                        Back to Products<span class="icon-right-arrow"></span>
+                    </NuxtLink>
+                </div>
+
+                <div v-else class="row">
                     <div class="col-xl-8 col-lg-7">
                         <div class="news-details__left">
                             <div class="news-details__content">
-                                <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
-                                    <p class="news-details__text-1" style="margin: 0;"><span style="color: var(--lds-primary); font-weight: bold;">AMD NVME HOST RECORDER IP</span> / High-Performance / Gen3 PCIe</p>
+                                <!-- Product Categories Badge -->
+                                <div v-if="productCategories.length > 0" style="background-color: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+                                    <p class="news-details__text-1" style="margin: 0;">
+                                        <span 
+                                            v-for="(cat, index) in productCategories" 
+                                            :key="cat.id"
+                                            style="color: var(--lds-primary); font-weight: bold;"
+                                        >
+                                            {{ cat.name }}<span v-if="index < productCategories.length - 1"> / </span>
+                                        </span>
+                                    </p>
                                 </div>
 
-                                <h3 class="news-details__title-1">Kintex Ultra Scale Plus NVMe Host IP</h3>
+                                <!-- Product Title -->
+                                <h3 class="news-details__title-1" v-html="product.title.rendered"></h3>
                                 
-                                <div style="float: left; width: 50%; margin-right: 30px; margin-bottom: 20px;">
-                                    <img src="/assets/images/news/NMVE_HOST_K7U-844x1024.jpg" alt="Kintex Ultra Scale Plus NVMe Host IP" style="width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                                <!-- Featured Image -->
+                                <div v-if="productImage" style="float: left; width: 50%; margin-right: 30px; margin-bottom: 20px;">
+                                    <img 
+                                        :src="productImage" 
+                                        :alt="stripHtml(product.title.rendered)" 
+                                        style="width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"
+                                    >
                                 </div>
                                 
-                                <h3 class="news-details__title-2">Product Overview</h3>
-                                <p class="news-details__text-1">The LDS NVME HOST IP has been designed for both beginners and experts in NVMe to drive NVMe PCIe SSD. This comprehensive IP solution provides flexible interfaces and simplified management for FPGA-based storage applications.</p>
-                                
-                                <h3 class="news-details__title-2">Key Features</h3>
-                                <p class="news-details__text-2">The LDS NVME HOST IP provides two interfaces:</p>
-                                <ul class="news-details__points list-unstyled">
-                                    <li>
-                                        <div class="icon">
-                                            <span class="icon-check-2"></span>
-                                        </div>
-                                        <div class="text">
-                                            <p><strong>CPU Interface</strong> - Optimized for long sequential recording or reading operations</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="icon">
-                                            <span class="icon-check-2"></span>
-                                        </div>
-                                        <div class="text">
-                                            <p><strong>FIFO Interface</strong> - Designed for I/O intensive data transfer applications</p>
-                                        </div>
-                                    </li>
-                                </ul>
+                                <!-- Product Content (Dynamic from WordPress) -->
+                                <div class="news-details__text-1" v-html="product.content.rendered"></div>
 
                                 <div style="clear: both;"></div>
-
-                                <h3 class="news-details__title-2">Technical Specifications</h3>
-                                <p class="news-details__text-2">The register file interface simplifies the management of the IP for CPU interface or State Machine interface using AXI bus:</p>
-                                
-                                <ul class="news-details__points list-unstyled">
-                                    <li>
-                                        <div class="icon"><span class="icon-check-2"></span></div>
-                                        <div class="text"><p>PCIe RP and EP register configuration is done automatically</p></div>
-                                    </li>
-                                    <li>
-                                        <div class="icon"><span class="icon-check-2"></span></div>
-                                        <div class="text"><p>NVMe register configuration is done automatically</p></div>
-                                    </li>
-                                    <li>
-                                        <div class="icon"><span class="icon-check-2"></span></div>
-                                        <div class="text"><p>Able to manage 8 Name Spaces</p></div>
-                                    </li>
-                                    <li>
-                                        <div class="icon"><span class="icon-check-2"></span></div>
-                                        <div class="text"><p>Able to manage up to 16 IO Queue to enable Multi-users</p></div>
-                                    </li>
-                                    <li>
-                                        <div class="icon"><span class="icon-check-2"></span></div>
-                                        <div class="text"><p>Able to manage 512Bytes or 4096Bytes sector size</p></div>
-                                    </li>
-                                    <li>
-                                        <div class="icon"><span class="icon-check-2"></span></div>
-                                        <div class="text"><p>Configurable IO Queue buffer size: 32KB, 64KB, 128KB, 256KB, 512KB or 1024KB</p></div>
-                                    </li>
-                                    <li>
-                                        <div class="icon"><span class="icon-check-2"></span></div>
-                                        <div class="text"><p>Easy connection to embedded Root Port PCIe IP through AXI bus</p></div>
-                                    </li>
-                                    <li>
-                                        <div class="icon"><span class="icon-check-2"></span></div>
-                                        <div class="text"><p>FAT32 / EXFAT available as an option</p></div>
-                                    </li>
-                                </ul>
-
-                                <h3 class="news-details__title-2">Performance</h3>
-                                <p class="news-details__text-2">When using a PCIe RP IP configured in Gen3, the system frequency is at 125MHz/256-Bits.</p>
-                                <p class="news-details__text-2">When using a PCIe RP IP configured in Gen2, the system frequency is at 125MHz/128-Bits.</p>
-
-                                <h3 class="news-details__title-2">Customization & Support</h3>
-                                <p class="news-details__text-2">The source code format is available for ease of customization. The customization can be done by Logic Design Solutions and <strong>DO254</strong> documentation is available on request.</p>
-                                
-                                <p class="news-details__text-2">This IP can be customized according to specific needs (application-specific requirement). Any other pre-designed functions can be integrated into the FPGA. FPGA density and I/O requirements can be defined according to customer specification.</p>
                             </div>
 
                             <div class="news-details__bottom">
-                                <p class="news-details__tags">
-                                    <span>Tags:</span>
-                                    <a href="#">NVMe</a>
-                                    <a href="#">PCIe Gen3</a>
-                                    <a href="#">Kintex UltraScale+</a>
-                                    <a href="#">AMD</a>
-                                    <a href="#">FPGA IP</a>
-                                    <a href="#">Storage</a>
+                                <p v-if="productCategories.length > 0" class="news-details__tags">
+                                    <span>Categories:</span>
+                                    <NuxtLink 
+                                        v-for="cat in productCategories" 
+                                        :key="cat.id"
+                                        :to="`/products?cat=${cat.id}`"
+                                    >
+                                        {{ cat.name }}
+                                    </NuxtLink>
                                 </p>
                                 <div class="news-details__social-list">
-                                    <a href="#"><i class="fab fa-facebook"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                    <a href="#" @click.prevent="shareOnFacebook"><i class="fab fa-facebook"></i></a>
+                                    <a href="#" @click.prevent="shareOnTwitter"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" @click.prevent="shareOnLinkedIn"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" @click.prevent="copyLink"><i class="fab fa-link"></i></a>
                                 </div>
                             </div>
 
@@ -143,19 +102,44 @@
 
                     <div class="col-xl-4 col-lg-5">
                         <div class="sidebar">
-                            <div class="sidebar__single sidebar__category">
-                                <h3 class="sidebar__title">Product Categories</h3>
-                                <ul class="sidebar__category-list list-unstyled">
-                                    <li class="active"><a href="/product-category">NVMe Host IP<span>(8)</span></a></li>
-                                    <li><a href="/product-category">SATA Host IP<span>(6)</span></a></li>
-                                    <li><a href="/product-category">SATA Device IP<span>(4)</span></a></li>
-                                    <li><a href="/product-category">ARINC 429 IP<span>(3)</span></a></li>
-                                    <li><a href="/product-category">Ethernet MAC IP<span>(5)</span></a></li>
-                                    <li><a href="/product-category">File System IP<span>(4)</span></a></li>
-                                    <li><a href="/product-category">Communication IP<span>(7)</span></a></li>
+                            <!-- Related Products -->
+                            <div v-if="relatedProducts.length > 0" class="sidebar__single sidebar__post">
+                                <h3 class="sidebar__title">Related Products</h3>
+                                <ul class="sidebar__post-list list-unstyled">
+                                    <li v-for="relProd in relatedProducts.slice(0, 3)" :key="relProd.id">
+                                        <div class="sidebar__post-image">
+                                            <img 
+                                                :src="getProductImage(relProd)" 
+                                                :alt="stripHtml(relProd.title.rendered)"
+                                                style="width: 70px; height: 70px; object-fit: cover; border-radius: 5px;"
+                                            >
+                                        </div>
+                                        <div class="sidebar__post-content">
+                                            <h3>
+                                                <NuxtLink :to="`/product-detail?id=${relProd.id}`" v-html="relProd.title.rendered"></NuxtLink>
+                                            </h3>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
 
+                            <!-- Product Categories from API -->
+                            <div v-if="allCategories && allCategories.length > 0" class="sidebar__single sidebar__category">
+                                <h3 class="sidebar__title">Product Categories</h3>
+                                <ul class="sidebar__category-list list-unstyled">
+                                    <li 
+                                        v-for="category in allCategories" 
+                                        :key="category.id"
+                                        :class="{ active: productCategories.some((pc: any) => pc.id === category.id) }"
+                                    >
+                                        <NuxtLink :to="`/products?cat=${category.id}`">
+                                            {{ category.name }}<span>({{ category.count }})</span>
+                                        </NuxtLink>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Contact CTA -->
                             <div class="sidebar__single have-any-project">
                                 <div class="have-any-project__bg"
                                     style="background-image: url(/assets/images/backgrounds/contact-us-bg.jpg);">
@@ -165,22 +149,23 @@
                                     <br> Contact Us
                                 </h3>
                                 <div class="have-any-project__btn-box">
-                                    <a href="/contact" class="have-any-project__btn thm-btn">Get Quote<span
-                                            class="icon-right-arrow"></span></a>
+                                    <NuxtLink to="/contact" class="have-any-project__btn thm-btn">
+                                        Get Quote<span class="icon-right-arrow"></span>
+                                    </NuxtLink>
                                 </div>
                             </div>
 
-                            <div class="sidebar__single sidebar__tags">
-                                <h3 class="sidebar__title">Related Tags</h3>
+                            <!-- Product Categories as Tags -->
+                            <div v-if="productCategories.length > 0" class="sidebar__single sidebar__tags">
+                                <h3 class="sidebar__title">Product Categories</h3>
                                 <div class="sidebar__tags-list">
-                                    <a href="#">NVMe</a>
-                                    <a href="#">PCIe</a>
-                                    <a href="#">Gen3</a>
-                                    <a href="#">Kintex</a>
-                                    <a href="#">UltraScale+</a>
-                                    <a href="#">AMD</a>
-                                    <a href="#">Storage</a>
-                                    <a href="#">IP Core</a>
+                                    <NuxtLink 
+                                        v-for="cat in productCategories" 
+                                        :key="cat.id"
+                                        :to="`/products?cat=${cat.id}`"
+                                    >
+                                        {{ cat.name }}
+                                    </NuxtLink>
                                 </div>
                             </div>
                         </div>
@@ -194,11 +179,106 @@
 
 <script setup lang="ts">
 import { useHead } from '#imports'
+import type { WordPressProduct, WordPressProductCategory } from '~/composables/useWordPressAPI'
 
+const route = useRoute()
+const productId = route.query.id as string
+
+if (!productId) {
+  navigateTo('/products')
+}
+
+// Fetch product details
+const { data: product, error, pending } = await useWPProduct(productId)
+
+// Fetch all categories to match with product
+const { data: allCategories } = await useWPProductCategories()
+
+// Get product categories
+const productCategories = computed(() => {
+  if (!product || !product.product_cat || !allCategories) return []
+  return allCategories.filter((cat: WordPressProductCategory) => 
+    product.product_cat.includes(cat.id)
+  )
+})
+
+// Get product image
+const productImage = computed(() => {
+  if (!product) return ''
+  if (product._embedded?.['wp:featuredmedia']?.[0]?.source_url) {
+    return product._embedded['wp:featuredmedia'][0].source_url
+  }
+  return '/assets/images/news/placeholder-product.jpg'
+})
+
+// Fetch related products (same category)
+const relatedProducts = ref<WordPressProduct[]>([])
+if (product && productCategories.value.length > 0) {
+  const categoryId = productCategories.value[0].id
+  const { data: categoryProducts } = await useWPProducts(6, 1)
+  relatedProducts.value = categoryProducts.filter((p: WordPressProduct) => 
+    p.id !== product.id && p.product_cat?.includes(categoryId)
+  )
+}
+
+// Helper function to get product image from embedded data
+const getProductImage = (prod: WordPressProduct): string => {
+  if (prod._embedded?.['wp:featuredmedia']?.[0]?.source_url) {
+    return prod._embedded['wp:featuredmedia'][0].source_url
+  }
+  return '/assets/images/news/placeholder-product.jpg'
+}
+
+// Helper function to strip HTML
+const stripHtml = (html: string): string => {
+  if (!html) return ''
+  return html.replace(/<[^>]*>/g, '')
+}
+
+// Helper function to format date
+const formatDate = (dateString: string): string => {
+  const date = new Date(dateString)
+  return date.toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  })
+}
+
+// Social sharing functions
+const shareOnFacebook = () => {
+  const url = window.location.href
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank')
+}
+
+const shareOnTwitter = () => {
+  const url = window.location.href
+  const text = product ? stripHtml(product.title.rendered) : 'Check out this product'
+  window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank')
+}
+
+const shareOnLinkedIn = () => {
+  const url = window.location.href
+  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank')
+}
+
+const copyLink = async () => {
+  try {
+    await navigator.clipboard.writeText(window.location.href)
+    alert('Link copied to clipboard!')
+  } catch (err) {
+    console.error('Failed to copy:', err)
+  }
+}
+
+// Set page title
 useHead({
-  title: 'Kintex Ultra Scale Plus NVMe Host IP - Logic Design Solutions',
+  title: product ? `${stripHtml(product.title.rendered)} - Logic Design Solutions` : 'Product Details',
   meta: [
-    { name: 'description', content: 'Kintex Ultra Scale Plus NVMe Host IP - High-performance NVMe IP solution for FPGA applications' }
+    {
+      name: 'description',
+      content: product ? stripHtml(product.excerpt?.rendered || '') : 'Product details'
+    }
   ]
 })
 </script>

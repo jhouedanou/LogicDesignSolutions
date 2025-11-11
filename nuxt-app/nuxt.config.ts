@@ -70,6 +70,13 @@ export default defineNuxtConfig({
   // Directory Configuration
   srcDir: 'app',
 
+  // Imports Configuration
+  imports: {
+    dirs: [
+      '../composables/**'
+    ]
+  },
+
   // Vite Configuration
   vite: {
     css: {

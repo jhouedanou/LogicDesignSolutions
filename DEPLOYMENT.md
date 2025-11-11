@@ -20,11 +20,16 @@ Ce projet utilise **Nuxt 4** pour la partie application web moderne.
 
 ### Netlify
 
-Le fichier `netlify.toml` à la racine exécute maintenant les builds directement depuis `nuxt-app` :
-- **Commande de build**: `cd nuxt-app && npm install && npm run build`
-- **Répertoire publié**: `nuxt-app/.output/public`
+Le fichier `netlify.toml` à la racine configure Netlify pour travailler directement
+depuis le sous-dossier `nuxt-app` :
+- **Base directory** : `nuxt-app` (Netlify exécute `npm install` et les commandes dans ce dossier)
+- **Commande de build** : `npm run build`
+- **Répertoire publié** : `.output/public`
+- **Version de Node** : `20.19.0` (compatible avec Nuxt 4.2+)
 
-Ainsi, Netlify installe les dépendances et lance la compilation dans le bon sous-dossier.
+Pensez à mettre à jour la variable d’environnement `NODE_VERSION` dans l’interface Netlify
+si nécessaire, puis relancez un déploiement avec le cache nettoyé si vous aviez déjà
+fait une tentative avec Node 18.
 
 ### Variables d'Environnement
 
