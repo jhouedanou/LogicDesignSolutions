@@ -6,6 +6,7 @@ export default defineNuxtConfig({
 
   // CSS Configuration
   css: [
+    '~/assets/css/merged-vendors.min.css',
     '~/assets/scss/main.scss'
   ],
 

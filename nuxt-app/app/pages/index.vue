@@ -623,25 +623,7 @@ useHead({
     { rel: 'stylesheet', href: '/assets/css/logic-custom.css' }
   ],
   script: [
-    { src: '/assets/vendors/jquery/jquery-3.6.0.min.js' },
-    { src: '/assets/vendors/bootstrap/js/bootstrap.bundle.min.js' },
-    { src: '/assets/vendors/jarallax/jarallax.min.js' },
-    { src: '/assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js' },
-    { src: '/assets/vendors/jquery-appear/jquery.appear.min.js' },
-    { src: '/assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js' },
-    { src: '/assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js' },
-    { src: '/assets/vendors/jquery-validate/jquery.validate.min.js' },
-    { src: '/assets/vendors/odometer/odometer.min.js' },
-    { src: '/assets/vendors/swiper/swiper.min.js' },
-    { src: '/assets/vendors/wnumb/wNumb.min.js' },
-    { src: '/assets/vendors/wow/wow.js' },
-    { src: '/assets/vendors/isotope/isotope.js' },
-    { src: '/assets/vendors/owl-carousel/owl.carousel.min.js' },
-    { src: '/assets/vendors/bootstrap-select/js/bootstrap-select.min.js' },
-    { src: '/assets/vendors/jquery-ui/jquery-ui.js' },
-    { src: '/assets/vendors/jquery.circle-type/jquery.circleType.js' },
-    { src: '/assets/vendors/jquery.circle-type/jquery.lettering.min.js' },
-    { src: '/assets/js/smartbiz.js' }
+    { src: '/assets/js/merged-vendors.min.js' }
   ]
 })
 </script>
