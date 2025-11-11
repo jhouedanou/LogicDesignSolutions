@@ -20,12 +20,11 @@ Ce projet utilise **Nuxt 4** pour la partie application web moderne.
 
 ### Netlify
 
-Le fichier `netlify.toml` à la racine configure automatiquement :
-- **Base directory**: `nuxt-app`
-- **Build command**: `npm run build`
-- **Publish directory**: `.output/public`
+Le fichier `netlify.toml` à la racine exécute maintenant les builds directement depuis `nuxt-app` :
+- **Commande de build**: `cd nuxt-app && npm install && npm run build`
+- **Répertoire publié**: `nuxt-app/.output/public`
 
-Netlify détectera automatiquement cette configuration lors du déploiement.
+Ainsi, Netlify installe les dépendances et lance la compilation dans le bon sous-dossier.
 
 ### Variables d'Environnement
 
