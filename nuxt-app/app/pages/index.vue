@@ -256,7 +256,7 @@
       <!--Google Map Start-->
       <section class="google-map">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2622.7967516134676!2d2.5699478999999997!3d48.8561268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e611de797bffff%3A0xea046efe8222fe8!2sLogic%20Design%20Solutions!5e0!3m2!1sfr!2sfr!4v1696521234567!5m2!1sfr!2sfr"
+          :src="googleMapSrc"
           class="google-map__one" allowfullscreen></iframe>
       </section>
       <!--Google Map End-->
@@ -379,6 +379,7 @@ const whatWeDoWidget = ref<string>('')
 const newsFromTitleWidget = ref<string>('')
 const brandsTitleWidget = ref<string>('')
 const brandsDescriptionWidget = ref<string>('')
+const googleMapSrc = ref<string>('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2622.7967516134676!2d2.5699478999999997!3d48.8561268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e611de797bffff%3A0xea046efe8222fe8!2sLogic%20Design%20Solutions!5e0!3m2!1sfr!2sfr!4v1696521234567!5m2!1sfr!2sfr')
 const featuresItems = ref<string[]>([])
 
 // Divide features dynamically into two columns
@@ -392,7 +393,7 @@ onMounted(async () => {
 
   // Load about section widgets
   try {
-    const [taglineContent, titleContent, contentTitleContent, descriptionContent, featuresContent, awardContent, companyNameContent, imageContent, whatWeDoContent, newsFromContent, brandsTitleContent, brandsDescriptionContent] = await Promise.all([
+    const [taglineContent, titleContent, contentTitleContent, descriptionContent, featuresContent, awardContent, companyNameContent, imageContent, whatWeDoContent, newsFromContent, brandsTitleContent, brandsDescriptionContent, googleMapContent] = await Promise.all([
       fetchWidgetContent('custom_html-9', 'nouveau-template-01'),  // tagline
       fetchWidgetContent('custom_html-12', 'nouveau-template-01'), // title
       fetchWidgetContent('custom_html-14', 'nouveau-template-01'), // contentTitle
@@ -404,7 +405,8 @@ onMounted(async () => {
       fetchWidgetContent('custom_html-19', 'nouveau-template-01'), // "What we do"
       fetchWidgetContent('custom_html-20', 'nouveau-template-01'), // "Recent News From"
       fetchWidgetContent('custom_html-21', 'nouveau-template-01'), // brands title
-      fetchWidgetContent('custom_html-22', 'nouveau-template-01')  // brands description
+      fetchWidgetContent('custom_html-22', 'nouveau-template-01'), // brands description
+      fetchWidgetContent('custom_html-23', 'nouveau-template-01')  // google map iframe
     ])
     aboutWidgetContent.value = taglineContent
     aboutTitleWidget.value = titleContent
@@ -416,6 +418,15 @@ onMounted(async () => {
     newsFromTitleWidget.value = newsFromContent
     brandsTitleWidget.value = brandsTitleContent
     brandsDescriptionWidget.value = brandsDescriptionContent
+
+    // Extract iframe src from Google Map widget
+    if (googleMapContent && typeof googleMapContent === 'string') {
+      const srcRegex = /src=["']([^"']+)["']/i
+      const match = googleMapContent.match(srcRegex)
+      if (match && match[1]) {
+        googleMapSrc.value = match[1]
+      }
+    }
 
     // Extract image URL from widget content
     if (imageContent && typeof imageContent === 'string') {
