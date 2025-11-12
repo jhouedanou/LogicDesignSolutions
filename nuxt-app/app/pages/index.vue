@@ -114,7 +114,7 @@
                   <div class="row">
                     <div class="col-xl-6 col-lg-6 col-md-6">
                       <ul class="about-two__list list-unstyled">
-                        <li v-for="(feature, index) in featuresItems.slice(0, 2)" :key="index">
+                        <li v-for="(feature, index) in leftFeatures" :key="index">
                           <div class="icon">
                             <span class="icon-arrows"></span>
                           </div>
@@ -126,7 +126,7 @@
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6">
                       <ul class="about-two__list two list-unstyled">
-                        <li v-for="(feature, index) in featuresItems.slice(2, 4)" :key="index">
+                        <li v-for="(feature, index) in rightFeatures" :key="index">
                           <div class="icon">
                             <span class="icon-arrows"></span>
                           </div>
@@ -357,7 +357,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted, nextTick, computed } from 'vue'
 import { useHead, useContent, useSlides } from '#imports'
 
 definePageMeta({
@@ -375,6 +375,11 @@ const aboutTitleWidget = ref<string>('')
 const aboutContentTitleWidget = ref<string>('')
 const aboutDescriptionWidget = ref<string>('')
 const featuresItems = ref<string[]>([])
+
+// Divide features dynamically into two columns
+const midpoint = computed(() => Math.ceil(featuresItems.value.length / 2))
+const leftFeatures = computed(() => featuresItems.value.slice(0, midpoint.value))
+const rightFeatures = computed(() => featuresItems.value.slice(midpoint.value))
 
 onMounted(async () => {
   // Fetch slides, partners, and products from API
