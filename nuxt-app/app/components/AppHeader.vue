@@ -29,9 +29,9 @@
                 <span class="icon-telephone-call"></span>
               </div>
               <div class="main-menu-two__call-content">
-                <p class="main-menu-two__call-sub-title">{{ site.callLabel }}</p>
+                <p class="main-menu-two__call-sub-title" v-html="callLabelWidget || site.callLabel"></p>
                 <h5 class="main-menu-two__call-number">
-                  <a :href="`tel:${site.phone.replace(/\s/g, '')}`">{{ site.phone }}</a>
+                  <a :href="`tel:${site.phone.replace(/\s/g, '')}`" v-html="phoneWidget || site.phone"></a>
                 </h5>
               </div>
             </div>
@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useFetch } from '#imports'
 
 const fallbackMenu = [
@@ -74,11 +74,28 @@ const fallbackSite = {
 
 const { data: menuResponse } = useFetch('/api/menu')
 const { data: siteResponse } = useFetch('/api/site-config')
+const { fetchWidgetContent } = useWidgets()
 
 const menuItems = computed(() => menuResponse.value?.items ?? fallbackMenu)
+const callLabelWidget = ref<string>('')
+const phoneWidget = ref<string>('')
 
 const site = computed(() => ({
   ...fallbackSite,
   ...(siteResponse.value ?? {})
 }))
+
+onMounted(async () => {
+  try {
+    // Load call label widget
+    const callLabelContent = await fetchWidgetContent('custom_html-10', 'nouveau-template-01')
+    callLabelWidget.value = callLabelContent
+
+    // Load phone widget
+    const phoneContent = await fetchWidgetContent('custom_html-11', 'nouveau-template-01')
+    phoneWidget.value = phoneContent
+  } catch (err) {
+    console.error('Error loading widgets:', err)
+  }
+})
 </script>

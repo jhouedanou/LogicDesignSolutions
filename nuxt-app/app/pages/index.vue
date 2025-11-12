@@ -100,40 +100,38 @@
               <div class="about-two__content">
                 <div class="section-title text-left">
                   <div class="section-title__tagline-box">
-                    <p class="section-title__tagline">{{ about?.tagline }}</p>
+                    <p class="section-title__tagline" v-html="aboutWidgetContent || about?.tagline"></p>
                   </div>
-                  <h2 class="section-title__title">{{ about?.title }}</h2>
+                  <h2 class="section-title__title" v-html="aboutTitleWidget || about?.title"></h2>
                 </div>
                 <div class="about-two__content-title">
-                  <h3>{{ about?.contentTitle }}</h3>
+                  <h3 v-html="aboutContentTitleWidget || about?.contentTitle"></h3>
                 </div>
                 <div class="about-two__content-text">
-                  <p>
-                    {{ about?.description }}
-                  </p>
+                  <p v-html="aboutDescriptionWidget || about?.description"></p>
                 </div>
                 <div class="about-two__content-inner">
                   <div class="row">
                     <div class="col-xl-6 col-lg-6 col-md-6">
                       <ul class="about-two__list list-unstyled">
-                        <li v-for="feature in about?.features?.slice(0, 2)" :key="feature.id">
+                        <li v-for="(feature, index) in featuresItems.slice(0, 2)" :key="index">
                           <div class="icon">
                             <span class="icon-arrows"></span>
                           </div>
                           <div class="text">
-                            <p align="justify">{{ feature.description }}</p>
+                            <p align="justify">{{ feature }}</p>
                           </div>
                         </li>
                       </ul>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6">
                       <ul class="about-two__list two list-unstyled">
-                        <li v-for="feature in about?.features?.slice(2, 4)" :key="feature.id">
+                        <li v-for="(feature, index) in featuresItems.slice(2, 4)" :key="index">
                           <div class="icon">
                             <span class="icon-arrows"></span>
                           </div>
                           <div class="text">
-                            <p align="justify">{{ feature.description }}</p>
+                            <p align="justify">{{ feature }}</p>
                           </div>
                         </li>
                       </ul>
@@ -210,11 +208,11 @@
               }
             }'>
               <!--Services Two Single Start-->
-              <div class="item">
+              <div v-for="product in products.slice(0, 4)" :key="product.id" class="item">
                 <div class="services-two__single">
                   <div class="services-two__img-box">
                     <div class="services-two__img">
-                      <img src="/assets/images/news/news-1.jpg" alt="Gen 5 NVMe Host IP on AGILEX 7 R-Tile">
+                      <img :src="product.image" :alt="product.title">
                     </div>
                   </div>
                   <div class="services-two__content">
@@ -222,73 +220,10 @@
                       <span class="icon-teamwork"></span>
                       <div class="services-two__icon-shape"></div>
                     </div>
-                    <h3 class="services-two__title"><a href="/news">Gen 5 NVMe Host IP<br>on AGILEX 7 R-Tile !</a></h3>
-                    <p class="services-two__text">France, Gournay sur Marne, September 5th 2025 – The Gen5 NVME-HOST-IP on AGILEX 7 R-Tile...</p>
-                    <a href="/news" class="services-two__btn">Read More<span
-                        class="icon-right-arrow"></span></a>
-                  </div>
-                </div>
-              </div>
-              <!--Services Two Single End-->
-              <!--Services Two Single Start-->
-              <div class="item">
-                <div class="services-two__single">
-                  <div class="services-two__img-box">
-                    <div class="services-two__img">
-                      <img src="/assets/images/news/news-2.png" alt="NVME Host IP on Kintex Ultra Scale Plus">
-                    </div>
-                  </div>
-                  <div class="services-two__content">
-                    <div class="services-two__icon">
-                      <span class="icon-coin-stack"></span>
-                      <div class="services-two__icon-shape"></div>
-                    </div>
-                    <h3 class="services-two__title"><a href="/news">NVME Host IP on<br>Kintex Ultra Scale Plus !</a></h3>
-                    <p class="services-two__text">France, Gournay sur Marne, November 14th 2024 – The NVME-HOST-IP on Kintex Ultra Scale Plus...</p>
-                    <a href="/news" class="services-two__btn">Read More<span
-                        class="icon-right-arrow"></span></a>
-                  </div>
-                </div>
-              </div>
-              <!--Services Two Single End-->
-              <!--Services Two Single Start-->
-              <div class="item">
-                <div class="services-two__single">
-                  <div class="services-two__img-box">
-                    <div class="services-two__img">
-                      <img src="/assets/images/news/news-3.jpg" alt="New ARINC 429 IP">
-                    </div>
-                  </div>
-                  <div class="services-two__content">
-                    <div class="services-two__icon">
-                      <span class="icon-teamwork"></span>
-                      <div class="services-two__icon-shape"></div>
-                    </div>
-                    <h3 class="services-two__title"><a href="/news">New ARINC 429 IP</a></h3>
-                    <p class="services-two__text">France, Gournay sur Marne, November 4th 2024 – The new ARINC 429 IP from Logic Design Solutions...</p>
-                    <a href="/news" class="services-two__btn">Read More<span
-                        class="icon-right-arrow"></span></a>
-                  </div>
-                </div>
-              </div>
-              <!--Services Two Single End-->
-              <!--Services Two Single Start-->
-              <div class="item">
-                <div class="services-two__single">
-                  <div class="services-two__img-box">
-                    <div class="services-two__img">
-                      <img src="/assets/images/news/news-4.jpg" alt="Gen4 NVME Host IP on Artix Ultra Scale Plus">
-                    </div>
-                  </div>
-                  <div class="services-two__content">
-                    <div class="services-two__icon">
-                      <span class="icon-coin-stack"></span>
-                      <div class="services-two__icon-shape"></div>
-                    </div>
-                    <h3 class="services-two__title"><a href="/news">Gen4 NVME Host IP on<br>Artix Ultra Scale Plus !</a></h3>
-                    <p class="services-two__text">France, Gournay sur Marne, November 4th 2024 – The Gen4 NVME-HOST-IP on Artix Ultra Scale Plus...</p>
-                    <a href="/news" class="services-two__btn">Read More<span
-                        class="icon-right-arrow"></span></a>
+                    <h3 class="services-two__title"><NuxtLink :to="`/product-detail?id=${product.id}`">{{ product.title }}</NuxtLink></h3>
+                    <p class="services-two__text">{{ product.excerpt }}</p>
+                    <NuxtLink :to="`/product-detail?id=${product.id}`" class="services-two__btn">Read More<span
+                        class="icon-right-arrow"></span></NuxtLink>
                   </div>
                 </div>
               </div>
@@ -422,7 +357,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { useHead, useContent, useSlides } from '#imports'
 
 definePageMeta({
@@ -432,32 +367,86 @@ definePageMeta({
 const { hero, about, news, site, brands } = useContent()
 const { slides, fetchSlides } = useSlides()
 const { partners, fetchPartners } = usePartners()
+const { products, fetchProducts } = useProducts()
+const { fetchWidgetContent } = useWidgets()
 const isLoading = ref(true)
+const aboutWidgetContent = ref<string>('')
+const aboutTitleWidget = ref<string>('')
+const aboutContentTitleWidget = ref<string>('')
+const aboutDescriptionWidget = ref<string>('')
+const featuresItems = ref<string[]>([])
 
 onMounted(async () => {
-  // Fetch slides and partners from API
-  await Promise.all([fetchSlides(), fetchPartners()])
+  // Fetch slides, partners, and products from API
+  await Promise.all([fetchSlides(), fetchPartners(), fetchProducts()])
+
+  // Load about section widgets
+  try {
+    const [taglineContent, titleContent, contentTitleContent, descriptionContent, featuresContent] = await Promise.all([
+      fetchWidgetContent('custom_html-9', 'nouveau-template-01'),  // tagline
+      fetchWidgetContent('custom_html-12', 'nouveau-template-01'), // title
+      fetchWidgetContent('custom_html-14', 'nouveau-template-01'), // contentTitle
+      fetchWidgetContent('custom_html-15', 'nouveau-template-01'), // description
+      fetchWidgetContent('text-3', 'nouveau-template-01')          // features
+    ])
+//console.log(featuresContent)
+    aboutWidgetContent.value = taglineContent
+    aboutTitleWidget.value = titleContent
+    aboutContentTitleWidget.value = contentTitleContent
+    aboutDescriptionWidget.value = descriptionContent
+
+    // Parse features from HTML using regex (works server-side and client-side)
+    if (featuresContent) {
+      const liRegex = /<li[^>]*>([\s\S]*?)<\/li>/gi
+      const matches = Array.from(featuresContent.matchAll(liRegex))
+      featuresItems.value = matches.map((match) => {
+        // Remove HTML tags and trim whitespace
+        return match[1].replace(/<[^>]*>/g, '').trim()
+      })
+    }
+  } catch (err) {
+    console.error('Error loading about widgets:', err)
+  }
+
+  // Wait for DOM to be fully rendered
+  await nextTick()
 
   // Hide preloader after content is ready
   setTimeout(() => {
     isLoading.value = false
   }, 500)
 
-  // Initialize Owl Carousel AFTER slides are loaded
-  if (typeof window !== 'undefined' && (window as any).$) {
-    const $ = (window as any).$
+  // Initialize Owl Carousel with robust retry logic
+  if (typeof window !== 'undefined') {
+    const initCarousels = (attempts = 0) => {
+      const $ = (window as any).$
 
-    // Wait for owl carousel script to be loaded
-    const initCarousel = () => {
-      if ($.fn.owlCarousel) {
-        // Destroy existing carousel if it exists
-        const carousel = $('.main-slider-two__carousel')
-        if (carousel.hasClass('owl-loaded')) {
-          carousel.trigger('destroy.owl.carousel')
+      if (!$ || !$.fn.owlCarousel) {
+        if (attempts < 20) {
+          // Retry up to 20 times (2 seconds total)
+          setTimeout(() => initCarousels(attempts + 1), 100)
+        }
+        return
+      }
+
+      try {
+        // Destroy existing carousels if they exist
+        const mainCarousel = $('.main-slider-two__carousel')
+        const servicesCarousel = $('.services-two__carousel')
+        const brandCarousel = $('.brand-one__carousel')
+
+        if (mainCarousel.hasClass('owl-loaded')) {
+          mainCarousel.trigger('destroy.owl.carousel')
+        }
+        if (servicesCarousel.hasClass('owl-loaded')) {
+          servicesCarousel.trigger('destroy.owl.carousel')
+        }
+        if (brandCarousel.hasClass('owl-loaded')) {
+          brandCarousel.trigger('destroy.owl.carousel')
         }
 
-        // Initialize main slider carousel with fresh instance
-        carousel.owlCarousel({
+        // Initialize main slider carousel
+        mainCarousel.owlCarousel({
           loop: true,
           items: 1,
           navText: ['<span class="icon-left-arrow"></span>', '<span class="icon-right-arrow"></span>'],
@@ -474,7 +463,7 @@ onMounted(async () => {
         })
 
         // Initialize services carousel
-        $('.services-two__carousel').owlCarousel({
+        servicesCarousel.owlCarousel({
           loop: true,
           autoplay: true,
           margin: 30,
@@ -484,26 +473,16 @@ onMounted(async () => {
           autoplayTimeout: 10000,
           navText: ['<span class="icon-left-arrow"></span>', '<span class="icon-right-arrow"></span>'],
           responsive: {
-            0: {
-              items: 1
-            },
-            768: {
-              items: 1
-            },
-            992: {
-              items: 1
-            },
-            1200: {
-              items: 1
-            },
-            1350: {
-              items: 2
-            }
+            0: { items: 1 },
+            768: { items: 1 },
+            992: { items: 1 },
+            1200: { items: 1 },
+            1350: { items: 2 }
           }
         })
 
         // Initialize partners/brands carousel
-        $('.brand-one__carousel').owlCarousel({
+        brandCarousel.owlCarousel({
           loop: true,
           items: 3,
           margin: 100,
@@ -513,39 +492,23 @@ onMounted(async () => {
           autoplayTimeout: 5000,
           smartSpeed: 1000,
           responsive: {
-            0: {
-              items: 1,
-              margin: 30
-            },
-            375: {
-              items: 1,
-              margin: 30
-            },
-            575: {
-              items: 2,
-              margin: 50
-            },
-            767: {
-              items: 2,
-              margin: 50
-            },
-            991: {
-              items: 3,
-              margin: 80
-            },
-            1199: {
-              items: 3,
-              margin: 100
-            }
+            0: { items: 1, margin: 30 },
+            375: { items: 1, margin: 30 },
+            575: { items: 2, margin: 50 },
+            767: { items: 2, margin: 50 },
+            991: { items: 3, margin: 80 },
+            1199: { items: 3, margin: 100 }
           }
         })
-      } else {
-        setTimeout(initCarousel, 100)
+
+        console.log('Owl Carousel initialized successfully')
+      } catch (error) {
+        console.error('Error initializing Owl Carousel:', error)
       }
     }
 
-    // Wait longer to ensure slides are rendered
-    setTimeout(initCarousel, 1000)
+    // Start initialization after a delay to ensure DOM is ready
+    setTimeout(() => initCarousels(), 1500)
   }
 })
 
