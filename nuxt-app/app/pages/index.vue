@@ -309,59 +309,10 @@
           </div>
           <p class="brand-two__text">{{ brands?.description }}</p>
           <div class="brand-one__inner">
-            <div class="thm-swiper__slider swiper-container" data-swiper-options='{"spaceBetween": 100,
-            "slidesPerView": 3,
-            "loop": true,
-            "navigation": {
-              "nextEl": "#brand-one__swiper-button-next",
-              "prevEl": "#brand-one__swiper-button-prev"
-            },
-            "autoplay": { "delay": 5000 },
-            "breakpoints": {
-              "0": {
-                "spaceBetween": 30,
-                "slidesPerView": 1
-              },
-              "375": {
-                "spaceBetween": 30,
-                "slidesPerView": 1
-              },
-              "575": {
-                "spaceBetween": 50,
-                "slidesPerView": 2
-              },
-              "767": {
-                "spaceBetween": 50,
-                "slidesPerView": 2
-              },
-              "991": {
-                "spaceBetween": 80,
-                "slidesPerView": 3
-              },
-              "1199": {
-                "spaceBetween": 100,
-                "slidesPerView": 3
-              }
-            }}'>
-              <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <img src="/assets/images/brand/AMD_Embedded_Select.png" alt="AMD Embedded Select Partner">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                  <img src="/assets/images/brand/Member-Badge-1-1.png" alt="Intel Partner">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                  <img src="/assets/images/brand/image001.png" alt="Technology Partner">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                  <img src="/assets/images/brand/AMD_Embedded_Select.png" alt="AMD Embedded Select Partner">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                  <img src="/assets/images/brand/Member-Badge-1-1.png" alt="Intel Partner">
-                </div><!-- /.swiper-slide -->
-                <div class="swiper-slide">
-                  <img src="/assets/images/brand/image001.png" alt="Technology Partner">
-                </div><!-- /.swiper-slide -->
+            <div class="brand-one__carousel owl-carousel owl-theme thm-owl__carousel"
+              data-owl-options='{"loop": true, "items": 3, "margin": 100, "dots": true, "nav": false, "autoplay": true, "autoplayTimeout": 5000, "responsive": {"0": {"items": 1, "margin": 30}, "375": {"items": 1, "margin": 30}, "575": {"items": 2, "margin": 50}, "767": {"items": 2, "margin": 50}, "991": {"items": 3, "margin": 80}, "1199": {"items": 3, "margin": 100}}}'>
+              <div v-for="partner in partners" :key="partner.id" class="item">
+                <img :src="partner.image" :alt="partner.title">
               </div>
             </div>
           </div>
@@ -480,11 +431,12 @@ definePageMeta({
 
 const { hero, about, news, site, brands } = useContent()
 const { slides, fetchSlides } = useSlides()
+const { partners, fetchPartners } = usePartners()
 const isLoading = ref(true)
 
 onMounted(async () => {
-  // Fetch slides from API first
-  await fetchSlides()
+  // Fetch slides and partners from API
+  await Promise.all([fetchSlides(), fetchPartners()])
 
   // Hide preloader after content is ready
   setTimeout(() => {
@@ -546,6 +498,44 @@ onMounted(async () => {
             },
             1350: {
               items: 2
+            }
+          }
+        })
+
+        // Initialize partners/brands carousel
+        $('.brand-one__carousel').owlCarousel({
+          loop: true,
+          items: 3,
+          margin: 100,
+          dots: true,
+          nav: false,
+          autoplay: true,
+          autoplayTimeout: 5000,
+          smartSpeed: 1000,
+          responsive: {
+            0: {
+              items: 1,
+              margin: 30
+            },
+            375: {
+              items: 1,
+              margin: 30
+            },
+            575: {
+              items: 2,
+              margin: 50
+            },
+            767: {
+              items: 2,
+              margin: 50
+            },
+            991: {
+              items: 3,
+              margin: 80
+            },
+            1199: {
+              items: 3,
+              margin: 100
             }
           }
         })
@@ -619,6 +609,22 @@ useHead({
   height: 100vh;
   display: flex;
   align-items: center;
+}
+
+/* Brand/Partners Carousel Height */
+.brand-one__carousel .item {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-one__carousel .item img {
+  max-height: 90px;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
 .main-slider-two__bg {
