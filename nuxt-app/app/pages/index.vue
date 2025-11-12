@@ -67,9 +67,9 @@
         <div class="main-slider-two__carousel owl-carousel owl-theme thm-owl__carousel"
           data-owl-options='{"loop": true, "items": 1, "navText": ["<span class=\"icon-left-arrow\"></span>","<span class=\"icon-right-arrow\"></span>"], "margin": 0, "dots": true, "nav": false, "animateOut": "slideOutDown", "animateIn": "fadeIn", "active": true, "smartSpeed": 1000, "autoplay": true, "autoplayTimeout": 7000, "autoplayHoverPause": false}'>
 
-          <div class="item main-slider-two__slide-1">
+          <div v-for="(slide, index) in slides" :key="slide.id" :class="`item main-slider-two__slide-${index + 1}`">
             <div class="main-slider-two__bg"
-              style="background-image: url(/assets/images/backgrounds/logic-slider-1.webp);">
+              :style="`background-image: url(${slide.image});`">
             </div><!-- /.slider-one__bg -->
             <div class="main-slider-two__shape-1"></div>
             <div class="main-slider-two__shape-2"></div>
@@ -77,52 +77,10 @@
             </div>
             <div class="container">
               <div class="main-slider-two__content">
-                <p class="main-slider-two__sub-title">FPGA Design Services</p>
-                <h2 class="main-slider-two__title">Discover our <br> product lines <br> and IP solutions</h2>
+                <p class="main-slider-two__sub-title">{{ slide.subtitle }}</p>
+                <h2 class="main-slider-two__title" v-html="slide.title"></h2>
                 <div class="main-slider-two__btn-box">
-                  <a href="/products" class="main-slider-two__btn thm-btn">Let's Work Together<span
-                      class="icon-right-arrow"></span></a>
-                </div>
-              </div>
-              <!-- Video hidden -->
-            </div>
-          </div>
-
-          <div class="item main-slider-two__slide-2">
-            <div class="main-slider-two__bg"
-              style="background-image: url(/assets/images/backgrounds/logic-slider-2.webp);">
-            </div><!-- /.slider-one__bg -->
-            <div class="main-slider-two__shape-1"></div>
-            <div class="main-slider-two__shape-2"></div>
-            <div class="main-slider-two__shape-3"><img src="/assets/images/shapes/slider-v2-shape1.png" alt="">
-            </div>
-            <div class="container">
-              <div class="main-slider-two__content">
-                <p class="main-slider-two__sub-title">FPGA Design Services</p>
-                <h2 class="main-slider-two__title">Discover our <br> product lines <br> and IP solutions</h2>
-                <div class="main-slider-two__btn-box">
-                  <a href="/products" class="main-slider-two__btn thm-btn">Let's Work Together<span
-                      class="icon-right-arrow"></span></a>
-                </div>
-              </div>
-              <!-- Video hidden -->
-            </div>
-          </div>
-
-          <div class="item main-slider-two__slide-3">
-            <div class="main-slider-two__bg"
-              style="background-image: url(/assets/images/backgrounds/logic-slider-3.webp);">
-            </div><!-- /.slider-one__bg -->
-            <div class="main-slider-two__shape-1"></div>
-            <div class="main-slider-two__shape-2"></div>
-            <div class="main-slider-two__shape-3"><img src="/assets/images/shapes/slider-v2-shape1.png" alt="">
-            </div>
-            <div class="container">
-              <div class="main-slider-two__content">
-                <p class="main-slider-two__sub-title">FPGA Design Services</p>
-                <h2 class="main-slider-two__title">Discover our <br> product lines <br> and IP solutions</h2>
-                <div class="main-slider-two__btn-box">
-                  <a href="/products" class="main-slider-two__btn thm-btn">Let's Work Together<span
+                  <a :href="slide.link" class="main-slider-two__btn thm-btn">{{ slide.linkText }}<span
                       class="icon-right-arrow"></span></a>
                 </div>
               </div>
@@ -514,30 +472,40 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useHead } from '#imports'
+import { useHead, useContent, useSlides } from '#imports'
 
 definePageMeta({
   layout: false
 })
 
 const { hero, about, news, site, brands } = useContent()
+const { slides, fetchSlides } = useSlides()
 const isLoading = ref(true)
 
-onMounted(() => {
+onMounted(async () => {
+  // Fetch slides from API first
+  await fetchSlides()
+
   // Hide preloader after content is ready
   setTimeout(() => {
     isLoading.value = false
   }, 500)
 
-  // Initialize Owl Carousel after DOM is ready
+  // Initialize Owl Carousel AFTER slides are loaded
   if (typeof window !== 'undefined' && (window as any).$) {
     const $ = (window as any).$
 
     // Wait for owl carousel script to be loaded
     const initCarousel = () => {
       if ($.fn.owlCarousel) {
-        // Initialize main slider carousel
-        $('.main-slider-two__carousel').owlCarousel({
+        // Destroy existing carousel if it exists
+        const carousel = $('.main-slider-two__carousel')
+        if (carousel.hasClass('owl-loaded')) {
+          carousel.trigger('destroy.owl.carousel')
+        }
+
+        // Initialize main slider carousel with fresh instance
+        carousel.owlCarousel({
           loop: true,
           items: 1,
           navText: ['<span class="icon-left-arrow"></span>', '<span class="icon-right-arrow"></span>'],
@@ -586,7 +554,8 @@ onMounted(() => {
       }
     }
 
-    setTimeout(initCarousel, 500)
+    // Wait longer to ensure slides are rendered
+    setTimeout(initCarousel, 1000)
   }
 })
 
