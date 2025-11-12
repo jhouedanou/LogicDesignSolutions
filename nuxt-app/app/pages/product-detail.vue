@@ -182,7 +182,9 @@
 </template>
 
 <script setup lang="ts">
-import { useHead } from '#imports'
+import { useHead, navigateTo } from '#imports'
+import { ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
 
 // Types are defined in types/global.d.ts
 type WordPressProduct = {
@@ -206,51 +208,51 @@ const route = useRoute()
 const productId = route.query.id as string
 
 // Initialize product as null to prevent undefined requests
-let product: any = null
-let error: any = null
-let pending = false
+const product = ref<any>(null)
+const error = ref<any>(null)
+const pending = ref(false)
+const allCategories = ref<any[]>([])
 
 // Only fetch if productId is defined and valid
 if (productId && productId !== 'undefined' && productId.trim()) {
-  const result = await useWPProduct(productId)
-  product = result.data
-  error = result.error
-  pending = result.pending
+  const { data: prodData, error: prodError, pending: prodPending } = await useWPProduct(productId)
+  product.value = prodData.value
+  error.value = prodError.value
+  pending.value = prodPending.value
+
+  // Fetch all categories to match with product
+  const { data: categoriesData } = await useWPProductCategories()
+  allCategories.value = categoriesData.value || []
 } else {
   // Product ID is missing, redirect to products page
-  if (process.client) {
-    navigateTo('/products')
-  }
+  navigateTo('/products')
 }
-
-// Fetch all categories to match with product
-const { data: allCategories } = await useWPProductCategories()
 
 // Get product categories
 const productCategories = computed(() => {
-  if (!product || !product.product_cat || !allCategories) return []
-  return allCategories.filter((cat: WordPressProductCategory) => 
-    product.product_cat!.includes(cat.id)
+  if (!product.value || !product.value.product_cat || !allCategories.value) return []
+  return allCategories.value.filter((cat: WordPressProductCategory) =>
+    product.value.product_cat!.includes(cat.id)
   )
 })
 
 // Get product image
 const productImage = computed(() => {
-  if (!product) return ''
-  if (product._embedded?.['wp:featuredmedia']?.[0]?.source_url) {
-    return product._embedded['wp:featuredmedia'][0].source_url
+  if (!product.value) return ''
+  if (product.value._embedded?.['wp:featuredmedia']?.[0]?.source_url) {
+    return product.value._embedded['wp:featuredmedia'][0].source_url
   }
   return '/assets/images/news/placeholder-product.jpg'
 })
 
 // Fetch related products (same category)
 const relatedProducts = ref<WordPressProduct[]>([])
-if (product && productCategories.value.length > 0) {
+if (product.value && productCategories.value.length > 0) {
   const categoryId = productCategories.value[0]!.id
   const { data: categoryProducts } = await useWPProducts(6, 1)
-  relatedProducts.value = categoryProducts.filter((p: WordPressProduct) => 
-    p.id !== product.id && p.product_cat?.includes(categoryId)
-  )
+  relatedProducts.value = categoryProducts.value?.filter((p: WordPressProduct) =>
+    p.id !== product.value.id && p.product_cat?.includes(categoryId)
+  ) || []
 }
 
 // Helper function to get product image from embedded data
@@ -267,16 +269,6 @@ const stripHtml = (html: string): string => {
   return html.replace(/<[^>]*>/g, '')
 }
 
-// Helper function to format date
-const formatDate = (dateString: string): string => {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('en-US', { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
-  })
-}
-
 // Social sharing functions
 const shareOnFacebook = () => {
   const url = window.location.href
@@ -285,7 +277,7 @@ const shareOnFacebook = () => {
 
 const shareOnTwitter = () => {
   const url = window.location.href
-  const text = product ? stripHtml(product.title.rendered) : 'Check out this product'
+  const text = product.value ? stripHtml(product.value.title.rendered) : 'Check out this product'
   window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank')
 }
 
@@ -305,11 +297,11 @@ const copyLink = async () => {
 
 // Set page title
 useHead({
-  title: product ? `${stripHtml(product.title.rendered)} - Logic Design Solutions` : 'Product Details',
+  title: product.value ? `${stripHtml(product.value.title.rendered)} - Logic Design Solutions` : 'Product Details',
   meta: [
     {
       name: 'description',
-      content: product ? stripHtml(product.excerpt?.rendered || '') : 'Product details'
+      content: product.value ? stripHtml(product.value.excerpt?.rendered || '') : 'Product details'
     }
   ]
 })

@@ -75,7 +75,7 @@
                     </div>
                     <div class="news-one__content">
                       <h3 class="news-one__title">
-                        <NuxtLink :to="`/product-detail?id=${product.id}`" v-html="product.title.rendered"></NuxtLink>
+                        <NuxtLink :to="`/product-detail?id=${product.id}`" v-html="getProductTitle(product)"></NuxtLink>
                       </h3>
                     </div>
                   </div>
@@ -175,6 +175,8 @@
 
 <script setup lang="ts">
 import { useHead } from '#imports'
+import { ref, computed, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 // Types are defined in types/global.d.ts
 type WordPressProduct = {
@@ -211,8 +213,8 @@ const selectedCategory = ref<number | null>(route.query.cat ? parseInt(route.que
 const perPage = 9 // 3 colonnes x 3 lignes
 
 // Fetch categories first
-const categoriesResult = await useWPProductCategories()
-const categories = ref<WordPressProductCategory[]>(categoriesResult.data || [])
+const { data: categoriesData } = await useWPProductCategories()
+const categories = ref<WordPressProductCategory[]>(categoriesData.value || [])
 
 // Reactive state
 const allProducts = ref<WordPressProduct[]>([])
@@ -247,23 +249,45 @@ const paginatedProducts = computed(() => {
 const loadProducts = async () => {
   pending.value = true
   error.value = null
-  
+
   try {
     // Load enough products to handle filtering (100 products)
-    const result = await useWPProducts(100, 1)
-    allProducts.value = result.data || []
-    totalCount.value = result.totalCount || 0
-    totalPages.value = result.totalPages || 1
-    error.value = result.error
+    const { data, error: fetchError, totalCount: count, totalPages: pages } = await useWPProducts(100, 1)
+
+    console.log('Products loaded:', data.value)
+    console.log('Total count:', count.value)
+
+    allProducts.value = data.value || []
+    totalCount.value = count.value || 0
+    totalPages.value = pages.value || 1
+    error.value = fetchError.value
+
+    console.log('All products set:', allProducts.value.length)
   } catch (e) {
     error.value = e
+    console.error('Error loading products:', e)
   } finally {
     pending.value = false
   }
 }
 
 // Initial load
-await loadProducts()
+try {
+  await loadProducts()
+} catch (e) {
+  console.error('Failed to load products:', e)
+}
+
+// Helper function to get product title reliably
+const getProductTitle = (product: WordPressProduct): string => {
+  // Try different title locations
+  if (product.title?.rendered) {
+    return product.title.rendered
+  } else if (typeof product.title === 'string') {
+    return product.title
+  }
+  return 'Untitled Product'
+}
 
 // Helper function to get product image from embedded data
 const getProductImage = (product: WordPressProduct): string => {
@@ -271,7 +295,7 @@ const getProductImage = (product: WordPressProduct): string => {
   if (product._embedded?.['wp:featuredmedia']?.[0]?.source_url) {
     return product._embedded['wp:featuredmedia'][0].source_url
   }
-  
+
   // Fallback to placeholder
   return '/assets/images/news/placeholder-product.jpg'
 }
