@@ -173,11 +173,9 @@
         <div class="container">
           <div class="section-title-two text-center">
             <div class="section-title-two__tagline-box">
-              <p class="section-title-two__tagline">What we do</p>
+              <p class="section-title-two__tagline" v-html="whatWeDoWidget || 'What we do'"></p>
             </div>
-            <h2 class="section-title-two__title">Recent <span>News</span> From
-              <br> Blog Latest News
-            </h2>
+            <h2 class="section-title-two__title" v-html="newsFromTitleWidget || 'Recent <span>News</span> From<br> Blog Latest News'"></h2>
           </div>
           <div class="services-two__bottom">
             <div class="services-two__carousel owl-carousel owl-theme thm-owl__carousel" data-owl-options='{
@@ -240,9 +238,9 @@
         <div class="container">
           <div class="section-title-two text-center">
             <!-- Tagline removed -->
-            <h2 class="section-title-two__title">{{ brands?.title }}</h2>
+            <h2 class="section-title-two__title" v-html="brandsTitleWidget || brands?.title"></h2>
           </div>
-          <p class="brand-two__text">{{ brands?.description }}</p>
+          <p class="brand-two__text" v-html="brandsDescriptionWidget || brands?.description"></p>
           <div class="brand-one__inner">
             <div class="brand-one__carousel owl-carousel owl-theme thm-owl__carousel"
               data-owl-options='{"loop": true, "items": 3, "margin": 100, "dots": true, "nav": false, "autoplay": true, "autoplayTimeout": 5000, "responsive": {"0": {"items": 1, "margin": 30}, "375": {"items": 1, "margin": 30}, "575": {"items": 2, "margin": 50}, "767": {"items": 2, "margin": 50}, "991": {"items": 3, "margin": 80}, "1199": {"items": 3, "margin": 100}}}'>
@@ -377,6 +375,10 @@ const aboutDescriptionWidget = ref<string>('')
 const awardWidget = ref<string>('')
 const companyNameWidget = ref<string>('')
 const awardImageUrl = ref<string>('/assets/images/resources/im1.jpeg')
+const whatWeDoWidget = ref<string>('')
+const newsFromTitleWidget = ref<string>('')
+const brandsTitleWidget = ref<string>('')
+const brandsDescriptionWidget = ref<string>('')
 const featuresItems = ref<string[]>([])
 
 // Divide features dynamically into two columns
@@ -390,7 +392,7 @@ onMounted(async () => {
 
   // Load about section widgets
   try {
-    const [taglineContent, titleContent, contentTitleContent, descriptionContent, featuresContent, awardContent, companyNameContent, imageContent] = await Promise.all([
+    const [taglineContent, titleContent, contentTitleContent, descriptionContent, featuresContent, awardContent, companyNameContent, imageContent, whatWeDoContent, newsFromContent, brandsTitleContent, brandsDescriptionContent] = await Promise.all([
       fetchWidgetContent('custom_html-9', 'nouveau-template-01'),  // tagline
       fetchWidgetContent('custom_html-12', 'nouveau-template-01'), // title
       fetchWidgetContent('custom_html-14', 'nouveau-template-01'), // contentTitle
@@ -398,7 +400,11 @@ onMounted(async () => {
       fetchWidgetContent('text-3', 'nouveau-template-01'),         // features
       fetchWidgetContent('custom_html-17', 'nouveau-template-01'), // award
       fetchWidgetContent('custom_html-18', 'nouveau-template-01'), // company name
-      fetchWidgetContent('media_image-2', 'nouveau-template-01')   // award image
+      fetchWidgetContent('media_image-2', 'nouveau-template-01'),  // award image
+      fetchWidgetContent('custom_html-19', 'nouveau-template-01'), // "What we do"
+      fetchWidgetContent('custom_html-20', 'nouveau-template-01'), // "Recent News From"
+      fetchWidgetContent('custom_html-21', 'nouveau-template-01'), // brands title
+      fetchWidgetContent('custom_html-22', 'nouveau-template-01')  // brands description
     ])
     aboutWidgetContent.value = taglineContent
     aboutTitleWidget.value = titleContent
@@ -406,6 +412,10 @@ onMounted(async () => {
     aboutDescriptionWidget.value = descriptionContent
     awardWidget.value = awardContent
     companyNameWidget.value = companyNameContent
+    whatWeDoWidget.value = whatWeDoContent
+    newsFromTitleWidget.value = newsFromContent
+    brandsTitleWidget.value = brandsTitleContent
+    brandsDescriptionWidget.value = brandsDescriptionContent
 
     // Extract image URL from widget content
     if (imageContent && typeof imageContent === 'string') {
