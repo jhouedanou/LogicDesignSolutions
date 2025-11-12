@@ -1,3 +1,5 @@
+import { ref } from 'vue'
+
 export const useContent = () => {
   const hero = ref({
     title: 'Innovative FPGA Solutions',
@@ -6,7 +8,7 @@ export const useContent = () => {
     cta: 'Get Started',
     image: '/assets/images/hero-bg.jpg'
   })
-  
+
   const about = ref({
     tagline: 'About Us',
     title: 'Leading Provider of FPGA Design Solutions',
@@ -22,9 +24,9 @@ export const useContent = () => {
     award: 'Award Winning',
     companyName: 'Logic Design Solutions'
   })
-  
+
   const news = ref([] as Array<Record<string, any>>)
-  
+
   const brands = ref({
     title: 'Trusted Technology Partners',
     description: 'We work with industry-leading technology partners',

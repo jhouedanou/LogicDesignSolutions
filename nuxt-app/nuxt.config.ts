@@ -152,10 +152,25 @@ export default defineNuxtConfig({
         scss: {
           additionalData: '@use "~/assets/scss/_variables.scss" as *;'
         }
+      },
+      postcss: {
+        plugins: [
+          {
+            postcssPlugin: 'internal:replace-color-adjust',
+            Once(root: any) {
+              root.walkDecls(/^-webkit-print-color-adjust$|^color-adjust$/, (decl: any) => {
+                if (decl.prop === 'color-adjust') {
+                  decl.prop = 'print-color-adjust';
+                }
+              });
+            }
+          }
+        ]
       }
     },
     build: {
       cssCodeSplit: true,
+      sourcemap: false,
       rollupOptions: {
         output: {
           manualChunks: {
