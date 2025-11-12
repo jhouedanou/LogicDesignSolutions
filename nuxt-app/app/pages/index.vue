@@ -154,7 +154,7 @@
                   <h3><span v-html="awardWidget || about?.award"></span> <br><span v-html="companyNameWidget || about?.companyName"></span></h3>
                 </div>
                 <div class="about-two__img-inner">
-                  <img src="/assets/images/resources/im1.jpeg" alt="Image" style="border-radius: 10px;">
+                  <img :src="awardImageUrl" alt="Image" style="border-radius: 10px;">
                   <!-- Video hidden -->
                   <div class="about-two__img-line about-two__img-line1"></div>
                   <div class="about-two__img-line about-two__img-line2"></div>
@@ -376,6 +376,7 @@ const aboutContentTitleWidget = ref<string>('')
 const aboutDescriptionWidget = ref<string>('')
 const awardWidget = ref<string>('')
 const companyNameWidget = ref<string>('')
+const awardImageUrl = ref<string>('/assets/images/resources/im1.jpeg')
 const featuresItems = ref<string[]>([])
 
 // Divide features dynamically into two columns
@@ -389,14 +390,15 @@ onMounted(async () => {
 
   // Load about section widgets
   try {
-    const [taglineContent, titleContent, contentTitleContent, descriptionContent, featuresContent, awardContent, companyNameContent] = await Promise.all([
+    const [taglineContent, titleContent, contentTitleContent, descriptionContent, featuresContent, awardContent, companyNameContent, imageContent] = await Promise.all([
       fetchWidgetContent('custom_html-9', 'nouveau-template-01'),  // tagline
       fetchWidgetContent('custom_html-12', 'nouveau-template-01'), // title
       fetchWidgetContent('custom_html-14', 'nouveau-template-01'), // contentTitle
       fetchWidgetContent('custom_html-15', 'nouveau-template-01'), // description
       fetchWidgetContent('text-3', 'nouveau-template-01'),         // features
       fetchWidgetContent('custom_html-17', 'nouveau-template-01'), // award
-      fetchWidgetContent('custom_html-18', 'nouveau-template-01')  // company name
+      fetchWidgetContent('custom_html-18', 'nouveau-template-01'), // company name
+      fetchWidgetContent('media_image-2', 'nouveau-template-01')   // award image
     ])
     aboutWidgetContent.value = taglineContent
     aboutTitleWidget.value = titleContent
@@ -404,6 +406,18 @@ onMounted(async () => {
     aboutDescriptionWidget.value = descriptionContent
     awardWidget.value = awardContent
     companyNameWidget.value = companyNameContent
+
+    // Extract image URL from widget content
+    if (imageContent && typeof imageContent === 'string') {
+      try {
+        const imageData = JSON.parse(imageContent)
+        if (imageData.content && imageData.content.url) {
+          awardImageUrl.value = imageData.content.url
+        }
+      } catch (parseErr) {
+        console.warn('Failed to parse image widget content:', parseErr)
+      }
+    }
 
     // Parse features from HTML using regex (works server-side and client-side)
     if (featuresContent) {
