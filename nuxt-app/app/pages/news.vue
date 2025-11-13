@@ -193,13 +193,15 @@
           <div class="col-xl-4 col-lg-5">
             <div class="sidebar">
               <!-- Subscribe to Newsletter Sidebar -->
-              <HaveAnyProject 
-                title="Subscribe to"
-                subtitle="Our Newsletter"
-                cta=""
-                buttonText="Subscribe"
+              <ClientOnly>
+                <HaveAnyProject 
+                  title="Subscribe to"
+                  subtitle="Our Newsletter"
+                  cta=""
+                  buttonText="Subscribe"
                 buttonLink="#"
               />
+              </ClientOnly>
             </div>
           </div>
         </div>

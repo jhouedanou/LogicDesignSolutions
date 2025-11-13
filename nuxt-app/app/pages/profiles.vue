@@ -120,12 +120,14 @@
                     <div class="col-xl-4 col-lg-5">
                         <div class="sidebar">
                             <!-- Search, Quick Links and Statistics removed -->
-                            <HaveAnyProject 
-                              title="Have Any"
-                              subtitle="Project?"
-                              cta="Contact Us"
-                              buttonText="Contact Us"
-                            />
+                            <ClientOnly>
+                                <HaveAnyProject 
+                                  title="Have Any"
+                                  subtitle="Project?"
+                                  cta="Contact Us"
+                                  buttonText="Contact Us"
+                                />
+                            </ClientOnly>
                             <!-- Technologies section removed -->
                         </div>
                     </div>
