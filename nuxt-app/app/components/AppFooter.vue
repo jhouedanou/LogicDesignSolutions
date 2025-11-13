@@ -8,7 +8,6 @@
             <NuxtLink to="/" style="font-size: 24px; font-weight: 700; font-style: italic; color: #ffffff;">LogicDesignSolutions</NuxtLink>
           </div>
           <p class="site-footer-two__bottom-text">Copyright © Logic Design Solution
-            All
             Rights Reserved - Design by <a style="color:#999999;"  href="">Digital Consulting</a></p>
           <ul class="list-unstyled site-footer-two__bottom-menu">
             <li><NuxtLink to="/profiles">Profiles</NuxtLink></li>

@@ -154,7 +154,7 @@
                   <h3><span v-html="awardWidget || about?.award"></span> <br><span v-html="companyNameWidget || about?.companyName"></span></h3>
                 </div>
                 <div class="about-two__img-inner">
-                  <img :src="awardImageUrl" alt="Image" style="border-radius: 10px;">
+                  <img v-if="awardImageUrl" :src="awardImageUrl" alt="Award Image" style="border-radius: 10px;">
                   <!-- Video hidden -->
                   <div class="about-two__img-line about-two__img-line1"></div>
                   <div class="about-two__img-line about-two__img-line2"></div>
@@ -348,7 +348,7 @@ const aboutContentTitleWidget = ref<string>('')
 const aboutDescriptionWidget = ref<string>('')
 const awardWidget = ref<string>('')
 const companyNameWidget = ref<string>('')
-const awardImageUrl = ref<string>('/assets/images/resources/im1.jpeg')
+const awardImageUrl = ref<string>('')
 const whatWeDoWidget = ref<string>('')
 const newsFromTitleWidget = ref<string>('')
 const brandsTitleWidget = ref<string>('')
@@ -362,11 +362,14 @@ const leftFeatures = computed(() => featuresItems.value.slice(0, midpoint.value)
 const rightFeatures = computed(() => featuresItems.value.slice(midpoint.value))
 
 onMounted(async () => {
-  // Fetch slides, partners, and products from API
-  await Promise.all([fetchSlides(), fetchPartners(), fetchProducts()])
-
-  // Load about section widgets
   try {
+    // Fetch slides, partners, and products from API
+    console.log('🔄 Tentative de connexion à l\'API...')
+    await Promise.all([fetchSlides(), fetchPartners(), fetchProducts()])
+    console.log('✅ API disponible - Données chargées avec succès')
+
+    // Load about section widgets
+    console.log('🔄 Chargement des widgets...')
     const [taglineContent, titleContent, contentTitleContent, descriptionContent, featuresContent, awardContent, companyNameContent, imageContent, whatWeDoContent, newsFromContent, brandsTitleContent, brandsDescriptionContent, googleMapContent] = await Promise.all([
       fetchWidgetContent('custom_html-9', 'nouveau-template-01'),  // tagline
       fetchWidgetContent('custom_html-12', 'nouveau-template-01'), // title
@@ -403,37 +406,71 @@ onMounted(async () => {
     }
 
     // Extract image URL from widget content
-    if (imageContent && typeof imageContent === 'string') {
+    console.log('📦 Contenu de imageContent (media_image-2):', imageContent)
+    
+    if (imageContent && typeof imageContent === 'object' && imageContent.url) {
+      // L'objet contient directement l'URL
+      awardImageUrl.value = imageContent.url
+      console.log('✅ Image de l\'award chargée depuis l\'API:', awardImageUrl.value)
+    } else if (imageContent && typeof imageContent === 'string') {
+      // Fallback: essayer de parser si c'est une string JSON
       try {
         const imageData = JSON.parse(imageContent)
-        if (imageData.content && imageData.content.url) {
+        if (imageData.url) {
+          awardImageUrl.value = imageData.url
+          console.log('✅ Image de l\'award chargée depuis l\'API (JSON parsé):', awardImageUrl.value)
+        } else if (imageData.content && imageData.content.url) {
           awardImageUrl.value = imageData.content.url
+          console.log('✅ Image de l\'award chargée depuis l\'API (content.url):', awardImageUrl.value)
+        } else {
+          console.warn('⚠️ Structure de données inattendue dans le JSON:', imageData)
+          awardImageUrl.value = '/assets/images/resources/im1.jpeg' // Fallback
         }
       } catch (parseErr) {
-        console.warn('Failed to parse image widget content:', parseErr)
+        console.warn('❌ Échec du parsing, contenu:', imageContent)
+        // Si c'est directement une URL
+        if (imageContent.startsWith('http')) {
+          awardImageUrl.value = imageContent
+          console.log('✅ Image utilisée directement comme URL:', awardImageUrl.value)
+        } else {
+          console.warn('⚠️ Utilisation de l\'image de fallback')
+          awardImageUrl.value = '/assets/images/resources/im1.jpeg' // Fallback
+        }
       }
+    } else {
+      console.warn('⚠️ Aucun contenu d\'image valide reçu de l\'API (media_image-2)')
+      console.warn('⚠️ Type:', typeof imageContent, 'Valeur:', imageContent)
+      awardImageUrl.value = '/assets/images/resources/im1.jpeg' // Fallback
     }
 
     // Parse features from HTML using regex (works server-side and client-side)
     if (featuresContent) {
       const liRegex = /<li[^>]*>([\s\S]*?)<\/li>/gi
-      const matches = Array.from(featuresContent.matchAll(liRegex))
+      const matches: RegExpMatchArray[] = Array.from(featuresContent.matchAll(liRegex)) as RegExpMatchArray[]
       featuresItems.value = matches.map((match) => {
         // Remove HTML tags and trim whitespace
-        return match[1].replace(/<[^>]*>/g, '').trim()
+        return (match[1] || '').replace(/<[^>]*>/g, '').trim()
       })
     }
-  } catch (err) {
-    console.error('Error loading about widgets:', err)
+    console.log('✅ Widgets chargés avec succès')
+
+    // Wait for DOM to be fully rendered
+    await nextTick()
+
+    console.log('✅ Toutes les données sont chargées - Affichage de la page')
+    
+    // Hide preloader only after ALL content is loaded
+    setTimeout(() => {
+      isLoading.value = false
+    }, 300)
+  } catch (error) {
+    console.error('❌ Erreur critique lors du chargement:', error)
+    
+    // Hide preloader even on error to avoid infinite loading
+    setTimeout(() => {
+      isLoading.value = false
+    }, 1000)
   }
-
-  // Wait for DOM to be fully rendered
-  await nextTick()
-
-  // Hide preloader after content is ready
-  setTimeout(() => {
-    isLoading.value = false
-  }, 500)
 
   // Initialize Owl Carousel with robust retry logic
   if (typeof window !== 'undefined') {

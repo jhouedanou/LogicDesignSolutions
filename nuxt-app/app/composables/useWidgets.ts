@@ -47,7 +47,7 @@ export const useWidgets = () => {
   }
 
   // Fetch a specific widget's content
-  const fetchWidgetContent = async (widgetId: string, sidebarId: string = 'nouveau-template-01'): Promise<string> => {
+  const fetchWidgetContent = async (widgetId: string, sidebarId: string = 'nouveau-template-01'): Promise<string | any> => {
     try {
       const response = await fetch(`/api/widget?id=${widgetId}&sidebar=${sidebarId}`)
 
@@ -56,6 +56,12 @@ export const useWidgets = () => {
       }
 
       const data = await response.json()
+
+      // For image widgets (media_image), return the full content object with URL
+      if (data.name === 'Image' || widgetId.startsWith('media_image')) {
+        console.log(`Loaded image widget ${widgetId}:`, data.content)
+        return data.content // Return the full content object with url, width, height, etc.
+      }
 
       // Extract the content HTML from the widget structure
       let content = ''
