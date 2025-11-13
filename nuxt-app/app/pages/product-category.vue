@@ -213,19 +213,7 @@
 
                             <!-- FPGA Platforms section removed -->
 
-                            <div class="sidebar__single have-any-project">
-                                <div class="have-any-project__bg"
-                                    style="background-image: url(/assets/images/backgrounds/contact-us-bg.jpg);">
-                                </div>
-                                <h3 class="have-any-project__title">Need Custom
-                                    <br> IP Solution?
-                                    <br> Contact Us
-                                </h3>
-                                <div class="have-any-project__btn-box">
-                                    <a href="/contact" class="have-any-project__btn thm-btn">Get Quote<span
-                                            class="icon-right-arrow"></span></a>
-                                </div>
-                            </div>
+                            <HaveAnyProject />
 
                             <div class="sidebar__single sidebar__tags">
                                 <h3 class="sidebar__title">NVMe Tags</h3>

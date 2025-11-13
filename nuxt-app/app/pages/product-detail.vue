@@ -144,20 +144,7 @@
                             </div>
 
                             <!-- Contact CTA -->
-                            <div class="sidebar__single have-any-project">
-                                <div class="have-any-project__bg"
-                                    style="background-image: url(/assets/images/backgrounds/contact-us-bg.jpg);">
-                                </div>
-                                <h3 class="have-any-project__title">Need Custom
-                                    <br> IP Solution?
-                                    <br> Contact Us
-                                </h3>
-                                <div class="have-any-project__btn-box">
-                                    <NuxtLink to="/contact" class="have-any-project__btn thm-btn">
-                                        Get Quote<span class="icon-right-arrow"></span>
-                                    </NuxtLink>
-                                </div>
-                            </div>
+                            <HaveAnyProject />
 
                             <!-- Product Categories as Tags -->
                             <div v-if="productCategories.length > 0" class="sidebar__single sidebar__tags">

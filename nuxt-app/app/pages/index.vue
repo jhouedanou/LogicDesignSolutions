@@ -234,23 +234,7 @@
 
 
       <!--Brand Two Start-->
-      <section class="brand-one brand-two">
-        <div class="container">
-          <div class="section-title-two text-center">
-            <!-- Tagline removed -->
-            <h2 class="section-title-two__title" v-html="brandsTitleWidget || brands?.title"></h2>
-          </div>
-          <p class="brand-two__text" v-html="brandsDescriptionWidget || brands?.description"></p>
-          <div class="brand-one__inner">
-            <div class="brand-one__carousel owl-carousel owl-theme thm-owl__carousel"
-              data-owl-options='{"loop": true, "items": 3, "margin": 100, "dots": true, "nav": false, "autoplay": true, "autoplayTimeout": 5000, "responsive": {"0": {"items": 1, "margin": 30}, "375": {"items": 1, "margin": 30}, "575": {"items": 2, "margin": 50}, "767": {"items": 2, "margin": 50}, "991": {"items": 3, "margin": 80}, "1199": {"items": 3, "margin": 100}}}'>
-              <div v-for="partner in partners" :key="partner.id" class="item">
-                <img :src="partner.image" :alt="partner.title">
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <BrandPartners />
       <!--Brand Two End-->
 
       <!--Google Map Start-->
@@ -338,9 +322,8 @@ definePageMeta({
 
 const { hero, about, news, site, brands } = useContent()
 const { slides, fetchSlides } = useSlides()
-const { partners, fetchPartners } = usePartners()
 const { products, fetchProducts } = useProducts()
-const { fetchWidgetContent } = useWidgets()
+const { fetchMultipleWidgets, fetchWidgetContent } = useWidgets()
 const isLoading = ref(true)
 const aboutWidgetContent = ref<string>('')
 const aboutTitleWidget = ref<string>('')
@@ -351,8 +334,6 @@ const companyNameWidget = ref<string>('')
 const awardImageUrl = ref<string>('')
 const whatWeDoWidget = ref<string>('')
 const newsFromTitleWidget = ref<string>('')
-const brandsTitleWidget = ref<string>('')
-const brandsDescriptionWidget = ref<string>('')
 const googleMapSrc = ref<string>('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2622.7967516134676!2d2.5699478999999997!3d48.8561268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e611de797bffff%3A0xea046efe8222fe8!2sLogic%20Design%20Solutions!5e0!3m2!1sfr!2sfr!4v1696521234567!5m2!1sfr!2sfr')
 const featuresItems = ref<string[]>([])
 
@@ -364,39 +345,37 @@ const rightFeatures = computed(() => featuresItems.value.slice(midpoint.value))
 onMounted(async () => {
   try {
     // Fetch slides, partners, and products from API
-    console.log('🔄 Tentative de connexion à l\'API...')
-    await Promise.all([fetchSlides(), fetchPartners(), fetchProducts()])
-    console.log('✅ API disponible - Données chargées avec succès')
+    await Promise.all([fetchSlides(), fetchProducts()])
 
-    // Load about section widgets
-    console.log('🔄 Chargement des widgets...')
-    const [taglineContent, titleContent, contentTitleContent, descriptionContent, featuresContent, awardContent, companyNameContent, imageContent, whatWeDoContent, newsFromContent, brandsTitleContent, brandsDescriptionContent, googleMapContent] = await Promise.all([
-      fetchWidgetContent('custom_html-9', 'nouveau-template-01'),  // tagline
-      fetchWidgetContent('custom_html-12', 'nouveau-template-01'), // title
-      fetchWidgetContent('custom_html-14', 'nouveau-template-01'), // contentTitle
-      fetchWidgetContent('custom_html-15', 'nouveau-template-01'), // description
-      fetchWidgetContent('text-3', 'nouveau-template-01'),         // features
-      fetchWidgetContent('custom_html-17', 'nouveau-template-01'), // award
-      fetchWidgetContent('custom_html-18', 'nouveau-template-01'), // company name
-      fetchWidgetContent('media_image-2', 'nouveau-template-01'),  // award image
-      fetchWidgetContent('custom_html-19', 'nouveau-template-01'), // "What we do"
-      fetchWidgetContent('custom_html-20', 'nouveau-template-01'), // "Recent News From"
-      fetchWidgetContent('custom_html-21', 'nouveau-template-01'), // brands title
-      fetchWidgetContent('custom_html-22', 'nouveau-template-01'), // brands description
-      fetchWidgetContent('custom_html-23', 'nouveau-template-01')  // google map iframe
-    ])
-    aboutWidgetContent.value = taglineContent
-    aboutTitleWidget.value = titleContent
-    aboutContentTitleWidget.value = contentTitleContent
-    aboutDescriptionWidget.value = descriptionContent
-    awardWidget.value = awardContent
-    companyNameWidget.value = companyNameContent
-    whatWeDoWidget.value = whatWeDoContent
-    newsFromTitleWidget.value = newsFromContent
-    brandsTitleWidget.value = brandsTitleContent
-    brandsDescriptionWidget.value = brandsDescriptionContent
+    // Load about section widgets in batch
+    const widgets = await fetchMultipleWidgets(
+      [
+        'custom_html-9',   // tagline
+        'custom_html-12',  // title
+        'custom_html-14',  // contentTitle
+        'custom_html-15',  // description
+        'text-3',          // features
+        'custom_html-17',  // award
+        'custom_html-18',  // company name
+        'media_image-2',   // award image
+        'custom_html-19',  // "What we do"
+        'custom_html-20',  // "Recent News From"
+        'custom_html-23'   // google map iframe
+      ],
+      'nouveau-template-01'
+    )
+
+    aboutWidgetContent.value = widgets['custom_html-9']
+    aboutTitleWidget.value = widgets['custom_html-12']
+    aboutContentTitleWidget.value = widgets['custom_html-14']
+    aboutDescriptionWidget.value = widgets['custom_html-15']
+    awardWidget.value = widgets['custom_html-17']
+    companyNameWidget.value = widgets['custom_html-18']
+    whatWeDoWidget.value = widgets['custom_html-19']
+    newsFromTitleWidget.value = widgets['custom_html-20']
 
     // Extract iframe src from Google Map widget
+    const googleMapContent = widgets['custom_html-23']
     if (googleMapContent && typeof googleMapContent === 'string') {
       const srcRegex = /src=["']([^"']+)["']/i
       const match = googleMapContent.match(srcRegex)
@@ -406,70 +385,48 @@ onMounted(async () => {
     }
 
     // Extract image URL from widget content
-    console.log('📦 Contenu de imageContent (media_image-2):', imageContent)
-    
+    const imageContent = widgets['media_image-2']
     if (imageContent && typeof imageContent === 'object' && imageContent.url) {
-      // L'objet contient directement l'URL
       awardImageUrl.value = imageContent.url
-      console.log('✅ Image de l\'award chargée depuis l\'API:', awardImageUrl.value)
     } else if (imageContent && typeof imageContent === 'string') {
-      // Fallback: essayer de parser si c'est une string JSON
       try {
         const imageData = JSON.parse(imageContent)
         if (imageData.url) {
           awardImageUrl.value = imageData.url
-          console.log('✅ Image de l\'award chargée depuis l\'API (JSON parsé):', awardImageUrl.value)
         } else if (imageData.content && imageData.content.url) {
           awardImageUrl.value = imageData.content.url
-          console.log('✅ Image de l\'award chargée depuis l\'API (content.url):', awardImageUrl.value)
-        } else {
-          console.warn('⚠️ Structure de données inattendue dans le JSON:', imageData)
-          awardImageUrl.value = '/assets/images/resources/im1.jpeg' // Fallback
         }
       } catch (parseErr) {
-        console.warn('❌ Échec du parsing, contenu:', imageContent)
-        // Si c'est directement une URL
         if (imageContent.startsWith('http')) {
           awardImageUrl.value = imageContent
-          console.log('✅ Image utilisée directement comme URL:', awardImageUrl.value)
-        } else {
-          console.warn('⚠️ Utilisation de l\'image de fallback')
-          awardImageUrl.value = '/assets/images/resources/im1.jpeg' // Fallback
         }
       }
-    } else {
-      console.warn('⚠️ Aucun contenu d\'image valide reçu de l\'API (media_image-2)')
-      console.warn('⚠️ Type:', typeof imageContent, 'Valeur:', imageContent)
-      awardImageUrl.value = '/assets/images/resources/im1.jpeg' // Fallback
     }
 
-    // Parse features from HTML using regex (works server-side and client-side)
+    // Parse features from HTML
+    const featuresContent = widgets['text-3']
     if (featuresContent) {
       const liRegex = /<li[^>]*>([\s\S]*?)<\/li>/gi
       const matches: RegExpMatchArray[] = Array.from(featuresContent.matchAll(liRegex)) as RegExpMatchArray[]
       featuresItems.value = matches.map((match) => {
-        // Remove HTML tags and trim whitespace
         return (match[1] || '').replace(/<[^>]*>/g, '').trim()
       })
     }
-    console.log('✅ Widgets chargés avec succès')
 
     // Wait for DOM to be fully rendered
     await nextTick()
-
-    console.log('✅ Toutes les données sont chargées - Affichage de la page')
     
     // Hide preloader only after ALL content is loaded
     setTimeout(() => {
       isLoading.value = false
     }, 300)
   } catch (error) {
-    console.error('❌ Erreur critique lors du chargement:', error)
+    console.error('Erreur lors du chargement:', error)
     
     // Hide preloader even on error to avoid infinite loading
     setTimeout(() => {
       isLoading.value = false
-    }, 1000)
+    }, 300)
   }
 
   // Initialize Owl Carousel with robust retry logic
@@ -556,8 +513,6 @@ onMounted(async () => {
             1199: { items: 3, margin: 100 }
           }
         })
-
-        console.log('Owl Carousel initialized successfully')
       } catch (error) {
         console.error('Error initializing Owl Carousel:', error)
       }
