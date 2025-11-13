@@ -71,6 +71,15 @@
             <div class="main-slider-two__bg"
               :style="`background-image: url(${slide.image});`">
             </div><!-- /.slider-one__bg -->
+            <NuxtImg
+              :src="slide.image"
+              :alt="slide.title"
+              preset="lcp"
+              :loading="index === 0 ? 'eager' : 'lazy'"
+              :fetchpriority="index === 0 ? 'high' : 'auto'"
+              :preload="index === 0"
+              style="position: absolute; width: 100%; height: 100%; object-fit: cover; top: 0; left: 0; z-index: -1; opacity: 0;"
+            />
             <div class="main-slider-two__shape-1"></div>
             <div class="main-slider-two__shape-2"></div>
             <div class="main-slider-two__shape-3"><img src="/assets/images/shapes/slider-v2-shape1.png" alt="">
@@ -98,67 +107,71 @@
           <div class="row">
             <div class="col-xl-6">
               <div class="about-two__content">
-                <div class="section-title text-left">
-                  <div class="section-title__tagline-box">
-                    <p class="section-title__tagline" v-html="aboutWidgetContent || about?.tagline"></p>
-                  </div>
-                  <h2 class="section-title__title" v-html="aboutTitleWidget || about?.title"></h2>
-                </div>
-                <div class="about-two__content-title">
-                  <h3 v-html="aboutContentTitleWidget || about?.contentTitle"></h3>
-                </div>
-                <div class="about-two__content-text">
-                  <p v-html="aboutDescriptionWidget || about?.description"></p>
-                </div>
-                <div class="about-two__content-inner">
-                  <div class="row">
-                    <div class="col-xl-6 col-lg-6 col-md-6">
-                      <ul class="about-two__list list-unstyled">
-                        <li v-for="(feature, index) in leftFeatures" :key="index">
-                          <div class="icon">
-                            <span class="icon-arrows"></span>
-                          </div>
-                          <div class="text">
-                            <p align="justify">{{ feature }}</p>
-                          </div>
-                        </li>
-                      </ul>
+                <ClientOnly>
+                  <div class="section-title text-left">
+                    <div class="section-title__tagline-box">
+                      <p class="section-title__tagline" v-html="aboutWidgetContent || about?.tagline"></p>
                     </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6">
-                      <ul class="about-two__list two list-unstyled">
-                        <li v-for="(feature, index) in rightFeatures" :key="index">
-                          <div class="icon">
-                            <span class="icon-arrows"></span>
-                          </div>
-                          <div class="text">
-                            <p align="justify">{{ feature }}</p>
-                          </div>
-                        </li>
-                      </ul>
+                    <h2 class="section-title__title" v-html="aboutTitleWidget || about?.title"></h2>
+                  </div>
+                  <div class="about-two__content-title">
+                    <h3 v-html="aboutContentTitleWidget || about?.contentTitle"></h3>
+                  </div>
+                  <div class="about-two__content-text">
+                    <p v-html="aboutDescriptionWidget || about?.description"></p>
+                  </div>
+                  <div class="about-two__content-inner">
+                    <div class="row">
+                      <div class="col-xl-6 col-lg-6 col-md-6">
+                        <ul class="about-two__list list-unstyled">
+                          <li v-for="(feature, index) in leftFeatures" :key="index">
+                            <div class="icon">
+                              <span class="icon-arrows"></span>
+                            </div>
+                            <div class="text">
+                              <p align="justify">{{ feature }}</p>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-xl-6 col-lg-6 col-md-6">
+                        <ul class="about-two__list two list-unstyled">
+                          <li v-for="(feature, index) in rightFeatures" :key="index">
+                            <div class="icon">
+                              <span class="icon-arrows"></span>
+                            </div>
+                            <div class="text">
+                              <p align="justify">{{ feature }}</p>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <!-- Statistics removed -->
-                <div class="about-two__content-btn">
-                  <NuxtLink to="/products" class="thm-btn">{{ about?.cta }}<span
-                        class="icon-right-arrow"></span></NuxtLink>
-                </div>
+                  <!-- Statistics removed -->
+                  <div class="about-two__content-btn">
+                    <NuxtLink to="/products" class="thm-btn">{{ about?.cta }}<span
+                          class="icon-right-arrow"></span></NuxtLink>
+                  </div>
+                </ClientOnly>
               </div>
             </div>
             <div class="col-xl-6">
               <div class="about-two__img">
-                <div class="about-two__img-award">
-                  <div class="icon">
-                    <span class="icon-badge"></span>
+                <ClientOnly>
+                  <div class="about-two__img-award">
+                    <div class="icon">
+                      <span class="icon-badge"></span>
+                    </div>
+                    <h3><span v-html="awardWidget || about?.award"></span> <br><span v-html="companyNameWidget || about?.companyName"></span></h3>
                   </div>
-                  <h3><span v-html="awardWidget || about?.award"></span> <br><span v-html="companyNameWidget || about?.companyName"></span></h3>
-                </div>
-                <div class="about-two__img-inner">
-                  <img v-if="awardImageUrl" :src="awardImageUrl" alt="Award Image" style="border-radius: 10px;">
-                  <!-- Video hidden -->
-                  <div class="about-two__img-line about-two__img-line1"></div>
-                  <div class="about-two__img-line about-two__img-line2"></div>
-                </div>
+                  <div class="about-two__img-inner">
+                    <img v-if="awardImageUrl" :src="awardImageUrl" alt="Award Image" style="border-radius: 10px;">
+                    <!-- Video hidden -->
+                    <div class="about-two__img-line about-two__img-line1"></div>
+                    <div class="about-two__img-line about-two__img-line2"></div>
+                  </div>
+                </ClientOnly>
               </div>
             </div>
           </div>
@@ -171,12 +184,14 @@
         <div class="services-two__bg-shape"
           style="background-image: url(/assets/images/shapes/services-two-bg-shape.png);"></div>
         <div class="container">
-          <div class="section-title-two text-center">
-            <div class="section-title-two__tagline-box">
-              <p class="section-title-two__tagline" v-html="whatWeDoWidget || 'What we do'"></p>
+          <ClientOnly>
+            <div class="section-title-two text-center">
+              <div class="section-title-two__tagline-box">
+                <p class="section-title-two__tagline" v-html="whatWeDoWidget || 'What we do'"></p>
+              </div>
+              <h2 class="section-title-two__title" v-html="newsFromTitleWidget || 'Recent <span>News</span> From<br> Blog Latest News'"></h2>
             </div>
-            <h2 class="section-title-two__title" v-html="newsFromTitleWidget || 'Recent <span>News</span> From<br> Blog Latest News'"></h2>
-          </div>
+          </ClientOnly>
           <div class="services-two__bottom">
             <div class="services-two__carousel owl-carousel owl-theme thm-owl__carousel" data-owl-options='{
               "loop": true,
@@ -536,7 +551,9 @@ useHead({
     { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
     {
       rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'
+      href: 'https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap',
+      media: 'print',
+      onload: "this.media='all'"
     },
     { rel: 'stylesheet', href: '/assets/vendors/bootstrap/css/bootstrap.min.css' },
     { rel: 'stylesheet', href: '/assets/vendors/animate/animate.min.css' },

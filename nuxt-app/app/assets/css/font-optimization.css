@@ -1,0 +1,42 @@
+/* Optimisation des polices pour améliorer FCP et CLS */
+
+/* 
+  Utilisation de font-display: swap pour s'assurer que le texte reste visible
+  pendant le chargement de la police web
+*/
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Roboto Condensed'), local('RobotoCondensed-Regular');
+}
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Roboto Condensed Bold'), local('RobotoCondensed-Bold');
+}
+
+/* 
+  Font metric overrides pour minimiser les Layout Shifts (CLS)
+  Ces valeurs doivent être ajustées selon la police de fallback utilisée
+*/
+@font-face {
+  font-family: 'Roboto Condensed Fallback';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Arial');
+  ascent-override: 92.77%;
+  descent-override: 24.39%;
+  line-gap-override: 0%;
+  size-adjust: 107.64%;
+}
+
+/* Application des polices avec fallback optimisé */
+body {
+  font-family: 'Roboto Condensed', 'Roboto Condensed Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}

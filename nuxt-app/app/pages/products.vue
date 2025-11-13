@@ -75,7 +75,9 @@
                     </div>
                     <div class="news-one__content">
                       <h3 class="news-one__title">
-                        <NuxtLink :to="`/product-detail?id=${product.id}`" v-html="getProductTitle(product)"></NuxtLink>
+                        <ClientOnly>
+                          <NuxtLink :to="`/product-detail?id=${product.id}`" v-html="getProductTitle(product)"></NuxtLink>
+                        </ClientOnly>
                       </h3>
                     </div>
                   </div>
