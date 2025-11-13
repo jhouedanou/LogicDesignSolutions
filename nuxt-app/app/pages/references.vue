@@ -30,38 +30,41 @@
                         </div>
 
                         <div class="news-details__content">
-                            <p style="font-size: 16px; line-height: 1.8; margin-bottom: 30px;" v-html="introText">
-                            </p>
+                            <ClientOnly>
+                                <template v-if="introText">
+                                    <p style="font-size: 16px; line-height: 1.8; margin-bottom: 30px;" v-html="introText"></p>
+                                </template>
 
-                            <div class="row" style="margin-bottom: 40px; position: relative; padding: 30px; border-radius: 5px; overflow: hidden;">
-                                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url(/assets/images/backgrounds/world-map-bg.png); background-size: cover; background-position: center; opacity: 0.12; z-index: 0;"></div>
-                                <div class="col-md-6" style="position: relative; z-index: 1;">
-                                    <ul style="list-style: none; padding-left: 0; font-size: 16px; line-height: 2; color: var(--lds-primary); font-weight: bold;" v-html="leftCountries">
-                                    </ul>
-                                </div>
-                                <div class="col-md-6" style="position: relative; z-index: 1;">
-                                    <ul style="list-style: none; padding-left: 0; font-size: 16px; line-height: 2; color: var(--lds-primary); font-weight: bold;" v-html="rightCountries">
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Founder Section -->
-                            <div class="row" style="margin-top: 50px;">
-                                <div class="col-md-12">
-                                    <h3 class="news-details__title-1">Our Founder</h3>
-                                    <div style="display: flex; align-items: flex-start; gap: 30px; margin-top: 20px;">
-                                        <div v-if="founderImageUrl" style="flex-shrink: 0;">
-                                            <img :src="founderImageUrl" :alt="founderName || 'Founder'" style="width: 150px; height: auto; border: 3px solid #eeeeee;">
+                                <template v-if="leftCountries || rightCountries">
+                                    <div class="row" style="margin-bottom: 40px; position: relative; padding: 30px; border-radius: 5px; overflow: hidden;">
+                                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url(/assets/images/backgrounds/world-map-bg.png); background-size: cover; background-position: center; opacity: 0.12; z-index: 0;"></div>
+                                        <div class="col-md-6" style="position: relative; z-index: 1;">
+                                            <ul style="list-style: none; padding-left: 0; font-size: 16px; line-height: 2; color: var(--lds-primary); font-weight: bold;" v-html="leftCountries"></ul>
                                         </div>
-                                        <div>
-                                            <h4 style="margin-bottom: 15px;">{{ founderName }}</h4>
-                                            <div style="font-size: 16px; line-height: 1.8; color: #6e7387;" v-html="founderBio">
+                                        <div class="col-md-6" style="position: relative; z-index: 1;">
+                                            <ul style="list-style: none; padding-left: 0; font-size: 16px; line-height: 2; color: var(--lds-primary); font-weight: bold;" v-html="rightCountries"></ul>
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <!-- Founder Section -->
+                                <template v-if="founderName || founderBio">
+                                    <div class="row" style="margin-top: 50px;">
+                                        <div class="col-md-12">
+                                            <h3 class="news-details__title-1">Our Founder</h3>
+                                            <div style="display: flex; align-items: flex-start; gap: 30px; margin-top: 20px;">
+                                                <div v-if="founderImageUrl" style="flex-shrink: 0;">
+                                                    <img :src="founderImageUrl" :alt="founderName || 'Founder'" style="width: 150px; height: auto; border: 3px solid #eeeeee;">
+                                                </div>
+                                                <div>
+                                                    <h4 style="margin-bottom: 15px;">{{ founderName }}</h4>
+                                                    <div style="font-size: 16px; line-height: 1.8; color: #6e7387;" v-html="founderBio"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
+                                </template>
+                            </ClientOnly>
                         </div>
                     </div>
 
