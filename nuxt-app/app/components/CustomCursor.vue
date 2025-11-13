@@ -27,13 +27,13 @@ onMounted(() => {
 
   // Animate cursor position
   const animate = () => {
-    // Smooth movement for main cursor
-    posX += (mouseX - posX) * 0.1
-    posY += (mouseY - posY) * 0.1
+    // Smooth movement for main cursor (faster response)
+    posX += (mouseX - posX) * 0.25
+    posY += (mouseY - posY) * 0.25
 
-    // Faster movement for secondary cursor
-    posX2 += (mouseX - posX2) * 0.3
-    posY2 += (mouseY - posY2) * 0.3
+    // Very fast movement for secondary cursor
+    posX2 += (mouseX - posX2) * 0.8
+    posY2 += (mouseY - posY2) * 0.8
 
     if (cursorRef.value) {
       cursorRef.value.style.left = posX + 'px'
