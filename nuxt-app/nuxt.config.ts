@@ -6,6 +6,7 @@ export default defineNuxtConfig({
 
   // CSS Configuration
   css: [
+    '~/assets/css/font-optimization.css',
     '~/assets/css/merged-vendors.min.css',
     '~/assets/scss/main.scss'
   ],
@@ -122,6 +123,15 @@ export default defineNuxtConfig({
           width: 1200,
           height: 600,
           quality: 80
+        }
+      },
+      lcp: {
+        modifiers: {
+          format: 'webp',
+          width: 1920,
+          height: 800,
+          quality: 85,
+          fit: 'cover'
         }
       },
       featured: {

@@ -4,6 +4,15 @@
 <section class="page-header">
             <div class="page-header-bg" style="background-image: url(/assets/images/backgrounds/logic-slider-2.webp)">
             </div>
+            <NuxtImg
+                src="/assets/images/backgrounds/logic-slider-2.webp"
+                alt="References Header Background"
+                preset="lcp"
+                loading="eager"
+                fetchpriority="high"
+                preload
+                style="position: absolute; width: 100%; height: 100%; object-fit: cover; top: 0; left: 0; z-index: -1; opacity: 0;"
+            />
             <div class="container">
                 <div class="page-header__inner">
                     <ul class="thm-breadcrumb list-unstyled">
@@ -54,7 +63,14 @@
                                             <h3 class="news-details__title-1">Our Founder</h3>
                                             <div style="display: flex; align-items: flex-start; gap: 30px; margin-top: 20px;">
                                                 <div v-if="founderImageUrl" style="flex-shrink: 0;">
-                                                    <img :src="founderImageUrl" :alt="founderName || 'Founder'" style="width: 150px; height: auto; border: 3px solid #eeeeee;">
+                                                    <NuxtImg
+                                                        :src="founderImageUrl"
+                                                        :alt="founderName || 'Founder'"
+                                                        width="150"
+                                                        height="200"
+                                                        loading="lazy"
+                                                        style="width: 150px; height: auto; border: 3px solid #eeeeee;"
+                                                    />
                                                 </div>
                                                 <div>
                                                     <h4 style="margin-bottom: 15px;">{{ founderName }}</h4>

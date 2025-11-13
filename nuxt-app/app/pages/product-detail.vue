@@ -50,44 +50,48 @@
                                     </p>
                                 </div>
 
-                                <!-- Product Title -->
-                                <h3 class="news-details__title-1" v-html="product.title.rendered"></h3>
-                                
-                                <!-- Featured Image -->
-                                <div v-if="productImage" style="float: left; width: 50%; margin-right: 30px; margin-bottom: 20px;">
-                                    <NuxtImg
-                                        :src="productImage"
-                                        :alt="stripHtml(product.title.rendered)"
-                                        preset="featured"
-                                        loading="eager"
-                                        style="width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"
-                                    />
-                                </div>
-                                
-                                <!-- Product Content (Dynamic from WordPress) -->
-                                <div class="news-details__text-1" v-html="product.content.rendered"></div>
+                                <ClientOnly>
+                                    <!-- Product Title -->
+                                    <h3 v-if="product" class="news-details__title-1" v-html="product.title.rendered"></h3>
+                                    
+                                    <!-- Featured Image -->
+                                    <div v-if="productImage" style="float: left; width: 50%; margin-right: 30px; margin-bottom: 20px;">
+                                        <NuxtImg
+                                            :src="productImage"
+                                            :alt="stripHtml(product.title.rendered)"
+                                            preset="featured"
+                                            loading="eager"
+                                            style="width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"
+                                        />
+                                    </div>
+                                    
+                                    <!-- Product Content (Dynamic from WordPress) -->
+                                    <div v-if="product" class="news-details__text-1" v-html="product.content.rendered"></div>
 
-                                <div style="clear: both;"></div>
+                                    <div style="clear: both;"></div>
+                                </ClientOnly>
                             </div>
 
-                            <div class="news-details__bottom">
-                                <p v-if="productCategories.length > 0" class="news-details__tags">
-                                    <span>Categories:</span>
-                                    <NuxtLink 
-                                        v-for="cat in productCategories" 
-                                        :key="cat.id"
-                                        :to="`/products?cat=${cat.id}`"
-                                    >
-                                        {{ cat.name }}
-                                    </NuxtLink>
-                                </p>
-                                <div class="news-details__social-list">
-                                    <a href="#" @click.prevent="shareOnFacebook"><i class="fab fa-facebook"></i></a>
-                                    <a href="#" @click.prevent="shareOnTwitter"><i class="fab fa-twitter"></i></a>
-                                    <a href="#" @click.prevent="shareOnLinkedIn"><i class="fab fa-linkedin"></i></a>
-                                    <a href="#" @click.prevent="copyLink"><i class="fab fa-link"></i></a>
+                            <ClientOnly>
+                                <div class="news-details__bottom">
+                                    <p v-if="productCategories.length > 0" class="news-details__tags">
+                                        <span>Categories:</span>
+                                        <NuxtLink 
+                                            v-for="cat in productCategories" 
+                                            :key="cat.id"
+                                            :to="`/products?cat=${cat.id}`"
+                                        >
+                                            {{ cat.name }}
+                                        </NuxtLink>
+                                    </p>
+                                    <div class="news-details__social-list">
+                                        <a href="#" @click.prevent="shareOnFacebook"><i class="fab fa-facebook"></i></a>
+                                        <a href="#" @click.prevent="shareOnTwitter"><i class="fab fa-twitter"></i></a>
+                                        <a href="#" @click.prevent="shareOnLinkedIn"><i class="fab fa-linkedin"></i></a>
+                                        <a href="#" @click.prevent="copyLink"><i class="fab fa-link"></i></a>
+                                    </div>
                                 </div>
-                            </div>
+                            </ClientOnly>
 
                             <div class="news-details__pagenation-box">
                                 <ul class="list-unstyled news-details__pagenation">
@@ -105,43 +109,47 @@
                     <div class="col-xl-4 col-lg-5">
                         <div class="sidebar">
                             <!-- Related Products -->
-                            <div v-if="relatedProducts.length > 0" class="sidebar__single sidebar__post">
-                                <h3 class="sidebar__title">Related Products</h3>
-                                <ul class="sidebar__post-list list-unstyled">
-                                    <li v-for="relProd in relatedProducts.slice(0, 3)" :key="relProd.id">
-                                        <div class="sidebar__post-image">
-                                            <NuxtImg
-                                                :src="getProductImage(relProd)"
-                                                :alt="stripHtml(relProd.title.rendered)"
-                                                preset="thumbnail"
-                                                loading="lazy"
-                                                style="width: 70px; height: 70px; object-fit: cover; border-radius: 5px;"
-                                            />
-                                        </div>
-                                        <div class="sidebar__post-content">
-                                            <h3>
-                                                <NuxtLink :to="`/product-detail?id=${relProd.id}`" v-html="relProd.title.rendered"></NuxtLink>
-                                            </h3>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                            <ClientOnly>
+                                <div v-if="relatedProducts.length > 0" class="sidebar__single sidebar__post">
+                                    <h3 class="sidebar__title">Related Products</h3>
+                                    <ul class="sidebar__post-list list-unstyled">
+                                        <li v-for="relProd in relatedProducts.slice(0, 3)" :key="relProd.id">
+                                            <div class="sidebar__post-image">
+                                                <NuxtImg
+                                                    :src="getProductImage(relProd)"
+                                                    :alt="stripHtml(relProd.title.rendered)"
+                                                    preset="thumbnail"
+                                                    loading="lazy"
+                                                    style="width: 70px; height: 70px; object-fit: cover; border-radius: 5px;"
+                                                />
+                                            </div>
+                                            <div class="sidebar__post-content">
+                                                <h3>
+                                                    <NuxtLink :to="`/product-detail?id=${relProd.id}`" v-html="relProd.title.rendered"></NuxtLink>
+                                                </h3>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </ClientOnly>
 
                             <!-- Product Categories from API -->
-                            <div v-if="allCategories && allCategories.length > 0" class="sidebar__single sidebar__category">
-                                <h3 class="sidebar__title">Product Categories</h3>
-                                <ul class="sidebar__category-list list-unstyled">
-                                    <li 
-                                        v-for="category in allCategories" 
-                                        :key="category.id"
-                                        :class="{ active: productCategories.some((pc: any) => pc.id === category.id) }"
-                                    >
-                                        <NuxtLink :to="`/products?cat=${category.id}`">
-                                            {{ category.name }}<span>({{ category.count }})</span>
-                                        </NuxtLink>
-                                    </li>
-                                </ul>
-                            </div>
+                            <ClientOnly>
+                                <div v-if="allCategories && allCategories.length > 0" class="sidebar__single sidebar__category">
+                                    <h3 class="sidebar__title">Product Categories</h3>
+                                    <ul class="sidebar__category-list list-unstyled">
+                                        <li 
+                                            v-for="category in allCategories" 
+                                            :key="category.id"
+                                            :class="{ active: productCategories.some((pc: any) => pc.id === category.id) }"
+                                        >
+                                            <NuxtLink :to="`/products?cat=${category.id}`">
+                                                {{ category.name }}<span>({{ category.count }})</span>
+                                            </NuxtLink>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </ClientOnly>
 
                             <!-- Contact CTA -->
                             <HaveAnyProject />
