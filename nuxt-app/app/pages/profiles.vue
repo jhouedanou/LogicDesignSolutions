@@ -120,19 +120,12 @@
                     <div class="col-xl-4 col-lg-5">
                         <div class="sidebar">
                             <!-- Search, Quick Links and Statistics removed -->
-                            <div class="sidebar__single have-any-project">
-                                <div class="have-any-project__bg"
-                                    style="background-image: url(/assets/images/backgrounds/contact-us-bg.jpg);">
-                                </div>
-                                <h3 class="have-any-project__title">Have Any
-                                    <br> Project?
-                                    <br> Contact Us
-                                </h3>
-                                <div class="have-any-project__btn-box">
-                                    <a href="/contact" class="have-any-project__btn thm-btn">Contact Us<span
-                                            class="icon-right-arrow"></span></a>
-                                </div>
-                            </div>
+                            <HaveAnyProject 
+                              title="Have Any"
+                              subtitle="Project?"
+                              cta="Contact Us"
+                              buttonText="Contact Us"
+                            />
                             <!-- Technologies section removed -->
                         </div>
                     </div>

@@ -43,71 +43,7 @@
         <!--Services End-->
 
         <!--Brand Two Start-->
-        <section class="brand-one brand-twoX">
-            <div class="container">
-                <div class="section-title-two text-center">
-                    <h2 class="section-title-two__title">Trusted Technology Partners</h2>
-                </div>
-                <p class="brand-two__text">Logic Design Solutions collaborates with leading technology providers<br> to deliver cutting-edge FPGA and IP solutions</p>
-                <div class="brand-one__inner">
-                    <div class="thm-swiper__slider swiper-container" data-swiper-options='{"spaceBetween": 100,
-                    "slidesPerView": 3,
-                    "loop": true,
-                    "navigation": {
-                        "nextEl": "#brand-one__swiper-button-next",
-                        "prevEl": "#brand-one__swiper-button-prev"
-                    },
-                    "autoplay": { "delay": 5000 },
-                    "breakpoints": {
-                        "0": {
-                            "spaceBetween": 30,
-                            "slidesPerView": 1
-                        },
-                        "375": {
-                            "spaceBetween": 30,
-                            "slidesPerView": 1
-                        },
-                        "575": {
-                            "spaceBetween": 50,
-                            "slidesPerView": 2
-                        },
-                        "767": {
-                            "spaceBetween": 50,
-                            "slidesPerView": 2
-                        },
-                        "991": {
-                            "spaceBetween": 80,
-                            "slidesPerView": 3
-                        },
-                        "1199": {
-                            "spaceBetween": 100,
-                            "slidesPerView": 3
-                        }
-                    }}'>
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <img src="/assets/images/brand/AMD_Embedded_Select.png" alt="AMD Embedded Select Partner">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="/assets/images/brand/Member-Badge-1-1.png" alt="Intel Partner">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="/assets/images/brand/image001.png" alt="Technology Partner">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="/assets/images/brand/AMD_Embedded_Select.png" alt="AMD Embedded Select Partner">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="/assets/images/brand/Member-Badge-1-1.png" alt="Intel Partner">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="/assets/images/brand/image001.png" alt="Technology Partner">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <BrandPartners />
         <!--Brand Two End-->
     </div>
 </template>

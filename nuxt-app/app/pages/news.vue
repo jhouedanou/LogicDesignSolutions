@@ -193,17 +193,13 @@
           <div class="col-xl-4 col-lg-5">
             <div class="sidebar">
               <!-- Subscribe to Newsletter Sidebar -->
-              <div class="sidebar__single have-any-project">
-                <div class="have-any-project__bg" style="background-image: url(/assets/images/backgrounds/contact-us-bg.jpg);"></div>
-                <h3 class="have-any-project__title">
-                  Subscribe to<br /> Our Newsletter
-                </h3>
-                <div class="have-any-project__btn-box">
-                  <a href="#" class="have-any-project__btn thm-btn">
-                    Subscribe<span class="icon-right-arrow"></span>
-                  </a>
-                </div>
-              </div>
+              <HaveAnyProject 
+                title="Subscribe to"
+                subtitle="Our Newsletter"
+                cta=""
+                buttonText="Subscribe"
+                buttonLink="#"
+              />
             </div>
           </div>
         </div>

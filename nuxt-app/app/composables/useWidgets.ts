@@ -49,6 +49,12 @@ export const useWidgets = () => {
   // Fetch a specific widget's content
   const fetchWidgetContent = async (widgetId: string, sidebarId: string = 'nouveau-template-01'): Promise<string | any> => {
     try {
+      // Check cache first
+      const cacheKey = `${sidebarId}:${widgetId}`
+      if (widgetContent.value[cacheKey]) {
+        return widgetContent.value[cacheKey]
+      }
+
       const response = await fetch(`/api/widget?id=${widgetId}&sidebar=${sidebarId}`)
 
       if (!response.ok) {
@@ -59,8 +65,14 @@ export const useWidgets = () => {
 
       // For image widgets (media_image), return the full content object with URL
       if (data.name === 'Image' || widgetId.startsWith('media_image')) {
-        console.log(`Loaded image widget ${widgetId}:`, data.content)
+        widgetContent.value[cacheKey] = data.content
         return data.content // Return the full content object with url, width, height, etc.
+      }
+
+      // For text widgets with title, return the full content object
+      if (data.name === 'Text' && data.content && typeof data.content === 'object' && data.content.title) {
+        widgetContent.value[cacheKey] = data.content
+        return data.content // Return the full content object with title, text, etc.
       }
 
       // Extract the content HTML from the widget structure
@@ -83,14 +95,34 @@ export const useWidgets = () => {
         content = data.rendered
       }
 
-      console.log(`Loaded widget ${widgetId}:`, content)
-
-      widgetContent.value[widgetId] = content
-      return widgetContent.value[widgetId]
+      widgetContent.value[cacheKey] = content
+      return content
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Unknown error'
       console.error(`Error fetching widget ${widgetId}:`, message)
       return ''
+    }
+  }
+
+  // Batch fetch multiple widgets from the same sidebar (optimized)
+  const fetchMultipleWidgets = async (widgetIds: string[], sidebarId: string = 'nouveau-template-01'): Promise<Record<string, any>> => {
+    try {
+      // Fetch all widgets in parallel
+      const results = await Promise.all(
+        widgetIds.map(id => fetchWidgetContent(id, sidebarId))
+      )
+
+      // Create a map of widgetId => content
+      const widgetMap: Record<string, any> = {}
+      widgetIds.forEach((id, index) => {
+        widgetMap[id] = results[index]
+      })
+
+      return widgetMap
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Unknown error'
+      console.error('Error fetching multiple widgets:', message)
+      return {}
     }
   }
 
@@ -118,6 +150,7 @@ export const useWidgets = () => {
     error,
     fetchWidgets,
     fetchWidgetContent,
+    fetchMultipleWidgets,
     getWidget,
     getSidebarWidgets,
     getWidgetContent
