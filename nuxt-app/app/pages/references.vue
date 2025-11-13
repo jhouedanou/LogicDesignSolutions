@@ -88,7 +88,9 @@
                         <div class="sidebar">
                             <!-- Search and Quick Links removed -->
 
-                            <HaveAnyProject />
+                            <ClientOnly>
+                                <HaveAnyProject />
+                            </ClientOnly>
 
                             <!-- Expertise tags removed -->
                         </div>

@@ -152,7 +152,9 @@
                             </ClientOnly>
 
                             <!-- Contact CTA -->
-                            <HaveAnyProject />
+                            <ClientOnly>
+                                <HaveAnyProject />
+                            </ClientOnly>
 
                             <!-- Product Categories as Tags -->
                             <div v-if="productCategories.length > 0" class="sidebar__single sidebar__tags">

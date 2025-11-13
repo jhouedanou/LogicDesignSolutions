@@ -213,7 +213,9 @@
 
                             <!-- FPGA Platforms section removed -->
 
-                            <HaveAnyProject />
+                            <ClientOnly>
+                                <HaveAnyProject />
+                            </ClientOnly>
 
                             <div class="sidebar__single sidebar__tags">
                                 <h3 class="sidebar__title">NVMe Tags</h3>
