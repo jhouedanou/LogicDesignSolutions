@@ -24,14 +24,10 @@
                     <div class="col-xl-8 col-lg-7">
 
                         <div class="news-details__content">
-                            <h3 class="news-details__title-1">We offer you the best for :</h3>
-                            <ul style="list-style: none; padding-left: 0; margin-top: 20px; font-size: 16px; line-height: 1.8;">
-                                <li style="margin-bottom: 12px;">» FPGA and IP turnkey design Service.</li>
-                                <li style="margin-bottom: 12px;">» FPGA and IP system architectures.</li>
-                                <li style="margin-bottom: 12px;">» FPGA and IP specification and implementation.</li>
-                                <li style="margin-bottom: 12px;">» IP customization and integration.</li>
-                                <li style="margin-bottom: 12px;">» FPGA and IP consulting.</li>
-                            </ul>
+                            <ClientOnly>
+                                <h3 v-if="servicesTitle" class="news-details__title-1">{{ servicesTitle }}</h3>
+                                <div v-if="servicesText" v-html="servicesText" style="margin-top: 20px; font-size: 16px; line-height: 1.8;"></div>
+                            </ClientOnly>
                         </div>
 
                     </div>
@@ -49,7 +45,26 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { useHead } from '#imports'
+
+const { fetchWidgetContent } = useWidgets()
+const servicesTitle = ref<string>('')
+const servicesText = ref<string>('')
+
+onMounted(async () => {
+  try {
+    // Charger le widget text-8 depuis la sidebar "services"
+    const servicesData = await fetchWidgetContent('text-8', 'services')
+    
+    if (servicesData && typeof servicesData === 'object' && servicesData.title) {
+      servicesTitle.value = servicesData.title
+      servicesText.value = servicesData.text || ''
+    }
+  } catch (error) {
+    console.error('Erreur lors du chargement du widget services:', error)
+  }
+})
 
 useHead({
   title: 'Services - Logic Design Solutions',
