@@ -63,11 +63,15 @@
 
                 <!-- Social Share -->
                 <div class="news-details__bottom" style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #eeeeee;">
-                  <p class="news-details__tags">
+                  <p v-if="tags.length > 0" class="news-details__tags">
                     <span>Tags:</span>
-                    <a href="#">FPGA</a>
-                    <a href="#">NVMe</a>
-                    <a href="#">IP</a>
+                    <NuxtLink 
+                      v-for="tag in tags" 
+                      :key="tag.id" 
+                      :to="`/news/tag/${tag.slug}`"
+                    >
+                      {{ tag.name }}
+                    </NuxtLink>
                   </p>
                   <div class="news-details__social-list">
                     <a href="#"><i class="fab fa-twitter"></i></a>
@@ -153,12 +157,13 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useHead } from '#imports'
 
 const route = useRoute()
-const { fetchPost, fetchPosts } = usePosts()
+const { fetchPost, fetchPosts, fetchTags } = usePosts()
 
 const post = ref<any>(null)
 const recentPosts = ref<any[]>([])
 const previousPost = ref<any>(null)
 const nextPost = ref<any>(null)
+const tags = ref<any[]>([])
 const loading = ref(true)
 
 const formatDate = (dateString: string) => {
@@ -176,6 +181,11 @@ const loadPost = async () => {
     
     if (postData) {
       post.value = postData
+      
+      // Charger les tags
+      if (postData.tags && postData.tags.length > 0) {
+        tags.value = await fetchTags(postData.tags)
+      }
       
       // Charger les articles récents
       const recentData = await fetchPosts(1, 5)
