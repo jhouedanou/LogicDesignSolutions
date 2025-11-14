@@ -6,13 +6,11 @@
             </div>
             <div class="container">
                 <div class="page-header__inner">
-                    <ul class="thm-breadcrumb list-unstyled">
-                        <li><a href="/">Home</a></li>
-                        <li>-</li>
-                        <li><a href="/products">Products</a></li>
-                        <li>-</li>
-                        <li>NVMe Host IP</li>
-                    </ul>
+                    <Breadcrumb :items="[
+                        { label: 'Home', to: '/' },
+                        { label: 'Products', to: '/products' },
+                        { label: 'NVMe Host IP' }
+                    ]" />
                     <h2 class="page-header__title">NVMe Host IP</h2>
                 </div>
             </div>

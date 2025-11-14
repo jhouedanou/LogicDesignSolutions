@@ -5,11 +5,13 @@
       <div class="container">
         <div class="page-header__inner">
           <h2>{{ faq?.title }}</h2>
-          <ul class="thm-breadcrumb list-unstyled">
-            <li><NuxtLink to="/">Home</NuxtLink></li>
-            <li><span>/</span></li>
-            <li>{{ faq?.title }}</li>
-          </ul>
+          <Breadcrumb 
+            :items="[
+              { label: 'Home', to: '/' },
+              { label: faq?.title || 'FAQ' }
+            ]"
+            separator="/"
+          />
         </div>
       </div>
     </section>
@@ -49,7 +51,28 @@
 <script setup lang="ts">
 import { useHead } from '#imports'
 
-const { faq } = useContent()
+const faq = ref({
+  title: 'FAQ',
+  tagline: 'Frequently Asked Questions',
+  description: 'Find answers to common questions',
+  questions: [
+    {
+      id: 1,
+      question: 'What services do you offer?',
+      answer: 'We provide comprehensive FPGA design services, IP core development, verification, and technical support.'
+    },
+    {
+      id: 2,
+      question: 'What industries do you serve?',
+      answer: 'We serve various industries including telecommunications, aerospace, automotive, and industrial automation.'
+    },
+    {
+      id: 3,
+      question: 'Do you provide custom solutions?',
+      answer: 'Yes, we specialize in custom FPGA design solutions tailored to your specific requirements.'
+    }
+  ]
+})
 
 useHead({
   title: 'FAQ - Frequently Asked Questions',

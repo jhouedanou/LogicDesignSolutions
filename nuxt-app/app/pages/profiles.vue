@@ -6,11 +6,10 @@
             </div>
             <div class="container">
                 <div class="page-header__inner">
-                    <ul class="thm-breadcrumb list-unstyled">
-                        <li><a href="/">Home</a></li>
-                        <li>-</li>
-                        <li>Company Profile</li>
-                    </ul>
+                    <Breadcrumb :items="[
+                        { label: 'Home', to: '/' },
+                        { label: 'Company Profile' }
+                    ]" />
                     <h2 class="page-header__title">Company Profile</h2>
                 </div>
             </div>

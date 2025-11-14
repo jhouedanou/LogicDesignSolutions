@@ -5,13 +5,11 @@
       <div class="page-header-bg" style="background-image: url(/assets/images/backgrounds/logic-slider-2.webp)"></div>
       <div class="container">
         <div class="page-header__inner">
-          <ul class="thm-breadcrumb list-unstyled">
-            <li><NuxtLink to="/">Home</NuxtLink></li>
-            <li>-</li>
-            <li><NuxtLink to="/news">News</NuxtLink></li>
-            <li v-if="post">-</li>
-            <li v-if="post">{{ post.title.rendered }}</li>
-          </ul>
+          <Breadcrumb :items="[
+            { label: 'Home', to: '/' },
+            { label: 'News', to: '/news' },
+            ...(post ? [{ label: post.title.rendered }] : [])
+          ]" />
           <h2 v-if="post" class="page-header__title" v-html="post.title.rendered"></h2>
         </div>
       </div>
