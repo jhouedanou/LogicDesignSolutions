@@ -50,8 +50,7 @@ export const useContent = () => {
       { label: 'PRODUCTS', path: '/products' },
       { label: 'SERVICES', path: '/services' },
       { label: 'NEWS', path: '/news' },
-      { label: 'REFERENCES', path: '/references' },
-      { label: 'CONTACT', path: '/contact' }
+      { label: 'REFERENCES', path: '/references' }
     ],
     footerMenu: [
       { title: 'Home', url: '/' },

@@ -61,8 +61,7 @@ const fallbackMenu = [
   { label: 'PRODUCTS', path: '/products' },
   { label: 'SERVICES', path: '/services' },
   { label: 'NEWS', path: '/news' },
-  { label: 'REFERENCES', path: '/references' },
-  { label: 'CONTACT', path: '/contact' }
+  { label: 'REFERENCES', path: '/references' }
 ]
 
 const fallbackSite = {
