@@ -5,11 +5,10 @@
       <div class="page-header-bg" style="background-image: url(/assets/images/backgrounds/logic-slider-2.webp)"></div>
       <div class="container">
         <div class="page-header__inner">
-          <ul class="thm-breadcrumb list-unstyled">
-            <li><NuxtLink to="/">Home</NuxtLink></li>
-            <li>-</li>
-            <li>Products</li>
-          </ul>
+          <Breadcrumb :items="[
+            { label: 'Home', to: '/' },
+            { label: 'Products' }
+          ]" />
           <h2 class="page-header__title">Our Products</h2>
         </div>
       </div>

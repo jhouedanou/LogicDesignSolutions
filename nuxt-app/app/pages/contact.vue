@@ -5,11 +5,10 @@
             </div>
             <div class="container">
                 <div class="page-header__inner">
-                    <ul class="thm-breadcrumb list-unstyled">
-                        <li><a href="/">Home</a></li>
-                        <li>-</li>
-                        <li>Contact</li>
-                    </ul>
+                    <Breadcrumb :items="[
+                        { label: 'Home', to: '/' },
+                        { label: 'Contact' }
+                    ]" />
                     <h2 class="page-header__title">Contact Us</h2>
                 </div>
             </div>

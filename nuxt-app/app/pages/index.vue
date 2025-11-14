@@ -221,21 +221,27 @@
               }
             }'>
               <!--Services Two Single Start-->
-              <div v-for="product in products.slice(0, 4)" :key="product.id" class="item">
+              <div v-for="post in recentNews" :key="post.id" class="item">
                 <div class="services-two__single">
                   <div class="services-two__img-box">
                     <div class="services-two__img">
-                      <img :src="product.image" :alt="product.title">
+                      <img 
+                        :src="post.featured_media_src_url || '/assets/images/news/news-default.jpg'" 
+                        :alt="post.title?.rendered || 'News'"
+                        style="width: 100%; height: 300px; object-fit: cover;"
+                      >
                     </div>
                   </div>
                   <div class="services-two__content">
-                    <div class="services-two__icon">
-                      <span class="icon-teamwork"></span>
+                    <div class="services-two__icon" style="display: none;">
+                      <span class="icon-newspaper"></span>
                       <div class="services-two__icon-shape"></div>
                     </div>
-                    <h3 class="services-two__title"><NuxtLink :to="`/product-detail?id=${product.id}`">{{ product.title }}</NuxtLink></h3>
-                    <p class="services-two__text">{{ product.excerpt }}</p>
-                    <NuxtLink :to="`/product-detail?id=${product.id}`" class="services-two__btn">Read More<span
+                    <h3 class="services-two__title">
+                      <NuxtLink :to="`/news/${post.slug}`" v-html="post.title?.rendered"></NuxtLink>
+                    </h3>
+                    <p class="services-two__text" v-html="getExcerpt(post)"></p>
+                    <NuxtLink :to="`/news/${post.slug}`" class="services-two__btn">Read More<span
                         class="icon-right-arrow"></span></NuxtLink>
                   </div>
                 </div>
@@ -338,8 +344,10 @@ definePageMeta({
 const { hero, about, news, site, brands } = useContent()
 const { slides, fetchSlides } = useSlides()
 const { products, fetchProducts } = useProducts()
+const { fetchPosts } = usePosts()
 const { fetchMultipleWidgets, fetchWidgetContent } = useWidgets()
 const isLoading = ref(true)
+const recentNews = ref<any[]>([])
 const aboutWidgetContent = ref<string>('')
 const aboutTitleWidget = ref<string>('')
 const aboutContentTitleWidget = ref<string>('')
@@ -357,9 +365,31 @@ const midpoint = computed(() => Math.ceil(featuresItems.value.length / 2))
 const leftFeatures = computed(() => featuresItems.value.slice(0, midpoint.value))
 const rightFeatures = computed(() => featuresItems.value.slice(midpoint.value))
 
+// Get excerpt from post content
+const getExcerpt = (post: any) => {
+  if (post.excerpt?.rendered) {
+    const div = document.createElement('div')
+    div.innerHTML = post.excerpt.rendered
+    const text = div.textContent || div.innerText || ''
+    return text.substring(0, 120) + '...'
+  }
+  
+  if (post.content?.rendered) {
+    const div = document.createElement('div')
+    div.innerHTML = post.content.rendered
+    const text = div.textContent || div.innerText || ''
+    return text.substring(0, 120) + '...'
+  }
+  
+  return ''
+}
+
 onMounted(async () => {
   try {
-    // Fetch slides, partners, and products from API
+    // Fetch slides, partners, products and recent news from API
+    const newsData = await fetchPosts(1, 4) // Get 4 most recent posts
+    recentNews.value = newsData.posts
+    
     await Promise.all([fetchSlides(), fetchProducts()])
 
     // Load about section widgets in batch

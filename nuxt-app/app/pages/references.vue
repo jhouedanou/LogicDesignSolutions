@@ -15,11 +15,10 @@
             />
             <div class="container">
                 <div class="page-header__inner">
-                    <ul class="thm-breadcrumb list-unstyled">
-                        <li><a href="/">Home</a></li>
-                        <li>-</li>
-                        <li>References</li>
-                    </ul>
+                    <Breadcrumb :items="[
+                        { label: 'Home', to: '/' },
+                        { label: 'References' }
+                    ]" />
                     <h2 class="page-header__title">Our References</h2>
                 </div>
             </div>
