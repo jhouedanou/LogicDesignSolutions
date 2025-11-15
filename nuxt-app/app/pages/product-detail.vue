@@ -180,6 +180,9 @@
 import { useHead, navigateTo } from '#imports'
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useWPProduct } from '../composables/useWPProduct'
+import { useWPProductCategories } from '../composables/useWPProductCategories'
+import { useWPProducts } from '../composables/useWPProducts'
 
 // Types are defined in types/global.d.ts
 type WordPressProduct = {

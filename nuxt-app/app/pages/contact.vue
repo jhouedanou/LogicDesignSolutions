@@ -24,53 +24,10 @@
                 <div class="row">
                     <div class="col-xl-8 col-lg-7">
                         <div class="contact-page__form">
-                            <form action="#" class="comment-one__form contact-form-validated" novalidate>
-                                <div class="row">
-                                    <div class="col-xl-6">
-                                        <div class="comment-form__input-box">
-                                            <input type="text" placeholder="Your Name" name="name" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div class="comment-form__input-box">
-                                            <input type="email" placeholder="Email Address" name="email" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div class="comment-form__input-box">
-                                            <input type="text" placeholder="Phone Number" name="phone">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div class="comment-form__input-box">
-                                            <input type="text" placeholder="Company Name" name="company">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-12">
-                                        <div class="comment-form__input-box">
-                                            <select class="selectpicker" aria-label="Select Service">
-                                                <option selected>Select Service</option>
-                                                <option value="1">FPGA Design</option>
-                                                <option value="2">IP Development</option>
-                                                <option value="3">Verification Services</option>
-                                                <option value="4">Consulting</option>
-                                                <option value="5">Technical Support</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-12">
-                                        <div class="comment-form__input-box text-message-box">
-                                            <textarea name="message" placeholder="Write Message" required></textarea>
-                                        </div>
-                                        <div class="comment-form__btn-box">
-                                            <button type="submit" class="thm-btn comment-form__btn">Send Message<span
-                                                    class="icon-right-arrow"></span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                            <ContactForm
+                                :contactEmail="'contact@logic-design-solutions.com'"
+                                :subject="'New Contact Form Submission from Logic Design Solutions'"
+                            />
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-5">

@@ -335,7 +335,12 @@
 
 <script setup lang="ts">
 import { ref, onMounted, nextTick, computed } from 'vue'
-import { useHead, useContent, useSlides } from '#imports'
+import { useHead } from '#imports'
+import { useContent } from '../composables/useContent'
+import { useSlides } from '../composables/useSlides'
+import { useProducts } from '../composables/useProducts'
+import { usePosts } from '../composables/usePosts'
+import { useWidgets } from '../composables/useWidgets'
 
 definePageMeta({
   layout: false

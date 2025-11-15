@@ -175,6 +175,8 @@
 import { useHead } from '#imports'
 import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useWPProductCategories } from '../composables/useWPProductCategories'
+import { useWPProducts } from '../composables/useWPProducts'
 
 // Types are defined in types/global.d.ts
 type WordPressProduct = {
