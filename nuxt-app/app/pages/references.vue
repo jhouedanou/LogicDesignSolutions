@@ -105,6 +105,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useHead } from '#imports'
+import { useWidgets } from '../composables/useWidgets'
 
 const { fetchMultipleWidgets } = useWidgets()
 const introText = ref<string>('')

@@ -151,7 +151,7 @@ export default defineNuxtConfig({
   // Imports Configuration
   imports: {
     dirs: [
-      '../composables/**'
+      'composables/**'
     ]
   },
 
