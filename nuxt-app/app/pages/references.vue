@@ -15,10 +15,7 @@
             />
             <div class="container">
                 <div class="page-header__inner">
-                    <Breadcrumb :items="[
-                        { label: 'Home', to: '/' },
-                        { label: 'References' }
-                    ]" />
+                    <Breadcrumb />
                     <h2 class="page-header__title">Our References</h2>
                 </div>
             </div>
