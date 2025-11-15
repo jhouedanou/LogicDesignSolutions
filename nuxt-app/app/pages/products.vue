@@ -5,10 +5,7 @@
       <div class="page-header-bg" style="background-image: url(/assets/images/backgrounds/logic-slider-2.webp)"></div>
       <div class="container">
         <div class="page-header__inner">
-          <Breadcrumb :items="[
-            { label: 'Home', to: '/' },
-            { label: 'Products' }
-          ]" />
+          <Breadcrumb />
           <h2 class="page-header__title">Our Products</h2>
         </div>
       </div>
