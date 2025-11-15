@@ -5,10 +5,7 @@
             </div>
             <div class="container">
                 <div class="page-header__inner">
-                    <Breadcrumb :items="[
-                        { label: 'Home', to: '/' },
-                        { label: 'Contact' }
-                    ]" />
+                    <Breadcrumb />
                     <h2 class="page-header__title">Contact Us</h2>
                 </div>
             </div>

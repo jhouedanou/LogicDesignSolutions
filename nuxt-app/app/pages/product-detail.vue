@@ -9,9 +9,9 @@
                     <Breadcrumb :items="[
                         { label: 'Home', to: '/' },
                         { label: 'Products', to: '/products' },
-                        { label: 'Product Details' }
+                        { label: productTitle }
                     ]" />
-                    <h2 class="page-header__title">Product Details</h2>
+                    <h2 class="page-header__title">{{ productTitle }}</h2>
                 </div>
             </div>
         </section>
@@ -223,12 +223,24 @@ if (productId && productId !== 'undefined' && productId.trim()) {
   navigateTo('/products')
 }
 
+// Helper function to strip HTML
+const stripHtml = (html: string): string => {
+  if (!html) return ''
+  return html.replace(/<[^>]*>/g, '')
+}
+
 // Get product categories
 const productCategories = computed(() => {
   if (!product.value || !product.value.product_cat || !allCategories.value) return []
   return allCategories.value.filter((cat: WordPressProductCategory) =>
     product.value.product_cat!.includes(cat.id)
   )
+})
+
+// Get product title
+const productTitle = computed(() => {
+  if (!product.value) return 'Product Details'
+  return stripHtml(product.value.title.rendered)
 })
 
 // Get product image
@@ -256,12 +268,6 @@ const getProductImage = (prod: WordPressProduct): string => {
     return prod._embedded['wp:featuredmedia'][0].source_url
   }
   return '/assets/images/news/placeholder-product.jpg'
-}
-
-// Helper function to strip HTML
-const stripHtml = (html: string): string => {
-  if (!html) return ''
-  return html.replace(/<[^>]*>/g, '')
 }
 
 // Social sharing functions
