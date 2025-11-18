@@ -9,9 +9,9 @@
                     <Breadcrumb :items="[
                         { label: 'Home', to: '/' },
                         { label: 'News', to: '/news' },
-                        { label: 'News Details' }
+                        { label: postTitle }
                     ]" />
-                    <h2 class="page-header__title">News Details</h2>
+                    <h2 class="page-header__title">{{ postTitle }}</h2>
                 </div>
             </div>
         </section>
@@ -20,30 +20,34 @@
         <!--News Details Start-->
         <section class="news-details">
             <div class="container">
-                <div class="row">
+                <div v-if="pending" class="text-center" style="padding: 60px;">
+                    <div class="spinner" style="display: inline-block; width: 50px; height: 50px; border: 4px solid #f3f3f3; border-top: 4px solid #ff6b35; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;"></div>
+                    <p style="color: #666; font-size: 16px;">Loading post...</p>
+                </div>
+
+                <div v-else-if="error || !post" class="text-center" style="padding: 60px; color: red;">
+                    <p>Post not found or error loading details.</p>
+                    <a href="/news" class="thm-btn" style="margin-top: 20px;">
+                        Back to News<span class="icon-right-arrow"></span>
+                    </a>
+                </div>
+
+                <div v-else class="row">
                     <div class="col-xl-8 col-lg-7">
                         <div class="news-details__left">
                             <div class="news-details__content">
-                                <h3 class="news-details__title-1">Gen 5 NVMe Host IP on AGILEX 7 R-Tile !</h3>
+                                <h3 class="news-details__title-1" v-html="post.title.rendered"></h3>
                                 
-                                <div style="float: left; width: 50%; margin-right: 30px; margin-bottom: 20px; position: relative;">
-                                    <img src="/assets/images/news/nvme_host_agilex_7_r_tile-672x1024.jpg" alt="Gen 5 NVMe Host IP" style="width: 100%; height: auto;">
+                                <div v-if="postImage" style="float: left; width: 50%; margin-right: 30px; margin-bottom: 20px; position: relative;">
+                                    <img :src="postImage" :alt="stripHtml(post.title.rendered)" style="width: 100%; height: auto;">
                                     <div class="news-details__date" style="position: absolute; top: 20px; left: 20px; background-color: var(--lds-primary); color: #ffffff; padding: 15px 20px; text-align: center; border-radius: 5px;">
-                                        <p style="margin: 0; font-size: 24px; font-weight: bold; line-height: 1.2;">05<br>Sep</p>
+                                        <p style="margin: 0; font-size: 24px; font-weight: bold; line-height: 1.2;">
+                                            {{ formatDate(post.date).day }}<br>{{ formatDate(post.date).month }}
+                                        </p>
                                     </div>
                                 </div>
                                 
-                                <p class="news-details__text-1">France, Gournay sur Marne, September 5th 2025 – Logic Design Solutions is proud to announce the availability of its Gen5 NVME-HOST-IP on AGILEX 7 R-Tile platform. This cutting-edge IP core represents a significant advancement in high-performance storage connectivity for FPGA-based systems.</p>
-                                
-                                <p class="news-details__text-2">Based in Gournay-sur-Marne, France, the company continues to push the boundaries of FPGA innovation. The newly available IP core supports random, sequential, read/write, and multi-user access, delivering exceptional performance and flexibility at PCIe Gen5 speed. It is designed to simplify development for engineers seeking robust, high-throughput storage connectivity.</p>
-
-                                <h3 class="news-details__title-2">Advanced File System Integration</h3>
-                                <p class="news-details__text-2">As an option, the solution integrates a fully operational FAT32/EXFAT file system in RAID0 configuration, enabling advanced data management and redundancy. To help customers get started quickly, Logic Design Solutions provides a series of ready-to-use demonstration projects — including sequential access on one, two, or four disks (with or without FAT32/EXFAT), random access evaluations, and simultaneous read/write operations across multiple drives.</p>
-
-                                <h3 class="news-details__title-2">Flexible Control Options</h3>
-                                <p class="news-details__text-2">Each demo can be controlled either by a CPU (with C source code provided) or by a state machine (with VHDL source code included). By combining all of these capabilities into a single IP, Logic Design Solutions eliminates the need for multiple separate IP cores — offering engineers a complete, integrated, and high-performance solution for next-generation FPGA storage applications.</p>
-
-                                <p class="news-details__text-2">For more information about our Gen5 NVMe Host IP on AGILEX 7 R-Tile, please contact our sales team or visit our products page.</p>
+                                <div v-html="post.content.rendered" class="news-content"></div>
                             </div>
 
                             <div class="news-details__bottom">
@@ -123,10 +127,110 @@
 <script setup lang="ts">
 import { useHead } from '#imports'
 
+// Types
+interface WordPressPost {
+  id: number
+  title: { rendered: string }
+  content: { rendered: string }
+  excerpt?: { rendered: string }
+  date: string
+  featured_media: number
+  _embedded?: {
+    'wp:featuredmedia'?: Array<{
+      id: number
+      source_url: string
+      alt_text?: string
+    }>
+  }
+}
+
+const route = useRoute()
+const postId = route.query.id as string
+
+// Initialize post
+const post = ref<WordPressPost | null>(null)
+const error = ref<any>(null)
+const pending = ref(true)
+
+// Fetch post if ID is valid
+if (postId && postId !== 'undefined' && postId.trim()) {
+  try {
+    const { data: postData, error: postError, pending: postPending } = await useWPPost(postId)
+    post.value = postData.value
+    error.value = postError.value
+    pending.value = postPending.value
+  } catch (e) {
+    error.value = e
+    pending.value = false
+  }
+} else {
+  // No ID provided, redirect to news page
+  navigateTo('/news')
+}
+
+// Get post title
+const postTitle = computed(() => {
+  if (!post.value) return 'News Details'
+  return stripHtml(post.value.title.rendered)
+})
+
+// Get post image
+const postImage = computed(() => {
+  if (!post.value) return ''
+  if (post.value._embedded?.['wp:featuredmedia']?.[0]?.source_url) {
+    return post.value._embedded['wp:featuredmedia'][0].source_url
+  }
+  return ''
+})
+
+// Helper function to strip HTML
+const stripHtml = (html: string): string => {
+  if (!html) return ''
+  return html.replace(/<[^>]*>/g, '')
+}
+
+// Format date
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString)
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  return {
+    day: date.getDate().toString().padStart(2, '0'),
+    month: months[date.getMonth()]
+  }
+}
+
+// Set page title and meta
 useHead({
-  title: 'Gen 5 NVMe Host IP on AGILEX 7 R-Tile - Logic Design Solutions',
+  title: post.value ? `${stripHtml(post.value.title.rendered)} - Logic Design Solutions` : 'News Details',
   meta: [
-    { name: 'description', content: 'Logic Design Solutions - News Details' }
+    {
+      name: 'description',
+      content: post.value ? stripHtml(post.value.excerpt?.rendered || '') : 'News details'
+    }
   ]
 })
 </script>
+
+<style scoped>
+.news-content :deep(p) {
+  margin-bottom: 20px;
+  line-height: 1.8;
+}
+
+.news-content :deep(h2),
+.news-content :deep(h3),
+.news-content :deep(h4) {
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+.news-content :deep(img) {
+  max-width: 100%;
+  height: auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
