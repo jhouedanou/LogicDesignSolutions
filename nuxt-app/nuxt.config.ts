@@ -158,6 +158,17 @@ export default defineNuxtConfig({
 
   // Vite Configuration
   vite: {
+    server: {
+      watch: {
+        ignored: ['**/node_modules/**', '**/dist/**', '**/.git/**', '**/.nuxt/**', '**/.output/**', '**/coverage/**', '**/.nyc_output/**', '**/*.{jpg,jpeg,png,gif,webp,svg,ico,pdf,mp4,avi,mov,woff,woff2,ttf,otf,eot}'],
+        usePolling: true,
+        interval: 5000,
+        binaryInterval: 10000
+      },
+      fs: {
+        strict: true
+      }
+    },
     css: {
       preprocessorOptions: {
         scss: {

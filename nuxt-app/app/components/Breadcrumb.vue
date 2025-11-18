@@ -62,14 +62,18 @@ const breadcrumbItems = computed(() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
 .thm-breadcrumb {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
   list-style: none;
-  padding: 0;
-  margin: 0;
+    padding:4px 10px;
+  margin: 1em 0;
+  ul{
+    padding:4px;
+  }
 }
 
 .thm-breadcrumb li {
