@@ -627,6 +627,8 @@ useHead({
 
 /* Hero Slider Height Limit */
 .main-slider-two {
+
+  min-height: 900px;
   max-height: 100vh;
   overflow: hidden;
 }
