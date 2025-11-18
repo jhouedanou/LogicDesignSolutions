@@ -24,163 +24,82 @@
               <h2 class="section-title__title">News & Announcements</h2>
             </div>
 
-            <div class="row">
-              <!-- News Item 1 -->
-              <div class="col-xl-6 col-lg-12 wow fadeInUp" data-wow-delay="100ms" style="margin-bottom: 30px;">
+            <div v-if="pending" class="text-center" style="padding: 60px 40px;">
+              <div class="spinner" style="display: inline-block; width: 50px; height: 50px; border: 4px solid #f3f3f3; border-top: 4px solid #ff6b35; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;"></div>
+              <p style="color: #666; font-size: 16px;">Loading posts...</p>
+            </div>
+
+            <div v-else-if="error" class="text-center" style="padding: 60px 40px; color: red;">
+              <p>Error loading posts. Please try again later.</p>
+            </div>
+
+            <div v-else class="row">
+              <!-- Dynamic News Items -->
+              <div 
+                v-for="(post, index) in posts" 
+                :key="post.id"
+                class="col-xl-6 col-lg-12 wow fadeInUp" 
+                :data-wow-delay="`${(index % 2 + 1) * 100}ms`" 
+                style="margin-bottom: 30px;"
+              >
                 <div class="row" style="border: 1px solid #eeeeee; padding: 0; margin: 0; height: 100%;">
                   <div class="col-xl-4 col-lg-4" style="padding: 10px;">
                     <div class="news-one__img" style="height: 100%;">
-                      <img src="/assets/images/news/nvme_host_agilex_7_r_tile-672x1024.jpg" alt="Gen 5 NVMe Host IP" style="width: 100%; height: 100%; object-fit: cover;" />
+                      <img 
+                        :src="getPostImage(post)" 
+                        :alt="stripHtml(post.title.rendered)" 
+                        style="width: 100%; height: 100%; object-fit: cover;" 
+                      />
                     </div>
                   </div>
                   <div class="col-xl-8 col-lg-8" style="padding: 20px;">
                     <ul class="news-one__meta list-unstyled">
-                      <li><a href="#">September 5, 2025</a></li>
+                      <li><a href="#">{{ formatDate(post.date) }}</a></li>
                       <li><a href="#">NEWS</a></li>
                     </ul>
-                    <h3 class="news-one__title"><NuxtLink to="/news-detail">Gen 5 NVMe Host IP on AGILEX 7 R-Tile !</NuxtLink></h3>
-                    <p class="news-one__text">France, Gournay sur Marne, September 5th 2025...</p>
+                    <h3 class="news-one__title">
+                      <a :href="`/news-detail?id=${post.id}`" v-html="post.title.rendered"></a>
+                    </h3>
+                    <p class="news-one__text">{{ getExcerpt(post) }}</p>
                     <div class="news-one__bottom">
                       <div class="news-one__read-more">
-                        <NuxtLink to="/news-detail">Read More <span class="icon-right-arrow"></span></NuxtLink>
+                        <a :href="`/news-detail?id=${post.id}`">Read More <span class="icon-right-arrow"></span></a>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- News Item 2 -->
-              <div class="col-xl-6 col-lg-12 wow fadeInUp" data-wow-delay="200ms" style="margin-bottom: 30px;">
-                <div class="row" style="border: 1px solid #eeeeee; padding: 0; margin: 0; height: 100%;">
-                  <div class="col-xl-4 col-lg-4" style="padding: 0;">
-                    <div class="news-one__img" style="height: 100%;">
-                      <img src="/assets/images/news/NMVE_HOST_K7U-844x1024.jpg" alt="Kintex NVMe" style="width: 100%; height: 100%; object-fit: cover;" />
-                    </div>
-                  </div>
-                  <div class="col-xl-8 col-lg-8" style="padding: 20px;">
-                    <ul class="news-one__meta list-unstyled">
-                      <li><a href="#">November 14, 2024</a></li>
-                      <li><a href="#">NEWS</a></li>
-                    </ul>
-                    <h3 class="news-one__title"><NuxtLink to="/news-detail">NVME Host IP on Kintex Ultra Scale Plus !</NuxtLink></h3>
-                    <p class="news-one__text">France, Gournay sur Marne, November 14th 2024...</p>
-                    <div class="news-one__bottom">
-                      <div class="news-one__read-more">
-                        <NuxtLink to="/news-detail">Read More <span class="icon-right-arrow"></span></NuxtLink>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <!-- News Item 3 -->
-              <div class="col-xl-6 col-lg-12 wow fadeInUp" data-wow-delay="300ms" style="margin-bottom: 30px;">
-                <div class="row" style="border: 1px solid #eeeeee; padding: 0; margin: 0; height: 100%;">
-                  <div class="col-xl-4 col-lg-4" style="padding: 0;">
-                    <div class="news-one__img" style="height: 100%;">
-                      <img src="/assets/images/news/ARINC_429_IP-924x1024.jpg" alt="ARINC 429" style="width: 100%; height: 100%; object-fit: cover;" />
-                    </div>
-                  </div>
-                  <div class="col-xl-8 col-lg-8" style="padding: 20px;">
-                    <ul class="news-one__meta list-unstyled">
-                      <li><a href="#">November 4, 2024</a></li>
-                      <li><a href="#">NEWS</a></li>
-                    </ul>
-                    <h3 class="news-one__title"><NuxtLink to="/news-detail">New ARINC 429 IP</NuxtLink></h3>
-                    <p class="news-one__text">France, Gournay sur Marne, November 4th 2024...</p>
-                    <div class="news-one__bottom">
-                      <div class="news-one__read-more">
-                        <NuxtLink to="/news-detail">Read More <span class="icon-right-arrow"></span></NuxtLink>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- News Item 4 -->
-              <div class="col-xl-6 col-lg-12 wow fadeInUp" data-wow-delay="100ms" style="margin-bottom: 30px;">
-                <div class="row" style="border: 1px solid #eeeeee; padding: 0; margin: 0; height: 100%;">
-                  <div class="col-xl-4 col-lg-4" style="padding: 0;">
-                    <div class="news-one__img" style="height: 100%;">
-                      <img src="/assets/images/news/Artix_Ultra_Scale_Plus_NVME_HOST_IP-671x1024.jpg" alt="Artix NVMe" style="width: 100%; height: 100%; object-fit: cover;" />
-                    </div>
-                  </div>
-                  <div class="col-xl-8 col-lg-8" style="padding: 20px;">
-                    <ul class="news-one__meta list-unstyled">
-                      <li><a href="#">November 4, 2024</a></li>
-                      <li><a href="#">NEWS</a></li>
-                    </ul>
-                    <h3 class="news-one__title"><NuxtLink to="/news-detail">Gen4 NVME Host IP on Artix Ultra Scale Plus !</NuxtLink></h3>
-                    <p class="news-one__text">France, Gournay sur Marne, November 4th 2024...</p>
-                    <div class="news-one__bottom">
-                      <div class="news-one__read-more">
-                        <NuxtLink to="/news-detail">Read More <span class="icon-right-arrow"></span></NuxtLink>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- News Item 5 -->
-              <div class="col-xl-6 col-lg-12 wow fadeInUp" data-wow-delay="200ms" style="margin-bottom: 30px;">
-                <div class="row" style="border: 1px solid #eeeeee; padding: 0; margin: 0; height: 100%;">
-                  <div class="col-xl-4 col-lg-4" style="padding: 0;">
-                    <div class="news-one__img" style="height: 100%;">
-                      <img src="/assets/images/news/EXFAT_IP_Soft_Core-1024x767.jpg" alt="EXFAT IP" style="width: 100%; height: 100%; object-fit: cover;" />
-                    </div>
-                  </div>
-                  <div class="col-xl-8 col-lg-8" style="padding: 20px;">
-                    <ul class="news-one__meta list-unstyled">
-                      <li><a href="#">October 22, 2024</a></li>
-                      <li><a href="#">NEWS</a></li>
-                    </ul>
-                    <h3 class="news-one__title"><NuxtLink to="/news-detail">EXFAT IP Soft Core for NVMe Host</NuxtLink></h3>
-                    <p class="news-one__text">France, Gournay sur Marne, October 22nd 2024...</p>
-                    <div class="news-one__bottom">
-                      <div class="news-one__read-more">
-                        <NuxtLink to="/news-detail">Read More <span class="icon-right-arrow"></span></NuxtLink>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- News Item 6 -->
-              <div class="col-xl-6 col-lg-12 wow fadeInUp" data-wow-delay="300ms" style="margin-bottom: 30px;">
-                <div class="row" style="border: 1px solid #eeeeee; padding: 0; margin: 0; height: 100%;">
-                  <div class="col-xl-4 col-lg-4" style="padding: 0;">
-                    <div class="news-one__img" style="height: 100%;">
-                      <img src="/assets/images/news/NVME_HOST_ZYNQ_ULTRASCALE_PLUS-936x1024.jpg" alt="Zynq NVMe" style="width: 100%; height: 100%; object-fit: cover;" />
-                    </div>
-                  </div>
-                  <div class="col-xl-8 col-lg-8" style="padding: 20px;">
-                    <ul class="news-one__meta list-unstyled">
-                      <li><a href="#">September 15, 2024</a></li>
-                      <li><a href="#">NEWS</a></li>
-                    </ul>
-                    <h3 class="news-one__title"><NuxtLink to="/news-detail">Zynq UltraScale+ NVMe Host IP Release</NuxtLink></h3>
-                    <p class="news-one__text">France, Gournay sur Marne, September 15th 2024...</p>
-                    <div class="news-one__bottom">
-                      <div class="news-one__read-more">
-                        <NuxtLink to="/news-detail">Read More <span class="icon-right-arrow"></span></NuxtLink>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
 
             <!-- Pagination -->
-            <div class="news-page__pagination" style="text-align: center; margin-top: 40px;">
+            <div v-if="!pending && !error && totalPages > 1" class="news-page__pagination" style="text-align: center; margin-top: 40px;">
               <ul class="pg-pagination list-unstyled" style="display: inline-flex; justify-content: center; gap: 10px;">
-                <li class="prev">
-                  <a href="#" aria-label="Previous">PREV</a>
+                <li class="prev" :class="{ disabled: currentPage === 1 }">
+                  <a 
+                    :href="currentPage > 1 ? `/news?page=${currentPage - 1}` : '#'" 
+                    aria-label="Previous"
+                    @click.prevent="currentPage > 1 && navigateToPage(currentPage - 1)"
+                  >PREV</a>
                 </li>
-                <li class="count active"><a href="#">01</a></li>
-                <li class="count"><a href="#">02</a></li>
-                <li class="count"><a href="#">03</a></li>
-                <li class="next">
-                  <a href="#" aria-label="Next">NEXT</a>
+                <li 
+                  v-for="page in totalPages" 
+                  :key="page"
+                  class="count" 
+                  :class="{ active: page === currentPage }"
+                >
+                  <a 
+                    :href="`/news?page=${page}`"
+                    @click.prevent="navigateToPage(page)"
+                  >{{ String(page).padStart(2, '0') }}</a>
+                </li>
+                <li class="next" :class="{ disabled: currentPage === totalPages }">
+                  <a 
+                    :href="currentPage < totalPages ? `/news?page=${currentPage + 1}` : '#'" 
+                    aria-label="Next"
+                    @click.prevent="currentPage < totalPages && navigateToPage(currentPage + 1)"
+                  >NEXT</a>
                 </li>
               </ul>
             </div>
@@ -208,7 +127,70 @@
 </template>
 
 <script setup lang="ts">
-import { useHead } from '#imports'
+import { ref, computed, watch } from 'vue'
+import { useHead, useRoute, navigateTo } from '#imports'
+
+interface WordPressPost {
+  id: number
+  date: string
+  title: {
+    rendered: string
+  }
+  content: {
+    rendered: string
+  }
+  excerpt?: {
+    rendered: string
+  }
+  featured_media: number
+  _embedded?: {
+    'wp:featuredmedia'?: Array<{
+      id: number
+      source_url: string
+      alt_text?: string
+    }>
+  }
+}
+
+// Get current page from query params
+const route = useRoute()
+const currentPage = ref(parseInt(route.query.page as string) || 1)
+
+// Fetch posts with pagination
+const perPage = 6
+const posts = ref<WordPressPost[]>([])
+const { data: postsData, error, pending, totalCount, totalPages } = await useWPPosts(perPage, currentPage.value)
+
+// Update posts when data is available
+watch(postsData, (newData) => {
+  if (newData) {
+    posts.value = newData
+  }
+}, { immediate: true })
+
+// Helper functions
+const stripHtml = (html: string) => {
+  return html.replace(/<[^>]*>/g, '')
+}
+
+const getPostImage = (post: WordPressPost) => {
+  return post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/assets/images/news/default-news.jpg'
+}
+
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString)
+  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' }
+  return date.toLocaleDateString('en-US', options)
+}
+
+const getExcerpt = (post: WordPressPost) => {
+  const excerpt = stripHtml(post.excerpt?.rendered || '')
+  return excerpt.length > 150 ? excerpt.substring(0, 150) + '...' : excerpt
+}
+
+const navigateToPage = (page: number) => {
+  navigateTo(`/news?page=${page}`)
+}
 
 useHead({
   title: 'News - Logic Design Solutions',
@@ -221,5 +203,22 @@ useHead({
 <style scoped>
 .news-page {
   width: 100%;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.pg-pagination .disabled a {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.pg-pagination .active a {
+  background-color: #ff6b35;
+  color: white;
+  font-weight: bold;
 }
 </style>
