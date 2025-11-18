@@ -66,13 +66,15 @@
                                 </div>
                             </div>
 
-                            <div class="news-details__pagenation-box">
+                            <div v-if="previousPost || nextPost" class="news-details__pagenation-box">
                                 <ul class="list-unstyled news-details__pagenation">
-                                    <li>Previous Article
-                                        <a href="#" style="margin-left: 10px;">NVME Host IP on Kintex Ultra Scale Plus</a>
+                                    <li v-if="previousPost">
+                                        Previous Article
+                                        <a :href="`/news-detail?id=${previousPost.id}`" style="margin-left: 10px;" v-html="previousPost.title.rendered"></a>
                                     </li>
-                                    <li>Next Article
-                                        <a href="#" style="margin-left: 10px;">New ARINC 429 IP</a>
+                                    <li v-if="nextPost">
+                                        Next Article
+                                        <a :href="`/news-detail?id=${nextPost.id}`" style="margin-left: 10px;" v-html="nextPost.title.rendered"></a>
                                     </li>
                                 </ul>
                             </div>
@@ -151,6 +153,10 @@ const post = ref<WordPressPost | null>(null)
 const error = ref<any>(null)
 const pending = ref(true)
 
+// Initialize adjacent posts
+const previousPost = ref<WordPressPost | null>(null)
+const nextPost = ref<WordPressPost | null>(null)
+
 // Fetch post if ID is valid
 if (postId && postId !== 'undefined' && postId.trim()) {
   try {
@@ -158,6 +164,32 @@ if (postId && postId !== 'undefined' && postId.trim()) {
     post.value = postData.value
     error.value = postError.value
     pending.value = postPending.value
+
+    // Fetch all posts to find previous and next
+    if (post.value) {
+      try {
+        const { data: allPostsData } = await useWPPosts(100, 1) // Fetch a large number to get all posts
+        if (allPostsData.value) {
+          const currentIndex = allPostsData.value.findIndex((p: WordPressPost) => p.id === post.value!.id)
+          
+          if (currentIndex !== -1) {
+            // Previous post is the one after in the array (newer post)
+            if (currentIndex > 0) {
+              const prevPost = allPostsData.value[currentIndex - 1]
+              if (prevPost) previousPost.value = prevPost
+            }
+            
+            // Next post is the one before in the array (older post)
+            if (currentIndex < allPostsData.value.length - 1) {
+              const nxtPost = allPostsData.value[currentIndex + 1]
+              if (nxtPost) nextPost.value = nxtPost
+            }
+          }
+        }
+      } catch (navError) {
+        console.error('Error loading adjacent posts:', navError)
+      }
+    }
   } catch (e) {
     error.value = e
     pending.value = false
