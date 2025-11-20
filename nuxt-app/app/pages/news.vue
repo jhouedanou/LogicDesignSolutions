@@ -159,14 +159,41 @@ const currentPage = ref(parseInt(route.query.page as string) || 1)
 // Fetch posts with pagination
 const perPage = 6
 const posts = ref<WordPressPost[]>([])
-const { data: postsData, error, pending, totalCount, totalPages } = await useWPPosts(perPage, currentPage.value)
+const error = ref<string | null>(null)
+const pending = ref(true)
+const totalCount = ref(0)
+const totalPages = ref(0)
 
-// Update posts when data is available
-watch(postsData, (newData) => {
-  if (newData) {
-    posts.value = newData
+// Function to load posts
+const loadPosts = async (page: number) => {
+  pending.value = true
+  error.value = null
+  
+  try {
+    const result = await useWPPosts(perPage, page)
+    posts.value = result.data.value || []
+    error.value = result.error.value
+    totalCount.value = result.totalCount.value
+    totalPages.value = result.totalPages.value
+  } catch (e) {
+    error.value = 'Error loading posts'
+    console.error('Error loading posts:', e)
+  } finally {
+    pending.value = false
   }
-}, { immediate: true })
+}
+
+// Load initial posts
+await loadPosts(currentPage.value)
+
+// Watch for page changes in URL
+watch(() => route.query.page, (newPage) => {
+  const pageNum = parseInt(newPage as string) || 1
+  currentPage.value = pageNum
+  loadPosts(pageNum)
+  // Scroll to top when page changes
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+})
 
 // Helper functions
 const stripHtml = (html: string) => {
