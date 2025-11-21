@@ -130,17 +130,76 @@ onMounted(async () => {
 
     // Traiter la liste des pays
     if (results['text-4']) {
-      const tempDiv = document.createElement('div')
-      tempDiv.innerHTML = results['text-4']
-      const listItems = Array.from(tempDiv.querySelectorAll('li'))
+      // Debug: voir ce qui est retourné
+      console.log('text-4 result:', results['text-4'])
+      console.log('text-4 type:', typeof results['text-4'])
       
-      // Diviser la liste en deux colonnes
-      const midpoint = Math.ceil(listItems.length / 2)
-      const leftItems = listItems.slice(0, midpoint)
-      const rightItems = listItems.slice(midpoint)
+      let countryText = ''
       
-      leftCountries.value = leftItems.map(li => li.outerHTML).join('\n')
-      rightCountries.value = rightItems.map(li => li.outerHTML).join('\n')
+      // Si c'est un objet avec text, utiliser le text
+      if (typeof results['text-4'] === 'object' && results['text-4'].text) {
+        countryText = results['text-4'].text
+        console.log('Using text property:', countryText)
+      } 
+      // Si c'est directement une string
+      else if (typeof results['text-4'] === 'string') {
+        countryText = results['text-4']
+        console.log('Using direct string:', countryText)
+      }
+      // Si c'est un objet avec content
+      else if (typeof results['text-4'] === 'object' && results['text-4'].content) {
+        countryText = results['text-4'].content
+        console.log('Using content property:', countryText)
+      }
+      
+      // Vérifier côté client seulement
+      if (process.client && countryText) {
+        const tempDiv = document.createElement('div')
+        tempDiv.innerHTML = countryText
+        const listItems = Array.from(tempDiv.querySelectorAll('li'))
+        
+        console.log('Found li elements:', listItems.length)
+        
+        if (listItems.length > 0) {
+          // Diviser la liste en deux colonnes
+          const midpoint = Math.ceil(listItems.length / 2)
+          const leftItems = listItems.slice(0, midpoint)
+          const rightItems = listItems.slice(midpoint)
+          
+          leftCountries.value = leftItems.map(li => li.outerHTML).join('\n')
+          rightCountries.value = rightItems.map(li => li.outerHTML).join('\n')
+        } else {
+          // Fallback: utiliser regex pour extraire les <li>
+          const liMatches = countryText.match(/<li[^>]*>.*?<\/li>/gi) || []
+          console.log('Regex found li elements:', liMatches.length)
+          
+          if (liMatches.length > 0) {
+            const midpoint = Math.ceil(liMatches.length / 2)
+            const leftItems = liMatches.slice(0, midpoint)
+            const rightItems = liMatches.slice(midpoint)
+            
+            leftCountries.value = leftItems.join('\n')
+            rightCountries.value = rightItems.join('\n')
+          } else {
+            // Si pas de <li> trouvés, afficher le contenu brut
+            leftCountries.value = countryText
+          }
+        }
+      } else if (countryText) {
+        // Fallback pour SSR: utiliser regex
+        const liMatches = countryText.match(/<li[^>]*>.*?<\/li>/gi) || []
+        
+        if (liMatches.length > 0) {
+          const midpoint = Math.ceil(liMatches.length / 2)
+          const leftItems = liMatches.slice(0, midpoint)
+          const rightItems = liMatches.slice(midpoint)
+          
+          leftCountries.value = leftItems.join('\n')
+          rightCountries.value = rightItems.join('\n')
+        } else {
+          leftCountries.value = countryText
+        }
+      }
     }
 
     // Traiter l'image du fondateur

@@ -71,30 +71,88 @@ const fallbackSite = {
   contactButtonText: 'Contact Us'
 }
 
-const { data: menuResponse } = useFetch('/api/menu')
-const { data: siteResponse } = useFetch('/api/site-config')
+// Cache global pour éviter les rechargements
+const headerCache = {
+  callLabelWidget: '',
+  phoneWidget: '',
+  loaded: false,
+  loading: false
+}
+
+const { data: menuResponse } = useFetch('/api/menu', { 
+  key: 'app-menu',
+  default: () => ({ items: fallbackMenu })
+})
+
+const { data: siteResponse } = useFetch('/api/site-config', {
+  key: 'site-config',
+  default: () => fallbackSite
+})
+
 const { fetchWidgetContent } = useWidgets()
 
 const menuItems = computed(() => menuResponse.value?.items ?? fallbackMenu)
-const callLabelWidget = ref<string>('')
-const phoneWidget = ref<string>('')
+const callLabelWidget = ref<string>(headerCache.callLabelWidget)
+const phoneWidget = ref<string>(headerCache.phoneWidget)
 
 const site = computed(() => ({
   ...fallbackSite,
   ...(siteResponse.value ?? {})
 }))
 
-onMounted(async () => {
+// Cache des widgets pour éviter les rechargements
+const loadWidgets = async () => {
+  // Si déjà chargé ou en cours de chargement, ne rien faire
+  if (headerCache.loaded || headerCache.loading) {
+    callLabelWidget.value = headerCache.callLabelWidget
+    phoneWidget.value = headerCache.phoneWidget
+    return
+  }
+  
+  headerCache.loading = true
+  
   try {
-    // Load call label widget
-    const callLabelContent = await fetchWidgetContent('custom_html-10', 'nouveau-template-01')
-    callLabelWidget.value = callLabelContent
-
-    // Load phone widget
-    const phoneContent = await fetchWidgetContent('custom_html-11', 'nouveau-template-01')
-    phoneWidget.value = phoneContent
+    const timeoutPromise = new Promise<never>((_, reject) => 
+      setTimeout(() => reject(new Error('Widget loading timeout')), 5000)
+    )
+    
+    const loadPromises = Promise.all([
+      fetchWidgetContent('custom_html-10', 'nouveau-template-01'),
+      fetchWidgetContent('custom_html-11', 'nouveau-template-01')
+    ])
+    
+    const [callLabelContent, phoneContent] = await Promise.race([loadPromises, timeoutPromise])
+    
+    // Mettre en cache
+    headerCache.callLabelWidget = callLabelContent || ''
+    headerCache.phoneWidget = phoneContent || ''
+    headerCache.loaded = true
+    
+    // Mettre à jour les refs
+    callLabelWidget.value = headerCache.callLabelWidget
+    phoneWidget.value = headerCache.phoneWidget
   } catch (err) {
     console.error('Error loading widgets:', err)
+    // Cache les valeurs par défaut en cas d'erreur
+    headerCache.callLabelWidget = ''
+    headerCache.phoneWidget = ''
+    headerCache.loaded = true
+    
+    callLabelWidget.value = headerCache.callLabelWidget
+    phoneWidget.value = headerCache.phoneWidget
+  } finally {
+    headerCache.loading = false
+  }
+}
+
+// Charger seulement si pas encore en cache
+onMounted(() => {
+  if (!headerCache.loaded && !headerCache.loading) {
+    loadWidgets()
+  } else {
+    // Utiliser le cache immédiatement
+    callLabelWidget.value = headerCache.callLabelWidget
+    phoneWidget.value = headerCache.phoneWidget
   }
 })
 </script>

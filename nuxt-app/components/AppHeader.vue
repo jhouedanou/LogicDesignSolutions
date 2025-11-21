@@ -29,10 +29,16 @@
                 <span class="icon-telephone-call"></span>
               </div>
               <div class="main-menu-two__call-content">
-                <p class="main-menu-two__call-sub-title">{{ site.callLabel }}</p>
-                <h5 class="main-menu-two__call-number">
-                  <a :href="`tel:${site.phone.replace(/\s/g, '')}`">{{ site.phone }}</a>
-                </h5>
+                <div v-if="siteStatus === 'pending'">
+                  <p class="main-menu-two__call-sub-title">Loading...</p>
+                  <h5 class="main-menu-two__call-number">...</h5>
+                </div>
+                <div v-else>
+                  <p class="main-menu-two__call-sub-title">{{ site.callLabel }}</p>
+                  <h5 class="main-menu-two__call-number">
+                    <a :href="`tel:${site.phone.replace(/\s/g, '')}`">{{ site.phone }}</a>
+                  </h5>
+                </div>
               </div>
             </div>
             <div class="main-menu-two__btn-box">
@@ -72,8 +78,8 @@ const fallbackSite = {
   contactButtonText: 'Contact Us'
 }
 
-const { data: menuResponse } = useFetch('/api/menu')
-const { data: siteResponse } = useFetch('/api/site-config')
+const { data: menuResponse } = useFetch('/api/menu', { key: 'menu' })
+const { data: siteResponse, status: siteStatus } = useFetch('/api/site-config', { key: 'site-config' })
 
 const menuItems = computed(() => menuResponse.value?.items ?? fallbackMenu)
 

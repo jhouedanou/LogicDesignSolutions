@@ -1,17 +1,14 @@
 <template>
   <div>
     <section class="page-header">
-      <div class="page-header__bg" style="background-image: url(/assets/images/backgrounds/page-header-bg.jpg);"></div>
+      <div class="page-header-bg" style="background-image: url(/assets/images/backgrounds/logic-slider-2.webp)"></div>
       <div class="container">
         <div class="page-header__inner">
-          <h2>{{ faq?.title }}</h2>
-          <Breadcrumb 
-            :items="[
-              { label: 'Home', to: '/' },
-              { label: faq?.title || 'FAQ' }
-            ]"
-            separator="/"
-          />
+          <Breadcrumb :items="[
+            { label: 'Home', to: '/' },
+            { label: faq?.title || 'FAQ' }
+          ]" />
+          <h2 class="page-header__title">{{ faq?.title }}</h2>
         </div>
       </div>
     </section>
@@ -27,15 +24,29 @@
 
         <div class="row">
           <div class="col-xl-12">
-            <div class="faq-page__single">
+            <div v-if="loading" class="text-center" style="padding: 60px;">
+              <div class="spinner" style="display: inline-block; width: 50px; height: 50px; border: 4px solid #f3f3f3; border-top: 4px solid #f02b59; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;"></div>
+              <p style="color: #666; font-size: 16px;">Loading FAQ...</p>
+            </div>
+
+            <div v-else-if="error" class="text-center" style="padding: 60px; color: red;">
+              <p>Error loading FAQ entries. Please try again later.</p>
+            </div>
+
+            <div v-else class="faq-page__single">
               <div class="accrodion-grp" data-grp-name="faq-one-accrodion">
-                <div v-for="(question, index) in faq?.questions" :key="question.id" class="accrodion" :class="{ active: index === 0 }">
-                  <div class="accrodion-title">
-                    <h4>{{ question.question }}</h4>
+                <div 
+                  v-for="(entry, index) in entries" 
+                  :key="entry.id" 
+                  class="accrodion" 
+                  :class="{ active: index === activeIndex }"
+                >
+                  <div class="accrodion-title" @click="toggleAccordion(index)">
+                    <h4>{{ stripHtml(entry.title.rendered) }}</h4>
                   </div>
                   <div class="accrodion-content">
                     <div class="inner">
-                      <p>{{ question.answer }}</p>
+                      <div v-html="entry.content.rendered"></div>
                     </div>
                   </div>
                 </div>
@@ -49,29 +60,24 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { useHead } from '#imports'
+
+const { entries, loading, error, fetchFAQEntries, stripHtml } = useFAQ()
+const activeIndex = ref<number>(0)
 
 const faq = ref({
   title: 'FAQ',
   tagline: 'Frequently Asked Questions',
-  description: 'Find answers to common questions',
-  questions: [
-    {
-      id: 1,
-      question: 'What services do you offer?',
-      answer: 'We provide comprehensive FPGA design services, IP core development, verification, and technical support.'
-    },
-    {
-      id: 2,
-      question: 'What industries do you serve?',
-      answer: 'We serve various industries including telecommunications, aerospace, automotive, and industrial automation.'
-    },
-    {
-      id: 3,
-      question: 'Do you provide custom solutions?',
-      answer: 'Yes, we specialize in custom FPGA design solutions tailored to your specific requirements.'
-    }
-  ]
+  description: 'Find answers to common questions'
+})
+
+const toggleAccordion = (index: number) => {
+  activeIndex.value = activeIndex.value === index ? -1 : index
+}
+
+onMounted(async () => {
+  await fetchFAQEntries()
 })
 
 useHead({
@@ -88,6 +94,11 @@ useHead({
 <style scoped>
 .faq-page {
   padding: 120px 0 90px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .accrodion-grp {
@@ -197,8 +208,12 @@ useHead({
 .page-header h2 {
   font-size: 48px;
   font-weight: 700;
-  color: #1f1f25;
+  color: #ffffff;
   margin-bottom: 20px;
+}
+
+.page-header__title {
+  color: #ffffff !important;
 }
 
 .thm-breadcrumb {

@@ -38,32 +38,34 @@
               <div 
                 v-for="(post, index) in posts" 
                 :key="post.id"
-                class="col-xl-6 col-lg-12 wow fadeInUp" 
+                class="col-xl-6 col-lg-6 col-md-6 col-sm-12 wow fadeInUp" 
                 :data-wow-delay="`${(index % 2 + 1) * 100}ms`" 
-                style="margin-bottom: 30px;"
+                style="margin-bottom: 40px; padding: 0 15px;"
               >
-                <div class="row" style="border: 1px solid #eeeeee; padding: 0; margin: 0; height: 100%;">
-                  <div class="col-xl-4 col-lg-4" style="padding: 10px;">
-                    <div class="news-one__img" style="height: 100%;">
-                      <img 
-                        :src="getPostImage(post)" 
-                        :alt="stripHtml(post.title.rendered)" 
-                        style="width: 100%; height: 100%; object-fit: cover;" 
-                      />
-                    </div>
+                <div class="news-item-card" style="border: 1px solid #eeeeee; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); height: 100%; display: flex; flex-direction: column;">
+                  <!-- Image en pleine largeur en haut -->
+                  <div class="news-one__img" style="width: 100%; height: 200px; overflow: hidden; margin: 0; padding: 0;">
+                    <img 
+                      :src="getPostImage(post)" 
+                      :alt="stripHtml(post.title.rendered)" 
+                      style="width: 100%; height: 100%; object-fit: cover; background-color: #f8f9fa; display: block;" 
+                    />
                   </div>
-                  <div class="col-xl-8 col-lg-8" style="padding: 20px;">
-                    <ul class="news-one__meta list-unstyled">
-                      <li><a href="#">{{ formatDate(post.date) }}</a></li>
-                      <li><a href="#">NEWS</a></li>
-                    </ul>
-                    <h3 class="news-one__title">
+                  <!-- Contenu en dessous -->
+                  <div style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column;">
+                    <!-- Cartouche de date en dessous avec primary color -->
+                    <div class="date-cartouche" style="display: inline-block; width: fit-content; background-color: var(--lds-primary); color: white; padding: 8px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);">
+                      {{ formatDate(post.date) }}
+                    </div>
+                    <!-- Titre -->
+                    <h3 class="news-one__title" style="font-size: 18px; line-height: 1.3; margin-bottom: 12px;">
                       <a :href="`/news-detail?id=${post.id}`" v-html="post.title.rendered"></a>
                     </h3>
-                    <p class="news-one__text">{{ getExcerpt(post) }}</p>
-                    <div class="news-one__bottom">
+                    <!-- Excerpt -->
+                    <p class="news-one__text" style="font-size: 14px; line-height: 1.6; color: #666; margin-bottom: 15px; flex-grow: 1;">{{ getExcerpt(post) }}</p>
+                    <div class="news-one__bottom" style="margin-top: auto;">
                       <div class="news-one__read-more">
-                        <a :href="`/news-detail?id=${post.id}`">Read More <span class="icon-right-arrow"></span></a>
+                        <a :href="`/news-detail?id=${post.id}`" style="font-size: 13px; font-weight: 500; color: #ff6b35; text-decoration: none;">Read More <span class="icon-right-arrow"></span></a>
                       </div>
                     </div>
                   </div>
@@ -114,7 +116,7 @@
                   subtitle="Our Newsletter"
                   cta=""
                   buttonText="Subscribe"
-                buttonLink="#"
+                buttonLink="/contact"
               />
               </ClientOnly>
             </div>
