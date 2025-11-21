@@ -55,7 +55,15 @@ export const useWidgets = () => {
         return widgetContent.value[cacheKey]
       }
 
-      const response = await fetch(`/api/widget?id=${widgetId}&sidebar=${sidebarId}`)
+      // Add timeout to prevent hanging requests
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 8000) // 8 second timeout
+
+      const response = await fetch(`/api/widget?id=${widgetId}&sidebar=${sidebarId}`, {
+        signal: controller.signal
+      })
+
+      clearTimeout(timeoutId)
 
       if (!response.ok) {
         throw new Error(`Failed to fetch widget content: ${response.status}`)
@@ -100,6 +108,11 @@ export const useWidgets = () => {
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Unknown error'
       console.error(`Error fetching widget ${widgetId}:`, message)
+      
+      // Cache empty result to prevent repeated failed requests
+      const cacheKey = `${sidebarId}:${widgetId}`
+      widgetContent.value[cacheKey] = ''
+      
       return ''
     }
   }

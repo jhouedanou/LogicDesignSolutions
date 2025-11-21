@@ -34,40 +34,42 @@
                 </div>
               </div>
 
-              <div v-else class="row">
+              <div v-else class="row" style="margin: 0 -15px;">
                 <div 
                   v-for="(post, index) in posts" 
                   :key="post.id"
-                  class="col-xl-6 col-lg-12 wow fadeInUp" 
+                  class="col-xl-6 col-lg-6 col-md-6 col-sm-12 wow fadeInUp" 
                   :data-wow-delay="`${(index + 1) * 100}ms`" 
-                  style="margin-bottom: 30px;"
+                  style="margin-bottom: 40px; padding: 0 15px;"
                 >
-                  <div class="row" style="border: 1px solid #eeeeee; padding: 0; margin: 0; height: 100%;">
-                    <div class="col-xl-4 col-lg-4" style="padding: 10px;">
-                      <div class="news-one__img" style="height: 100%;">
-                        <NuxtImg
-                          v-if="post.featured_media_src_url"
-                          :src="post.featured_media_src_url"
-                          :alt="post.title.rendered"
-                          width="300"
-                          height="400"
-                          loading="lazy"
-                          style="width: 100%; height: 100%; object-fit: cover;"
-                        />
-                      </div>
+                  <div class="news-item-card" style="border: 1px solid #eeeeee; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); height: 100%; display: flex; flex-direction: column; width: 100%;">
+                    <!-- Image en pleine largeur en haut -->
+                    <div class="news-one__img" style="width: 100%; height: 200px; overflow: hidden; margin: 0; padding: 0;">
+                      <NuxtImg
+                        v-if="post.featured_media_src_url"
+                        :src="post.featured_media_src_url"
+                        :alt="post.title.rendered"
+                        width="400"
+                        height="200"
+                        loading="lazy"
+                        style="width: 100%; height: 100%; object-fit: cover; background-color: #f8f9fa; display: block;"
+                      />
                     </div>
-                    <div class="col-xl-8 col-lg-8" style="padding: 20px;">
-                      <ul class="news-one__meta list-unstyled">
-                        <li><a href="#">{{ formatDate(post.date) }}</a></li>
-                        <li><a href="#">NEWS</a></li>
-                      </ul>
-                      <h3 class="news-one__title">
+                    <!-- Contenu en dessous -->
+                    <div style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column;">
+                      <!-- Cartouche de date en dessous avec primary color -->
+                      <div class="date-cartouche" style="display: inline-block; width: fit-content; background-color: var(--lds-primary); color: white; padding: 8px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);">
+                        {{ formatDate(post.date) }}
+                      </div>
+                      <!-- Titre -->
+                      <h3 class="news-one__title" style="font-size: 18px; line-height: 1.3; margin-bottom: 12px;">
                         <NuxtLink :to="`/news/${post.slug}`" v-html="post.title.rendered"></NuxtLink>
                       </h3>
-                      <p class="news-one__text">{{ getExcerpt(post.excerpt.rendered) }}</p>
-                      <div class="news-one__bottom">
+                      <!-- Excerpt -->
+                      <p class="news-one__text" style="font-size: 14px; line-height: 1.6; color: #666; margin-bottom: 15px; flex-grow: 1;">{{ getExcerpt(post.excerpt.rendered) }}</p>
+                      <div class="news-one__bottom" style="margin-top: auto;">
                         <div class="news-one__read-more">
-                          <NuxtLink :to="`/news/${post.slug}`">Read More <span class="icon-right-arrow"></span></NuxtLink>
+                          <NuxtLink :to="`/news/${post.slug}`" style="font-size: 13px; font-weight: 500; color: #ff6b35; text-decoration: none;">Read More <span class="icon-right-arrow"></span></NuxtLink>
                         </div>
                       </div>
                     </div>
@@ -106,7 +108,7 @@
                   subtitle="Our Newsletter"
                   cta=""
                   buttonText="Subscribe"
-                buttonLink="#"
+                buttonLink="/contact"
               />
               </ClientOnly>
             </div>
@@ -147,7 +149,7 @@ const goToPage = (page: number) => {
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString)
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
 }
 
 const getExcerpt = (content: string, maxLength: number = 150) => {
@@ -179,5 +181,75 @@ useHead({
 <style scoped>
 .news-page {
   width: 100%;
+}
+
+.news-item-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-item-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.news-one__meta li {
+  display: inline-block;
+  margin-right: 15px;
+  color: #888;
+}
+
+.news-one__meta li a {
+  color: #888;
+  text-decoration: none;
+}
+
+.news-one__title a {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.news-one__title a:hover {
+  color: #ff6b35;
+}
+
+.news-one__read-more a {
+  color: #ff6b35;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.news-one__read-more a:hover {
+  color: #e55a2b;
+}
+
+.date-cartouche {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.5);
+  }
+  100% {
+    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+  }
+}
+
+.news-one__category span {
+  transition: all 0.3s ease;
+}
+
+.news-item-card:hover .news-one__category span {
+  background-color: #ff6b35;
+  color: white;
+}
+
+.news-item-card {
+  height: 100% !important;
 }
 </style>

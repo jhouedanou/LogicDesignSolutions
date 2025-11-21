@@ -1,7 +1,15 @@
 <template>
   <div>
 <section class="page-header">
-            <div class="page-header-bg" style="background-image: url(/assets/images/backgrounds/logic-slider-2.webp)">
+            <div 
+              class="page-header-bg" 
+              :style="{
+                'background-image': post && postImage ? `url(${postImage})` : 'url(/assets/images/backgrounds/logic-slider-2.webp)',
+                'background-size': 'cover',
+                'background-position': 'center',
+                'background-repeat': 'no-repeat'
+              }"
+            >
             </div>
             <div class="container">
                 <div class="page-header__inner">
@@ -36,15 +44,6 @@
                         <div class="news-details__left">
                             <div class="news-details__content">
                                 <h3 class="news-details__title-1" v-html="post.title.rendered"></h3>
-                                
-                                <div v-if="postImage" style="float: left; width: 50%; margin-right: 30px; margin-bottom: 20px; position: relative;">
-                                    <img :src="postImage" :alt="stripHtml(post.title.rendered)" style="width: 100%; height: auto;">
-                                    <div class="news-details__date" style="position: absolute; top: 20px; left: 20px; background-color: var(--lds-primary); color: #ffffff; padding: 15px 20px; text-align: center; border-radius: 5px;">
-                                        <p style="margin: 0; font-size: 24px; font-weight: bold; line-height: 1.2;">
-                                            {{ formatDate(post.date).day }}<br>{{ formatDate(post.date).month }}
-                                        </p>
-                                    </div>
-                                </div>
                                 
                                 <div v-html="post.content.rendered" class="news-content"></div>
                             </div>
@@ -98,8 +97,8 @@
                                     <br> Our Newsletter
                                 </h3>
                                 <div class="have-any-project__btn-box">
-                                    <a href="#" class="have-any-project__btn thm-btn">Subscribe<span
-                                            class="icon-right-arrow"></span></a>
+                                    <NuxtLink to="/contact" class="have-any-project__btn thm-btn">Subscribe<span
+                                            class="icon-right-arrow"></span></NuxtLink>
                                 </div>
                             </div>
 
