@@ -44,11 +44,11 @@
               >
                 <div class="news-item-card" style="border: 1px solid #eeeeee; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); height: 100%; display: flex; flex-direction: column;">
                   <!-- Image en pleine largeur en haut -->
-                  <div class="news-one__img" style="width: 100%; height: 200px; overflow: hidden; margin: 0; padding: 0;">
+                  <div class="news-one__img" style="width: 100%; height: 100px; overflow: hidden; margin: 0; padding: 0; background-color: #f8f9fa;">
                     <img 
                       :src="getPostImage(post)" 
                       :alt="stripHtml(post.title.rendered)" 
-                      style="width: 100%; height: 100%; object-fit: cover; background-color: #f8f9fa; display: block;" 
+                      style="width: 100%; height: 100%; object-fit: contain; display: block;" 
                     />
                   </div>
                   <!-- Contenu en dessous -->

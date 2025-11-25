@@ -147,7 +147,7 @@
               </div>
 
               <!-- Popular Tags -->
-              <div class="sidebar__single sidebar__tags">
+              <!-- <div class="sidebar__single sidebar__tags">
                 <h3 class="sidebar__title">Popular Tags</h3>
                 <div class="sidebar__tags-list">
                   <a href="#">NVMe</a>
@@ -161,7 +161,7 @@
                   <a href="#">Gen5</a>
                   <a href="#">10G</a>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

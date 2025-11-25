@@ -29,16 +29,10 @@
                 <span class="icon-telephone-call"></span>
               </div>
               <div class="main-menu-two__call-content">
-                <div v-if="siteStatus === 'pending'">
-                  <p class="main-menu-two__call-sub-title">Loading...</p>
-                  <h5 class="main-menu-two__call-number">...</h5>
-                </div>
-                <div v-else>
-                  <p class="main-menu-two__call-sub-title">{{ site.callLabel }}</p>
-                  <h5 class="main-menu-two__call-number">
-                    <a :href="`tel:${site.phone.replace(/\s/g, '')}`">{{ site.phone }}</a>
-                  </h5>
-                </div>
+                <p class="main-menu-two__call-sub-title">{{ site.callLabel }}</p>
+                <h5 class="main-menu-two__call-number">
+                  <a :href="`tel:${site.phone.replace(/\s/g, '')}`">{{ site.phone }}</a>
+                </h5>
               </div>
             </div>
             <div class="main-menu-two__btn-box">

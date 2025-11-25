@@ -207,16 +207,10 @@
                   "items": 1
                 },
                 "768": {
-                  "items": 1
-                },
-                "992": {
-                  "items": 1
-                },
-                "1200": {
-                  "items": 1
-                },
-                "1350": {
                   "items": 2
+                },
+                "1024": {
+                  "items": 3
                 }
               }
             }'>
@@ -627,14 +621,20 @@ useHead({
 
 /* Hero Slider Height Limit */
 .main-slider-two {
-
   min-height: 900px;
   max-height: 100vh;
   overflow: hidden;
 }
 
+.main-slider-two__carousel {
+  min-height: 900px;
+  height: 100vh;
+  max-height: 100vh;
+}
+
 .main-slider-two .item {
   height: 100vh;
+  min-height: 900px;
   display: flex;
   align-items: center;
 }
