@@ -25,6 +25,12 @@
               <span style="font-size: 12px; color: #666;">Loading...</span>
             </div>
             <div v-else-if="widgetHtml" class="main-menu-two__call-content" v-html="widgetHtml"></div>
+            <div v-else class="main-menu-two__call-content">
+              <p class="main-menu-two__call-sub-title">{{ site?.callLabel || 'Call Us' }}</p>
+              <h5 class="main-menu-two__call-number">
+                <a :href="`tel:${(site?.phone || '').replace(/\s/g, '')}`">{{ site?.phone }}</a>
+              </h5>
+            </div>
           </div>
           <div class="main-menu-two__btn-box">
             <a href="/contact" class="main-menu-two__btn thm-btn">
