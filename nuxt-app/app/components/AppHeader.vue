@@ -29,9 +29,9 @@
                 <span class="icon-telephone-call"></span>
               </div>
               <div class="main-menu-two__call-content">
-                <p class="main-menu-two__call-sub-title" v-html="callLabelWidget || site.callLabel"></p>
+                <p class="main-menu-two__call-sub-title" v-html="displayCallLabel"></p>
                 <h5 class="main-menu-two__call-number">
-                  <a :href="`tel:${site.phone.replace(/\s/g, '')}`" v-html="phoneWidget || site.phone"></a>
+                  <a :href="`tel:${(displayPhone || site.phone).replace(/\s/g, '')}`" v-html="displayPhone"></a>
                 </h5>
               </div>
             </div>
@@ -99,6 +99,21 @@ const site = computed(() => ({
   ...fallbackSite,
   ...(siteResponse.value ?? {})
 }))
+
+// Computed safe display values to avoid showing 'Loading...' or placeholder dots
+const displayCallLabel = computed(() => {
+  const v = (callLabelWidget.value || '').toString().trim()
+  if (!v) return site.value.callLabel
+  const lowered = v.toLowerCase()
+  if (lowered === 'loading...' || v === '...') return site.value.callLabel
+  return v
+})
+
+const displayPhone = computed(() => {
+  const v = (phoneWidget.value || '').toString().trim()
+  if (!v || v === '...') return site.value.phone
+  return v
+})
 
 // Cache des widgets pour éviter les rechargements
 const loadWidgets = async () => {
