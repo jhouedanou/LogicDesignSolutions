@@ -4,37 +4,37 @@
       <div class="main-menu-two__wrapper-inner">
         <div class="main-menu-two__left">
           <div class="main-menu-two__logo">
-            <a href="/" style="font-size: 32px; font-weight: 700; font-style: italic; color: #000;">{{ site?.siteName }}</a>
+            <a href="/" style="font-size: 32px; font-weight: 700; font-style: italic; color: #000;">{{ siteData.siteName }}</a>
           </div>
           <div class="main-menu-two__main-menu-box">
             <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
             <ul class="main-menu__list">
-              <li v-for="item in navigation?.mainMenu" :key="item.path">
+              <li v-for="item in menuItems" :key="item.path">
                 <a :href="item.path">{{ item.label }}</a>
               </li>
             </ul>
           </div>
         </div>
         <div class="main-menu-two__right">
+          <div class="main-menu-two__search-box">
+            <a href="#" class="main-menu-two__search search-toggler" aria-label="Rechercher">
+              <i class="icon-search"></i>
+            </a>
+          </div>
           <div class="main-menu-two__call">
             <div class="main-menu-two__call-icon">
               <span class="icon-telephone-call"></span>
             </div>
-            <div v-if="widgetLoading" class="main-menu-two__call-content" style="display: flex; align-items: center; gap: 10px;">
-              <div class="spinner-mini"></div>
-              <span style="font-size: 12px; color: #666;">Loading...</span>
-            </div>
-            <div v-else-if="widgetHtml" class="main-menu-two__call-content" v-html="widgetHtml"></div>
-            <div v-else class="main-menu-two__call-content">
-              <p class="main-menu-two__call-sub-title">{{ site?.callLabel || 'Call Us' }}</p>
+            <div class="main-menu-two__call-content">
+              <p class="main-menu-two__call-sub-title">{{ siteData.callLabel }}</p>
               <h5 class="main-menu-two__call-number">
-                <a :href="`tel:${(site?.phone || '').replace(/\s/g, '')}`">{{ site?.phone }}</a>
+                <a :href="`tel:${siteData.phone.replace(/\s/g, '')}`">{{ siteData.phone }}</a>
               </h5>
             </div>
           </div>
           <div class="main-menu-two__btn-box">
             <a href="/contact" class="main-menu-two__btn thm-btn">
-              {{ site?.contactButtonText }}<span class="icon-right-arrow"></span>
+              {{ siteData.contactButtonText }}<span class="icon-right-arrow"></span>
             </a>
           </div>
         </div>
@@ -44,39 +44,42 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { computed } from 'vue'
+import { useFetch } from '#imports'
 
-const { site, navigation } = useContent()
-const { fetchWidgetContent } = useWidgets()
-const widgetHtml = ref<string>('')
-const widgetLoading = ref<boolean>(true)
+// Valeurs par défaut affichées immédiatement
+const fallbackSite = {
+  siteName: 'LogicDesignSolutions',
+  callLabel: 'Call Us',
+  phone: '+33 (0)1 45 92 24 47',
+  contactButtonText: 'Contact Us'
+}
 
-onMounted(async () => {
-  try {
-    widgetLoading.value = true
-    // Fetch the custom_html-8 widget content from nouveau-template-01 sidebar
-    const content = await fetchWidgetContent('custom_html-8', 'nouveau-template-01')
-    widgetHtml.value = content
-  } catch (err) {
-    console.error('Error loading widget:', err)
-  } finally {
-    widgetLoading.value = false
-  }
+const fallbackMenu = [
+  { label: 'HOME', path: '/' },
+  { label: 'PROFILES', path: '/profiles' },
+  { label: 'PRODUCTS', path: '/products' },
+  { label: 'SERVICES', path: '/services' },
+  { label: 'NEWS', path: '/news' },
+  { label: 'REFERENCES', path: '/references' }
+]
+
+// Récupération depuis l'API avec valeurs par défaut immédiates (pas de loading visible)
+const { data: siteResponse } = useFetch('/api/site-config', {
+  key: 'site-config-menu',
+  default: () => fallbackSite
 })
+
+const { data: menuResponse } = useFetch('/api/menu', {
+  key: 'menu-config',
+  default: () => ({ items: fallbackMenu })
+})
+
+// Computed qui fusionne les valeurs par défaut avec celles de l'API
+const siteData = computed(() => ({
+  ...fallbackSite,
+  ...(siteResponse.value ?? {})
+}))
+
+const menuItems = computed(() => menuResponse.value?.items ?? fallbackMenu)
 </script>
-
-<style scoped>
-.spinner-mini {
-  width: 16px;
-  height: 16px;
-  border: 2px solid #f3f3f3;
-  border-top: 2px solid #ff6b35;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-</style>

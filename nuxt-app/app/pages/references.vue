@@ -23,7 +23,7 @@
         <!--Page Header End-->
 
         <!--References Start-->
-        <section class="news-details">
+        <section class="news-details pb-0">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-8 col-lg-7">
@@ -97,7 +97,7 @@
         <!--References End-->
 
         <!--Brand Two Start-->
-        <BrandPartners />
+        <BrandPartners class="mt-0 pt-0"/>
         <!--Brand Two End-->
     </div>
 </template>
