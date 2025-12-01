@@ -131,7 +131,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import { useHead, useRoute, navigateTo } from '#imports'
+import { useHead, useRoute, useRouter } from '#imports'
 
 interface WordPressPost {
   id: number
@@ -173,6 +173,7 @@ interface WordPressPost {
 
 // Get current page from query params
 const route = useRoute()
+const router = useRouter()
 const currentPage = ref(parseInt(route.query.page as string) || 1)
 
 // Fetch posts with pagination
@@ -205,13 +206,17 @@ const loadPosts = async (page: number) => {
 // Load initial posts
 await loadPosts(currentPage.value)
 
-// Watch for page changes in URL
-watch(() => route.query.page, (newPage) => {
+// Watch for direct URL changes (e.g., browser back/forward)
+watch(() => route.query.page, async (newPage, oldPage) => {
+  if (newPage === oldPage) return
   const pageNum = parseInt(newPage as string) || 1
-  currentPage.value = pageNum
-  loadPosts(pageNum)
-  // Scroll to top when page changes
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+  if (pageNum !== currentPage.value) {
+    currentPage.value = pageNum
+    await loadPosts(pageNum)
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
 })
 
 // Helper functions
@@ -243,8 +248,21 @@ const getExcerpt = (post: WordPressPost) => {
   return excerpt.length > 150 ? excerpt.substring(0, 150) + '...' : excerpt
 }
 
-const navigateToPage = (page: number) => {
-  navigateTo(`/news?page=${page}`)
+const navigateToPage = async (page: number) => {
+  if (page === currentPage.value) return
+  
+  currentPage.value = page
+  
+  // Mettre à jour l'URL sans recharger la page
+  await router.push({ path: '/news', query: { page: page.toString() } })
+  
+  // Charger les nouveaux posts
+  await loadPosts(page)
+  
+  // Scroll to top
+  if (typeof window !== 'undefined') {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 }
 
 useHead({
