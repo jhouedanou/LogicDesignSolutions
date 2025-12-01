@@ -63,18 +63,7 @@
       </div>
     </div>
 
-    <div class="search-popup">
-      <div class="search-popup__overlay search-toggler"></div>
-      <div class="search-popup__content">
-        <form action="#">
-          <label for="search" class="sr-only">search here</label>
-          <input id="search" type="text" placeholder="Search Here..." />
-          <button type="submit" aria-label="search submit" class="thm-btn">
-            <i class="fas fa-search"></i>
-          </button>
-        </form>
-      </div>
-    </div>
+    <SearchPopup />
 
     <a href="#" data-target="html" class="scroll-to-target scroll-to-top">
       <i class="fas fa-arrow-up"></i>
