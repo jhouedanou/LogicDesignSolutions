@@ -44,11 +44,12 @@
               >
                 <div class="news-item-card" style="border: 1px solid #eeeeee; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); height: 100%; display: flex; flex-direction: column;">
                   <!-- Image en pleine largeur en haut -->
-                  <div class="news-one__img" style="width: 100%; height: 100px; overflow: hidden; margin: 0; padding: 0; background-color: #f8f9fa;">
+                  <div class="news-one__img" style="width: 100%; aspect-ratio: 1/1; overflow: hidden; margin: 0; padding: 0; background-color: #f8f9fa;">
                     <img 
                       :src="getPostImage(post)" 
                       :alt="stripHtml(post.title.rendered)" 
-                      style="width: 100%; height: 100%; object-fit: contain; display: block;" 
+                      style="width: 100%; height: 100%; object-fit: cover; display: block;" 
+                      loading="lazy"
                     />
                   </div>
                   <!-- Contenu en dessous -->
@@ -150,6 +151,22 @@ interface WordPressPost {
       id: number
       source_url: string
       alt_text?: string
+      media_details?: {
+        sizes?: {
+          thumbnail?: {
+            source_url: string
+          }
+          medium?: {
+            source_url: string
+          }
+          medium_large?: {
+            source_url: string
+          }
+          large?: {
+            source_url: string
+          }
+        }
+      }
     }>
   }
 }
@@ -203,7 +220,16 @@ const stripHtml = (html: string) => {
 }
 
 const getPostImage = (post: WordPressPost) => {
-  return post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/assets/images/news/default-news.jpg'
+  const media = post._embedded?.['wp:featuredmedia']?.[0]
+  if (!media) return '/assets/images/news/default-news.jpg'
+  
+  // Priorité : medium > thumbnail > medium_large > source_url (tailles plus petites en premier)
+  const sizes = media.media_details?.sizes
+  return sizes?.medium?.source_url 
+    || sizes?.thumbnail?.source_url 
+    || sizes?.medium_large?.source_url 
+    || media.source_url 
+    || '/assets/images/news/default-news.jpg'
 }
 
 const formatDate = (dateString: string) => {
