@@ -25,7 +25,7 @@
                     <div class="col-xl-8 col-lg-7">
                         <div class="contact-page__form">
                             <ContactForm
-                                :contactEmail="'contact@logic-design-solutions.com'"
+                                :contactEmail="'info@logic-design-solutions.com'"
                                 :subject="'New Contact Form Submission from Logic Design Solutions'"
                             />
                         </div>
@@ -50,7 +50,7 @@
                                         </div>
                                         <div class="content">
                                             <p>Email</p>
-                                            <h4 style="font-size: 16px;"><a href="mailto:contact@logic-design-solutions.com">contact@logic-design-solutions.com</a></h4>
+                                            <h4 style="font-size: 16px;"><a href="mailto:info@logic-design-solutions.com">info@logic-design-solutions.com</a></h4>
                                         </div>
                                     </li>
                                     <li>
