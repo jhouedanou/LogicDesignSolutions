@@ -136,20 +136,8 @@
                                     </li>
                                 </ul>
                             </div>
-
-                            <div class="sidebar__single have-any-project">
-                                <div class="have-any-project__bg"
-                                    style="background-image: url(/assets/images/backgrounds/contact-us-bg.jpg);">
-                                </div>
-                                <h3 class="have-any-project__title">Subscribe to
-                                    <br> Our Newsletter
-                                </h3>
-                                <div class="have-any-project__btn-box">
-                                    <NuxtLink to="/contact" class="have-any-project__btn thm-btn">Subscribe<span
-                                            class="icon-right-arrow"></span></NuxtLink>
-                                </div>
-                            </div>
-
+<HaveAnyProject />
+                        
                             <!-- <div class="sidebar__single sidebar__tags">
                                 <h3 class="sidebar__title">Popular Tags</h3>
                                 <div class="sidebar__tags-list">
