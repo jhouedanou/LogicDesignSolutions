@@ -101,7 +101,7 @@ interface FormData {
 const props = defineProps({
   contactEmail: {
     type: String,
-    default: 'contact@logic-design-solutions.com'
+    default: 'info@logic-design-solutions.com'
   },
   subject: {
     type: String,

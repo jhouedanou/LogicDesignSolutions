@@ -228,10 +228,10 @@ const getPostImage = (post: WordPressPost) => {
   const media = post._embedded?.['wp:featuredmedia']?.[0]
   if (!media) return '/assets/images/news/default-news.jpg'
   
-  // Priorité : medium > thumbnail > medium_large > source_url (tailles plus petites en premier)
+  // Priorité : full > large > medium_large > source_url (haute résolution en premier)
   const sizes = media.media_details?.sizes
-  return sizes?.medium?.source_url 
-    || sizes?.thumbnail?.source_url 
+  return sizes?.full?.source_url 
+    || sizes?.large?.source_url 
     || sizes?.medium_large?.source_url 
     || media.source_url 
     || '/assets/images/news/default-news.jpg'
