@@ -71,10 +71,7 @@
                             <div class="contact-page__social">
                                 <h3 class="contact-page__social-title">Follow Us</h3>
                                 <div class="contact-page__social-box" style="display: flex; gap: 15px;">
-                                    <a href="#" style="font-size: 28px;"><i class="fab fa-facebook"></i></a>
-                                    <a href="#" style="font-size: 28px;"><i class="fab fa-twitter"></i></a>
-                                    <a href="#" style="font-size: 28px;"><i class="fab fa-linkedin"></i></a>
-                                    <a href="#" style="font-size: 28px;"><i class="fab fa-instagram"></i></a>
+                                    <a href="https://www.linkedin.com/in/serge-sciberras-0381b22/" style="font-size: 28px;"><i class="fab fa-linkedin"></i></a>
                                 </div>
                             </div>
 

@@ -134,7 +134,7 @@
               </div>
 
               <!-- Custom IP Solution CTA -->
-              <div class="sidebar__single have-any-project">
+              <!-- <div class="sidebar__single have-any-project">
                 <div class="have-any-project__bg" style="background-image: url(/assets/images/backgrounds/contact-us-bg.jpg);"></div>
                 <h3 class="have-any-project__title">
                   Need Custom<br /> IP Solution?<br /> Contact Us
@@ -144,8 +144,10 @@
                     Get Quote<span class="icon-right-arrow"></span>
                   </NuxtLink>
                 </div>
-              </div>
-
+              </div> -->
+<ClientOnly>
+                                <HaveAnyProject />
+                            </ClientOnly>
               <!-- Popular Tags -->
               <!-- <div class="sidebar__single sidebar__tags">
                 <h3 class="sidebar__title">Popular Tags</h3>
