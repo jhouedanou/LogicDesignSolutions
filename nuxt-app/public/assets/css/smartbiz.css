@@ -8293,7 +8293,7 @@ ul {
   position: relative;
   display: block;
   background-color: var(--smartbiz-base);
-  padding: 78px 70px 80px;
+  padding: 1em;
   z-index: 1;
 }
 
