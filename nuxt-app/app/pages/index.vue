@@ -232,11 +232,11 @@
                       <div class="services-two__icon-shape"></div>
                     </div>
                     <h3 class="services-two__title">
-                      <NuxtLink :to="`/news/${post.slug}`" v-html="post.title?.rendered"></NuxtLink>
+                      <a :href="`/news-detail?id=${post.id}`" v-html="post.title?.rendered"></a>
                     </h3>
                     <p class="services-two__text" v-html="getExcerpt(post)"></p>
-                    <NuxtLink :to="`/news/${post.slug}`" class="services-two__btn">Read More<span
-                        class="icon-right-arrow"></span></NuxtLink>
+                    <a :href="`/news-detail?id=${post.id}`" class="services-two__btn">Read More<span
+                        class="icon-right-arrow"></span></a>
                   </div>
                 </div>
               </div>
@@ -449,12 +449,14 @@ onMounted(async () => {
 
     // Parse features from HTML
     const featuresContent = widgets['text-3']
-    if (featuresContent) {
+    if (featuresContent && typeof featuresContent === 'string') {
       const liRegex = /<li[^>]*>([\s\S]*?)<\/li>/gi
       const matches: RegExpMatchArray[] = Array.from(featuresContent.matchAll(liRegex)) as RegExpMatchArray[]
       featuresItems.value = matches.map((match) => {
         return (match[1] || '').replace(/<[^>]*>/g, '').trim()
       })
+    } else {
+      console.warn('⚠️ featuresContent is not a string:', typeof featuresContent, featuresContent)
     }
 
     // Wait for DOM to be fully rendered

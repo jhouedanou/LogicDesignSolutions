@@ -5,11 +5,20 @@
         <div class="main-menu-two__wrapper-inner">
           <div class="main-menu-two__left">
             <div class="main-menu-two__logo">
-              <NuxtLink
-                to="/"
-                style="font-size: 32px; font-weight: 700; font-style: italic; color: #000;"
-              >
-                {{ site.siteName }}
+              <NuxtLink to="/">
+                <img
+                  v-if="logoUrl"
+                  :src="logoUrl"
+                  :alt="logoAlt"
+                  :width="logoWidth"
+                  :height="logoHeight"
+                />
+                <span
+                  v-else
+                  style="font-size: 32px; font-weight: 700; font-style: italic; color: #000;"
+                >
+                  {{ site.siteName }}
+                </span>
               </NuxtLink>
             </div>
             <div class="main-menu-two__main-menu-box">
@@ -52,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useFetch } from '#imports'
 
 const fallbackMenu = [
@@ -81,4 +90,58 @@ const site = computed(() => ({
   ...fallbackSite,
   ...(siteResponse.value ?? {})
 }))
+
+// Récupérer le logo depuis l'API WordPress
+const logoUrl = ref('')
+const logoAlt = ref('Logic Design Solutions')
+const logoWidth = ref(290)
+const logoHeight = ref(39)
+
+// URL du logo par défaut en cas d'erreur
+const defaultLogoUrl = 'https://logic-design-solutions.com/wp-content/uploads/2025/12/logo22.png'
+
+const fetchLogo = async () => {
+  try {
+    const response = await fetch('https://logic-design-solutions.com/wp-json/custom/v1/widgets')
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const contentType = response.headers.get('content-type')
+    if (!contentType || !contentType.includes('application/json')) {
+      // Utiliser le logo par défaut
+      logoUrl.value = defaultLogoUrl
+      return
+    }
+
+    const data = await response.json()
+
+    if (data['zone-logo-sidebar'] && data['zone-logo-sidebar'].length > 0) {
+      const logoWidget = data['zone-logo-sidebar'][0]
+
+      if (logoWidget.content && logoWidget.content.url) {
+        logoUrl.value = logoWidget.content.url
+        logoAlt.value = logoWidget.content.alt || 'Logic Design Solutions'
+        logoWidth.value = logoWidget.content.width || 290
+        logoHeight.value = logoWidget.content.height || 39
+      } else {
+        // Utiliser le logo par défaut
+        logoUrl.value = defaultLogoUrl
+      }
+    } else {
+      // Utiliser le logo par défaut
+      logoUrl.value = defaultLogoUrl
+    }
+  } catch (error) {
+    console.error('Error fetching logo:', error)
+    // Utiliser le logo par défaut en cas d'erreur
+    logoUrl.value = defaultLogoUrl
+  }
+}
+
+// Charger le logo au montage du composant
+onMounted(() => {
+  fetchLogo()
+})
 </script>

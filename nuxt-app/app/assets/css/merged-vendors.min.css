@@ -15903,7 +15903,7 @@ ul {
   position: relative;
   display: block;
   background-color: var(--smartbiz-base);
-  padding: 78px 70px 80px;
+  padding: 2em;
   z-index: 1;
 }
 
@@ -15933,7 +15933,6 @@ ul {
   font-size: 45px;
   font-weight: 700;
   line-height: 55px;
-  text-transform: capitalize;
   color: var(--smartbiz-white);
 }
 
