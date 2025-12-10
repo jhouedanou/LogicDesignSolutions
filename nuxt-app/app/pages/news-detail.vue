@@ -58,11 +58,11 @@
                                 <ul class="list-unstyled news-details__pagenation">
                                     <li v-if="previousPost">
                                         Previous Article
-                                        <a :href="`/news-detail?id=${previousPost.id}`" style="margin-left: 10px;" v-html="previousPost.title.rendered"></a>
+                                        <a :href="`/news/${previousPost.slug}`" style="margin-left: 10px;" v-html="previousPost.title.rendered"></a>
                                     </li>
                                     <li v-if="nextPost">
                                         Next Article
-                                        <a :href="`/news-detail?id=${nextPost.id}`" style="margin-left: 10px;" v-html="nextPost.title.rendered"></a>
+                                        <a :href="`/news/${nextPost.slug}`" style="margin-left: 10px;" v-html="nextPost.title.rendered"></a>
                                     </li>
                                 </ul>
                             </div>
@@ -92,10 +92,10 @@
                                       <a
                                         v-for="suggestion in filteredPosts"
                                         :key="suggestion.id"
-                                        :href="`/news-detail?id=${suggestion.id}`"
+                                        :href="`/news/${suggestion.slug}`"
                                         class="suggestion-item"
                                         style="display: block; padding: 12px 15px; border-bottom: 1px solid #f0f0f0; text-decoration: none; color: #333; transition: background 0.2s; cursor: pointer;"
-                                        @click.prevent="goToPost(suggestion.id)"
+                                        @click.prevent="goToPost(suggestion.slug)"
                                       >
                                         <span style="font-size: 14px; font-weight: 500;" v-html="highlightMatch(suggestion.title.rendered)"></span>
                                         <span style="display: block; font-size: 11px; color: #999; margin-top: 4px;">{{ formatSearchDate(suggestion.date) }}</span>
@@ -126,7 +126,7 @@
                                         </div>
                                         <div class="sidebar__post-content" style="margin-left: 15px;">
                                             <h4 style="font-size: 14px; line-height: 1.4; margin: 0 0 5px 0;">
-                                                <a :href="`/news-detail?id=${relatedPost.id}`" v-html="relatedPost.title.rendered" style="color: #333; text-decoration: none;"></a>
+                                                <a :href="`/news/${relatedPost.slug}`" v-html="relatedPost.title.rendered" style="color: #333; text-decoration: none;"></a>
                                             </h4>
                                             <span style="font-size: 12px; color: #999;">{{ formatSearchDate(relatedPost.date) }}</span>
                                         </div>
@@ -169,6 +169,7 @@ interface WordPressTag {
 
 interface WordPressPost {
   id: number
+  slug: string
   title: { rendered: string }
   content: { rendered: string }
   excerpt?: { rendered: string }
@@ -192,6 +193,9 @@ interface WordPressPost {
 
 const route = useRoute()
 const postId = route.query.id as string
+
+// Redirect old URLs to new slug-based URLs
+// This will be done after fetching the post to get its slug
 
 // Initialize post
 const post = ref<WordPressPost | null>(null)
@@ -230,7 +234,7 @@ const currentUrl = computed(() => {
   if (typeof window !== 'undefined') {
     return window.location.href
   }
-  return `https://logic-design-solutions.com/news-detail?id=${postId}`
+  return `https://logic-design-solutions.com/news/${post.value?.slug || postId}`
 })
 
 const shareTitle = computed(() => {
@@ -287,9 +291,9 @@ const hideSuggestionsDelayed = () => {
 }
 
 // Navigate to post
-const goToPost = (postId: number) => {
+const goToPost = (postSlug: string) => {
   showSuggestions.value = false
-  navigateTo(`/news-detail?id=${postId}`)
+  navigateTo(`/news/${postSlug}`)
 }
 
 // Highlight matching text
@@ -322,6 +326,11 @@ if (postId && postId !== 'undefined' && postId.trim()) {
     post.value = postData.value
     error.value = postError.value
     pending.value = postPending.value
+
+    // Redirect to new slug-based URL if post loaded successfully
+    if (post.value?.slug) {
+      navigateTo(`/news/${post.value.slug}`, { replace: true, redirectCode: 301 })
+    }
 
     // Fetch all posts to find previous and next
     if (post.value) {

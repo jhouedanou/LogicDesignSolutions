@@ -123,7 +123,7 @@
                                             </div>
                                             <div class="sidebar__post-content">
                                                 <h3>
-                                                    <NuxtLink :to="`/product-detail?id=${relProd.id}`" v-html="relProd.title.rendered"></NuxtLink>
+                                                    <NuxtLink :to="`/products/${relProd.slug}`" v-html="relProd.title.rendered"></NuxtLink>
                                                 </h3>
                                             </div>
                                         </li>
@@ -187,6 +187,7 @@ import { useWPProducts } from '../composables/useWPProducts'
 // Types are defined in types/global.d.ts
 type WordPressProduct = {
   id: number
+  slug: string
   title: { rendered: string }
   content: { rendered: string }
   excerpt?: { rendered: string }
@@ -217,6 +218,11 @@ if (productId && productId !== 'undefined' && productId.trim()) {
   product.value = prodData.value
   error.value = prodError.value
   pending.value = prodPending.value
+
+  // Redirect to new slug-based URL if product loaded successfully
+  if (product.value?.slug) {
+    navigateTo(`/products/${product.value.slug}`, { replace: true, redirectCode: 301 })
+  }
 
   // Fetch all categories to match with product
   const { data: categoriesData } = await useWPProductCategories()

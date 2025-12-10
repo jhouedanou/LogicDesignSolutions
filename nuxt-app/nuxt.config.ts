@@ -69,8 +69,20 @@ export default defineNuxtConfig({
 
   // Modules
   modules: [
-    '@nuxt/image'
+    '@nuxt/image',
+    '@nuxtjs/sitemap'
   ],
+
+  // Sitemap Configuration
+  site: {
+    url: 'https://logic-design-solutions.com'
+  },
+  
+  sitemap: {
+    sources: [
+      '/api/__sitemap__/urls'
+    ]
+  },
 
   // Image Configuration
   image: {

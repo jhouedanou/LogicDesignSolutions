@@ -14,6 +14,7 @@ declare global {
 declare module '~/composables/useWordPressAPI' {
   export interface WordPressProduct {
     id: number
+    slug: string
     title: { rendered: string }
     content: { rendered: string }
     featured_media: number
@@ -34,6 +35,7 @@ declare module '~/composables/useWordPressAPI' {
 
   export interface WordPressPost {
     id: number
+    slug: string
     title: { rendered: string }
     content: { rendered: string }
     excerpt: { rendered: string }

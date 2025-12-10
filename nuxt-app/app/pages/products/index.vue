@@ -58,7 +58,7 @@
                   <div class="news-one__single">
                     <div class="news-one__img-box product-card-img-box">
                       <div class="news-one__img product-card-img">
-                        <NuxtLink :to="`/product-detail?id=${product.id}`">
+                        <NuxtLink :to="`/products/${product.slug}`">
                           <NuxtImg
                             :src="getProductImage(product)"
                             :alt="stripHtml(product.title.rendered)"
@@ -72,7 +72,7 @@
                     <div class="news-one__content">
                       <h3 class="news-one__title">
                         <ClientOnly>
-                          <NuxtLink :to="`/product-detail?id=${product.id}`" v-html="getProductTitle(product)"></NuxtLink>
+                          <NuxtLink :to="`/products/${product.slug}`" v-html="getProductTitle(product)"></NuxtLink>
                         </ClientOnly>
                       </h3>
                     </div>
@@ -177,12 +177,12 @@
 import { useHead } from '#imports'
 import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useWPProductCategories } from '../composables/useWPProductCategories'
-import { useWPProducts } from '../composables/useWPProducts'
+// Composables are auto-imported by Nuxt
 
 // Types are defined in types/global.d.ts
 type WordPressProduct = {
   id: number
+  slug: string
   title: { rendered: string }
   content: { rendered: string }
   excerpt?: { rendered: string }
