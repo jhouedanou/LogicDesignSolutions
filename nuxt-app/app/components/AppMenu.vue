@@ -4,7 +4,10 @@
       <div class="main-menu-two__wrapper-inner">
         <div class="main-menu-two__left">
           <div class="main-menu-two__logo">
-            <a href="/" style="font-size: 32px; font-weight: 700; font-style: italic; color: #000;">{{ siteData.siteName }}</a>
+            <a href="/">
+              <img v-if="logoUrl" :src="logoUrl" alt="Logo" style="max-height: 60px; width: auto;" />
+              <span v-else style="font-size: 32px; font-weight: 700; font-style: italic; color: #000;">{{ siteData.siteName }}</span>
+            </a>
           </div>
           <div class="main-menu-two__main-menu-box">
             <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
@@ -44,8 +47,28 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useFetch } from '#imports'
+
+// Logo depuis l'API WordPress
+const logoUrl = ref<string | null>(null)
+
+const fetchLogo = async () => {
+  try {
+    const response = await fetch('https://logic-design-solutions.com/wp-json/custom/v1/widgets')
+    const data = await response.json()
+    
+    if (data['zone-logo-sidebar'] && data['zone-logo-sidebar'][0]?.content?.url) {
+      logoUrl.value = data['zone-logo-sidebar'][0].content.url
+    }
+  } catch (error) {
+    console.error('Erreur lors du chargement du logo:', error)
+  }
+}
+
+onMounted(() => {
+  fetchLogo()
+})
 
 // Valeurs par défaut affichées immédiatement
 const fallbackSite = {

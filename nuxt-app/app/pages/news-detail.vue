@@ -41,19 +41,16 @@
                             </div>
 
                             <div class="news-details__bottom">
-                                <p class="news-details__tags">
+                                <p v-if="postTags.length > 0" class="news-details__tags">
                                     <span>Tags:</span>
-                                    <a href="#">NVMe</a>
-                                    <a href="#">Gen5</a>
-                                    <a href="#">AGILEX 7</a>
-                                    <a href="#">Intel</a>
-                                    <a href="#">FPGA</a>
+                                    <a v-for="tag in postTags" :key="tag.id" :href="`/news?tag=${tag.slug}`">{{ tag.name }}</a>
                                 </p>
                                 <div class="news-details__social-list">
-                                    <a href="#"><i class="fab fa-facebook"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                    <a :href="facebookShareUrl" target="_blank" rel="noopener noreferrer" title="Partager sur Facebook"><i class="fab fa-facebook"></i></a>
+                                    <a :href="twitterShareUrl" target="_blank" rel="noopener noreferrer" title="Partager sur Twitter/X"><i class="fab fa-twitter"></i></a>
+                                    <a :href="linkedinShareUrl" target="_blank" rel="noopener noreferrer" title="Partager sur LinkedIn"><i class="fab fa-linkedin"></i></a>
+                                    <a :href="whatsappShareUrl" target="_blank" rel="noopener noreferrer" title="Partager sur WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                                    <a :href="emailShareUrl" title="Partager par email"><i class="fas fa-envelope"></i></a>
                                 </div>
                             </div>
 
@@ -164,6 +161,12 @@
 import { useHead } from '#imports'
 
 // Types
+interface WordPressTag {
+  id: number
+  name: string
+  slug: string
+}
+
 interface WordPressPost {
   id: number
   title: { rendered: string }
@@ -171,12 +174,19 @@ interface WordPressPost {
   excerpt?: { rendered: string }
   date: string
   featured_media: number
+  tags?: number[]
   _embedded?: {
     'wp:featuredmedia'?: Array<{
       id: number
       source_url: string
       alt_text?: string
     }>
+    'wp:term'?: Array<Array<{
+      id: number
+      name: string
+      slug: string
+      taxonomy: string
+    }>>
   }
 }
 
@@ -204,6 +214,51 @@ const relatedPosts = computed(() => {
   return allPosts.value
     .filter(p => p.id !== post.value!.id)
     .slice(0, 4) // Show max 4 related posts
+})
+
+// Get tags from post
+const postTags = computed(() => {
+  if (!post.value?._embedded?.['wp:term']) return []
+  // wp:term contains arrays of terms, tags are usually in the second array (index 1)
+  // but we filter by taxonomy to be sure
+  const allTerms = post.value._embedded['wp:term'].flat()
+  return allTerms.filter(term => term.taxonomy === 'post_tag')
+})
+
+// Social sharing URLs
+const currentUrl = computed(() => {
+  if (typeof window !== 'undefined') {
+    return window.location.href
+  }
+  return `https://logic-design-solutions.com/news-detail?id=${postId}`
+})
+
+const shareTitle = computed(() => {
+  return post.value?.title?.rendered ? stripHtml(post.value.title.rendered) : 'News'
+})
+
+const shareExcerpt = computed(() => {
+  return post.value?.excerpt?.rendered ? stripHtml(post.value.excerpt.rendered).substring(0, 150) : ''
+})
+
+const facebookShareUrl = computed(() => {
+  return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl.value)}`
+})
+
+const twitterShareUrl = computed(() => {
+  return `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl.value)}&text=${encodeURIComponent(shareTitle.value)}`
+})
+
+const linkedinShareUrl = computed(() => {
+  return `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl.value)}`
+})
+
+const whatsappShareUrl = computed(() => {
+  return `https://wa.me/?text=${encodeURIComponent(shareTitle.value + ' ' + currentUrl.value)}`
+})
+
+const emailShareUrl = computed(() => {
+  return `mailto:?subject=${encodeURIComponent(shareTitle.value)}&body=${encodeURIComponent(shareExcerpt.value + '\n\nLire l\'article: ' + currentUrl.value)}`
 })
 
 // Filtered posts based on search query

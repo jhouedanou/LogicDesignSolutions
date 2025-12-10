@@ -3,7 +3,14 @@
     <div class="container">
       <nav class="navbar">
         <NuxtLink to="/" class="logo">
-          <img src="/logo.png" alt="Logo" />
+          <img
+            v-if="logoUrl"
+            :src="logoUrl"
+            :alt="logoAlt"
+            :width="logoWidth"
+            :height="logoHeight"
+          />
+          <img v-else src="/logo.png" alt="Logo" />
         </NuxtLink>
 
         <ul class="nav-menu" :class="{ active: isMenuOpen }">
@@ -34,6 +41,47 @@ const menuItems = ref([
   { label: 'Portfolio', path: '/portfolio' },
   { label: 'Contact', path: '/contact' }
 ])
+
+// Récupérer le logo depuis l'API WordPress
+const logoUrl = ref('')
+const logoAlt = ref('Logo')
+const logoWidth = ref(290)
+const logoHeight = ref(39)
+
+const fetchLogo = async () => {
+  try {
+    const response = await fetch('https://logic-design-solutions.com/wp-json/custom/v1/widgets')
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const contentType = response.headers.get('content-type')
+    if (!contentType || !contentType.includes('application/json')) {
+      console.warn('API response is not JSON')
+      return
+    }
+
+    const data = await response.json()
+
+    if (data['zone-logo-sidebar'] && data['zone-logo-sidebar'].length > 0) {
+      const logoWidget = data['zone-logo-sidebar'][0]
+      if (logoWidget.content) {
+        logoUrl.value = logoWidget.content.url || ''
+        logoAlt.value = logoWidget.content.alt || 'Logo'
+        logoWidth.value = logoWidget.content.width || 290
+        logoHeight.value = logoWidget.content.height || 39
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching logo:', error)
+  }
+}
+
+// Charger le logo au montage du composant
+onMounted(() => {
+  fetchLogo()
+})
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
