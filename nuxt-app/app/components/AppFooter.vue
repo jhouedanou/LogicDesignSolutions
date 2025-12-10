@@ -15,10 +15,7 @@
             <li><NuxtLink to="/faq">FAQ</NuxtLink></li>
           </ul>
           <div class="site-footer-two__social" style="display: flex; gap: 15px; justify-content: center;">
-            <a href="#" style="color: #ffffff; font-size: 20px;"><i class="fab fa-facebook"></i></a>
-            <a href="#" style="color: #ffffff; font-size: 20px;"><i class="fab fa-twitter"></i></a>
-            <a href="#" style="color: #ffffff; font-size: 20px;"><i class="fab fa-linkedin"></i></a>
-            <a href="#" style="color: #ffffff; font-size: 20px;"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/serge-sciberras-0381b22/" style="color: #ffffff; font-size: 20px;"><i class="fab fa-linkedin"></i></a>
           </div>
         </div>
       </div>
