@@ -232,11 +232,11 @@
                       <div class="services-two__icon-shape"></div>
                     </div>
                     <h3 class="services-two__title">
-                      <a :href="`/news-detail?id=${post.id}`" v-html="post.title?.rendered"></a>
+                      <NuxtLink :to="`/news/${post.slug}`" v-html="post.title?.rendered"></NuxtLink>
                     </h3>
                     <p class="services-two__text" v-html="getExcerpt(post)"></p>
-                    <a :href="`/news-detail?id=${post.id}`" class="services-two__btn">Read More<span
-                        class="icon-right-arrow"></span></a>
+                    <NuxtLink :to="`/news/${post.slug}`" class="services-two__btn">Read More<span
+                        class="icon-right-arrow"></span></NuxtLink>
                   </div>
                 </div>
               </div>

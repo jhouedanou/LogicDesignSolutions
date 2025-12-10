@@ -2,6 +2,7 @@ import { ref } from 'vue'
 
 interface WordPressProduct {
   id: number
+  slug: string
   title: { rendered: string }
   content: { rendered: string }
   excerpt?: { rendered: string }

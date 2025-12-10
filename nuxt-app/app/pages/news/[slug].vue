@@ -71,11 +71,28 @@
                       {{ tag.name }}
                     </NuxtLink>
                   </p>
-                  <div class="news-details__social-list">
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                  <div class="share-section" style="margin-top: 20px;">
+                    <span style="font-weight: 600; color: #0a1f44; margin-right: 15px;">Share:</span>
+                    <div class="social-share-buttons" style="display: inline-flex; gap: 10px;">
+                      <a :href="facebookShareUrl" target="_blank" rel="noopener noreferrer" title="Share on Facebook" class="share-btn share-btn--facebook">
+                        <i class="fab fa-facebook-f"></i>
+                      </a>
+                      <a :href="twitterShareUrl" target="_blank" rel="noopener noreferrer" title="Share on X (Twitter)" class="share-btn share-btn--twitter">
+                        <i class="fab fa-twitter"></i>
+                      </a>
+                      <a :href="linkedinShareUrl" target="_blank" rel="noopener noreferrer" title="Share on LinkedIn" class="share-btn share-btn--linkedin">
+                        <i class="fab fa-linkedin-in"></i>
+                      </a>
+                      <a :href="whatsappShareUrl" target="_blank" rel="noopener noreferrer" title="Share on WhatsApp" class="share-btn share-btn--whatsapp">
+                        <i class="fab fa-whatsapp"></i>
+                      </a>
+                      <a :href="emailShareUrl" title="Share via Email" class="share-btn share-btn--email">
+                        <i class="fas fa-envelope"></i>
+                      </a>
+                      <a href="#" @click.prevent="copyLink" title="Copy Link" class="share-btn share-btn--copy">
+                        <i class="fas fa-link"></i>
+                      </a>
+                    </div>
                   </div>
                 </div>
 
@@ -151,8 +168,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useRoute, useHead } from '#imports'
+import { ref, computed } from 'vue'
+import { useRoute, useHead, useSeoMeta } from '#imports'
 
 const route = useRoute()
 const { fetchPost, fetchPosts, fetchTags } = usePosts()
@@ -164,15 +181,62 @@ const nextPost = ref<any>(null)
 const tags = ref<any[]>([])
 const loading = ref(true)
 
+// Social sharing URLs
+const currentUrl = computed(() => {
+  if (typeof window !== 'undefined') {
+    return window.location.href
+  }
+  return `https://logic-design-solutions.com/news/${slug}`
+})
+
+const shareTitle = computed(() => {
+  return post.value ? post.value.title.rendered.replace(/<[^>]*>/g, '') : 'Logic Design Solutions - News'
+})
+
+const shareDescription = computed(() => {
+  return post.value ? post.value.excerpt.rendered.replace(/<[^>]*>/g, '').substring(0, 160) : ''
+})
+
+const facebookShareUrl = computed(() => {
+  return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl.value)}`
+})
+
+const twitterShareUrl = computed(() => {
+  return `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl.value)}&text=${encodeURIComponent(shareTitle.value)}`
+})
+
+const linkedinShareUrl = computed(() => {
+  return `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl.value)}`
+})
+
+const whatsappShareUrl = computed(() => {
+  return `https://wa.me/?text=${encodeURIComponent(shareTitle.value + ' - ' + currentUrl.value)}`
+})
+
+const emailShareUrl = computed(() => {
+  return `mailto:?subject=${encodeURIComponent(shareTitle.value)}&body=${encodeURIComponent('Check out this article: ' + currentUrl.value)}`
+})
+
+const copyLink = async () => {
+  if (typeof navigator !== 'undefined' && navigator.clipboard) {
+    try {
+      await navigator.clipboard.writeText(currentUrl.value)
+      alert('Link copied to clipboard!')
+    } catch (err) {
+      console.error('Failed to copy link:', err)
+    }
+  }
+}
+
 const formatDate = (dateString: string) => {
   const date = new Date(dateString)
   return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
 }
 
-const loadPost = async () => {
-  loading.value = true
-  const slug = route.params.slug as string
-  
+// Load post data immediately (not in onMounted)
+const slug = route.params.slug as string
+
+if (slug) {
   try {
     // Charger l'article principal
     const postData = await fetchPost(slug)
@@ -208,19 +272,38 @@ const loadPost = async () => {
   }
 }
 
-onMounted(async () => {
-  await loadPost()
+// Computed for Open Graph
+const ogTitle = computed(() => {
+  return post.value ? post.value.title.rendered.replace(/<[^>]*>/g, '') + ' - Logic Design Solutions' : 'News - Logic Design Solutions'
 })
 
-useHead(() => ({
-  title: post.value ? `${post.value.title.rendered} - Logic Design Solutions` : 'News - Logic Design Solutions',
-  meta: [
-    { 
-      name: 'description', 
-      content: post.value ? post.value.excerpt.rendered.replace(/<[^>]*>/g, '').substring(0, 160) : 'Logic Design Solutions - News Article' 
-    }
-  ]
-}))
+const ogDescription = computed(() => {
+  return post.value ? post.value.excerpt.rendered.replace(/<[^>]*>/g, '').substring(0, 160) : 'Logic Design Solutions - News Article'
+})
+
+const ogImage = computed(() => {
+  return post.value?.featured_media_src_url || 'https://logic-design-solutions.com/wp-content/uploads/2025/12/logo22.png'
+})
+
+const ogUrl = computed(() => {
+  return `https://logic-design-solutions.com/news/${slug}`
+})
+
+// SEO Meta tags
+useSeoMeta({
+  title: () => ogTitle.value,
+  description: () => ogDescription.value,
+  ogType: 'article',
+  ogTitle: () => ogTitle.value,
+  ogDescription: () => ogDescription.value,
+  ogImage: () => ogImage.value,
+  ogUrl: () => ogUrl.value,
+  ogSiteName: 'Logic Design Solutions',
+  twitterCard: 'summary_large_image',
+  twitterTitle: () => ogTitle.value,
+  twitterDescription: () => ogDescription.value,
+  twitterImage: () => ogImage.value,
+})
 </script>
 
 <style scoped>
@@ -307,5 +390,68 @@ useHead(() => ({
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Social Share Buttons */
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 16px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.share-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  color: #ffffff;
+}
+
+.share-btn--facebook {
+  background: #1877f2;
+}
+.share-btn--facebook:hover {
+  background: #0d65d9;
+}
+
+.share-btn--twitter {
+  background: #000000;
+}
+.share-btn--twitter:hover {
+  background: #333333;
+}
+
+.share-btn--linkedin {
+  background: #0a66c2;
+}
+.share-btn--linkedin:hover {
+  background: #084d93;
+}
+
+.share-btn--whatsapp {
+  background: #25d366;
+}
+.share-btn--whatsapp:hover {
+  background: #1da851;
+}
+
+.share-btn--email {
+  background: #ff6b35;
+}
+.share-btn--email:hover {
+  background: #e55a2b;
+}
+
+.share-btn--copy {
+  background: #6c757d;
+}
+.share-btn--copy:hover {
+  background: #5a6268;
 }
 </style>

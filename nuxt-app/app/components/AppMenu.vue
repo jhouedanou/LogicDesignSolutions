@@ -47,27 +47,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useFetch } from '#imports'
 
-// Logo depuis l'API WordPress
-const logoUrl = ref<string | null>(null)
+// Logo depuis l'API WordPress avec cache
+const { data: widgetsData } = useFetch<Record<string, any>>('https://logic-design-solutions.com/wp-json/custom/v1/widgets', {
+  key: 'widgets-logo-menu',
+  default: () => ({}),
+  getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+})
 
-const fetchLogo = async () => {
-  try {
-    const response = await fetch('https://logic-design-solutions.com/wp-json/custom/v1/widgets')
-    const data = await response.json()
-    
-    if (data['zone-logo-sidebar'] && data['zone-logo-sidebar'][0]?.content?.url) {
-      logoUrl.value = data['zone-logo-sidebar'][0].content.url
-    }
-  } catch (error) {
-    console.error('Erreur lors du chargement du logo:', error)
+const logoUrl = computed(() => {
+  if (widgetsData.value?.['zone-logo-sidebar']?.[0]?.content?.url) {
+    return widgetsData.value['zone-logo-sidebar'][0].content.url
   }
-}
-
-onMounted(() => {
-  fetchLogo()
+  return null
 })
 
 // Valeurs par défaut affichées immédiatement
