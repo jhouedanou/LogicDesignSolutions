@@ -317,13 +317,38 @@ useSeoMeta({
   margin-bottom: 20px;
 }
 
-.news-details__text :deep(ul) {
+.news-details__text :deep(ul),
+.news-details__text :deep(ol) {
   margin: 20px 0;
+  padding-left: 40px;
+  list-style-position: outside;
+  overflow: hidden; /* Empêche le float de casser l'indentation */
+}
+
+.news-details__text :deep(ul) {
+  list-style-type: disc;
+}
+
+.news-details__text :deep(ol) {
+  list-style-type: decimal;
+}
+
+.news-details__text :deep(ul ul),
+.news-details__text :deep(ol ul) {
+  list-style-type: disc;
+  margin: 10px 0;
   padding-left: 25px;
+}
+
+.news-details__text :deep(ul ul ul),
+.news-details__text :deep(ol ul ul) {
+  list-style-type: disc;
 }
 
 .news-details__text :deep(li) {
   margin-bottom: 10px;
+  display: list-item; /* Force le comportement de liste */
+  list-style-position: outside;
 }
 
 .news-details__text :deep(strong) {
@@ -333,6 +358,14 @@ useSeoMeta({
 
 .news-details__text :deep(sup) {
   font-size: 12px;
+}
+
+/* Fix pour les listes à côté des images flottantes */
+.news-details__text :deep(img[style*="float"]) + ul,
+.news-details__text :deep(img[style*="float"]) + ol,
+.news-details__text :deep(.wp-block-image) + ul,
+.news-details__text :deep(.wp-block-image) + ol {
+  overflow: hidden;
 }
 
 .sidebar__post-list {

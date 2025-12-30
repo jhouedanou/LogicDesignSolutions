@@ -467,4 +467,34 @@ useSeoMeta({
 .share-btn--copy:hover {
   background: #5a6268;
 }
+
+/* Fix pour les listes dans le contenu produit */
+.news-details__text-1 :deep(ul),
+.news-details__text-1 :deep(ol) {
+  margin: 20px 0;
+  padding-left: 40px;
+  list-style-position: outside;
+  overflow: hidden;
+}
+
+.news-details__text-1 :deep(ul) {
+  list-style-type: disc;
+}
+
+.news-details__text-1 :deep(ol) {
+  list-style-type: decimal;
+}
+
+.news-details__text-1 :deep(ul ul),
+.news-details__text-1 :deep(ol ul) {
+  list-style-type: disc;
+  margin: 10px 0;
+  padding-left: 25px;
+}
+
+.news-details__text-1 :deep(li) {
+  margin-bottom: 10px;
+  display: list-item;
+  list-style-position: outside;
+}
 </style>
