@@ -1,4 +1,3 @@
-const sharp = require('sharp');
 const path = require('path');
 const fs = require('fs');
 
@@ -9,9 +8,31 @@ const imagesToConvert = [
 ];
 
 async function convertImages() {
+  // Vérifier si sharp est disponible
+  let sharp;
+  try {
+    sharp = require('sharp');
+  } catch (err) {
+    console.warn('⚠️  Sharp n\'est pas disponible, conversion des images ignorée');
+    console.warn('💡 Veuillez pré-convertir les images en local avant le déploiement');
+    return;
+  }
+
   for (const imagePath of imagesToConvert) {
     const fullPath = path.join(__dirname, imagePath);
     const outputPath = fullPath.replace('.png', '.webp');
+
+    // Vérifier si l'image WebP existe déjà
+    if (fs.existsSync(outputPath)) {
+      console.log(`⏭️  Skipped ${imagePath} (WebP existe déjà)`);
+      continue;
+    }
+
+    // Vérifier si l'image source existe
+    if (!fs.existsSync(fullPath)) {
+      console.warn(`⚠️  Source non trouvée: ${imagePath}`);
+      continue;
+    }
 
     try {
       await sharp(fullPath)
