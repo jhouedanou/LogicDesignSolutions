@@ -1,0 +1,23 @@
+# Configuration Passenger (Phusion) pour Nuxt.js sur PlanetHoster
+# Copiez ce fichier sur votre serveur : ~/public_html/.htaccess
+
+# Enable Passenger
+PassengerEnabled on
+PassengerAppRoot /home/VOTRE-COMPTE/public_html
+PassengerAppType node
+PassengerStartupFile .output/server/index.mjs
+
+# Variables d'environnement
+SetEnv NODE_ENV production
+SetEnv NITRO_HOST 0.0.0.0
+SetEnv NITRO_PORT 3000
+
+# Performance (optionnel)
+PassengerMinInstances 1
+PassengerMaxPoolSize 2
+
+# Mémoire Node.js (optionnel - augmentez si nécessaire)
+# PassengerNodeOptions "--max-old-space-size=512"
+
+# IMPORTANT: Remplacez VOTRE-COMPTE par votre vrai nom d'utilisateur
+# Pour le trouver, connectez-vous en SSH et tapez: pwd

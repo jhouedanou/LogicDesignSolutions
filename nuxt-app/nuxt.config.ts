@@ -59,15 +59,10 @@ export default defineNuxtConfig({
     }
   },
 
-  // Nitro Configuration (Server)
+  // Nitro Configuration (Server) - SSR pour PlanetHoster
   nitro: {
     compressPublicAssets: true,
-    preset: 'static', // Pour génération statique
-    prerender: {
-      crawlLinks: true, // Crawler automatiquement tous les liens
-      routes: ['/', '/about', '/services', '/contact', '/products', '/news', '/faq', '/profiles', '/references'],
-      ignore: ['/api/**'] // Ignorer les routes API pour le prerender
-    }
+    // Pas de preset = SSR par défaut, parfait pour Node.js sur PlanetHoster
   },
 
   // Modules
