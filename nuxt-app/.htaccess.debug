@@ -1,0 +1,34 @@
+# Version DEBUG - À utiliser temporairement pour diagnostiquer les erreurs
+# Remplacer .htaccess par ce fichier, puis remettre la version normale après
+
+PassengerEnabled on
+PassengerAppRoot /home/fggxbsyg/public_html/new
+PassengerAppType node
+PassengerStartupFile app.js
+PassengerNodejs /home/fggxbsyg/nodevenv/public_html/new/22/bin/node
+
+# ENVIRONNEMENT DE DEBUG
+SetEnv NODE_ENV development
+PassengerAppEnv development
+PassengerFriendlyErrorPages on
+
+# LOGS DÉTAILLÉS
+PassengerLogLevel 3
+
+# Variables
+SetEnv HOST 0.0.0.0
+SetEnv PORT 3000
+
+# Performance réduite pour debug
+PassengerMinInstances 1
+PassengerMaxPoolSize 1
+PassengerStartTimeout 120
+
+# Rewrite basique
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ / [L]
+</IfModule>
