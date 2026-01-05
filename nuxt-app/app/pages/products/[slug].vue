@@ -380,7 +380,7 @@ const ogDescription = computed(() => {
 })
 
 const ogImage = computed(() => {
-  return productImage.value || 'https://logic-design-solutions.com/wp-content/uploads/2025/12/logo22.png'
+  return productImage.value || 'https://api.logic-design-solutions.com/wp-content/uploads/2025/12/logo22.png'
 })
 
 const ogUrl = computed(() => {

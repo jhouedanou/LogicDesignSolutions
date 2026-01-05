@@ -51,7 +51,7 @@ import { computed } from 'vue'
 import { useFetch } from '#imports'
 
 // Logo depuis l'API WordPress avec cache
-const { data: widgetsData } = useFetch<Record<string, any>>('https://logic-design-solutions.com/wp-json/custom/v1/widgets', {
+const { data: widgetsData } = useFetch<Record<string, any>>('https://api.logic-design-solutions.com/wp-json/custom/v1/widgets', {
   key: 'widgets-logo-menu',
   default: () => ({}),
   getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key] || nuxtApp.static.data[key]

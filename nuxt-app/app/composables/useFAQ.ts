@@ -27,7 +27,7 @@ export const useFAQ = () => {
     error.value = null
 
     try {
-      const response = await fetch('https://logic-design-solutions.com/wp-json/wp/v2/faq-entry?per_page=100&orderby=date&order=desc')
+      const response = await fetch('https://api.logic-design-solutions.com/wp-json/wp/v2/faq-entry?per_page=100&orderby=date&order=desc')
       
       if (!response.ok) {
         throw new Error(`Failed to fetch FAQ entries: ${response.status}`)

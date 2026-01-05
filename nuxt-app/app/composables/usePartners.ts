@@ -19,7 +19,7 @@ export const usePartners = () => {
 
       // Fetch partners from WordPress API
       const partnersResponse = await fetch(
-        'https://logic-design-solutions.com/wp-json/wp/v2/partners?per_page=100'
+        'https://api.logic-design-solutions.com/wp-json/wp/v2/partners?per_page=100'
       )
 
       if (!partnersResponse.ok) {
@@ -39,7 +39,7 @@ export const usePartners = () => {
       if (mediaIds.length > 0) {
         const uniqueMediaIds = Array.from(new Set(mediaIds)) // Remove duplicates
         const mediaResponse = await fetch(
-          `https://logic-design-solutions.com/wp-json/wp/v2/media?include=${uniqueMediaIds.join(',')}`
+          `https://api.logic-design-solutions.com/wp-json/wp/v2/media?include=${uniqueMediaIds.join(',')}`
         )
 
         if (mediaResponse.ok) {

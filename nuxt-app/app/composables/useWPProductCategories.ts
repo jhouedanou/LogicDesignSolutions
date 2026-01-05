@@ -13,7 +13,7 @@ export const useWPProductCategories = async () => {
 
   try {
     const response = await fetch(
-      'https://logic-design-solutions.com/wp-json/wp/v2/product_cat?per_page=100'
+      'https://api.logic-design-solutions.com/wp-json/wp/v2/product_cat?per_page=100'
     )
 
     if (!response.ok) {

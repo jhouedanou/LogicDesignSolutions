@@ -26,7 +26,7 @@ export const useWPPosts = async (perPage = 10, page = 1) => {
 
   try {
     const response = await fetch(
-      `https://logic-design-solutions.com/wp-json/wp/v2/posts?per_page=${perPage}&page=${page}&_embed`
+      `https://api.logic-design-solutions.com/wp-json/wp/v2/posts?per_page=${perPage}&page=${page}&_embed`
     )
 
     if (!response.ok) {

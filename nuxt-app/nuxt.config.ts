@@ -3,6 +3,9 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
 
   devtools: { enabled: true },
+  
+  // SSR et génération statique
+  ssr: true,
 
   // CSS Configuration
   css: [
@@ -59,11 +62,11 @@ export default defineNuxtConfig({
   // Nitro Configuration (Server)
   nitro: {
     compressPublicAssets: true,
-    preset: 'vercel',
+    preset: 'static', // Pour génération statique
     prerender: {
-      crawlLinks: false,
-      routes: ['/', '/about', '/services', '/contact', '/products', '/news', '/faq', '/product-category'],
-      ignore: ['/sitemap.xml', '/robots.txt']
+      crawlLinks: true, // Crawler automatiquement tous les liens
+      routes: ['/', '/about', '/services', '/contact', '/products', '/news', '/faq', '/profiles', '/references'],
+      ignore: ['/api/**'] // Ignorer les routes API pour le prerender
     }
   },
 

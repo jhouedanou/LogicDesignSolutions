@@ -86,7 +86,7 @@ const loadSearchData = async () => {
   try {
     // Charger les produits
     const productsResponse = await fetch(
-      'https://logic-design-solutions.com/wp-json/wp/v2/product?per_page=100&_fields=id,title,slug'
+      'https://api.logic-design-solutions.com/wp-json/wp/v2/product?per_page=100&_fields=id,title,slug'
     )
     if (productsResponse.ok) {
       const products = await productsResponse.json()
@@ -101,7 +101,7 @@ const loadSearchData = async () => {
 
     // Charger les posts/news
     const postsResponse = await fetch(
-      'https://logic-design-solutions.com/wp-json/wp/v2/posts?per_page=100&_fields=id,title,slug'
+      'https://api.logic-design-solutions.com/wp-json/wp/v2/posts?per_page=100&_fields=id,title,slug'
     )
     if (postsResponse.ok) {
       const posts = await postsResponse.json()

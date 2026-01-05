@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
 
     // Fetch widget data from WordPress API
     const response = await fetch(
-      `https://logic-design-solutions.com/wp-json/custom/v1/widgets`
+      `https://api.logic-design-solutions.com/wp-json/custom/v1/widgets`
     )
 
     if (!response.ok) {
@@ -58,7 +58,7 @@ export default defineEventHandler(async (event) => {
 
     // Try to fetch widget content from a specific endpoint
     const contentResponse = await fetch(
-      `https://logic-design-solutions.com/wp-json/custom/v1/widget-content/${widgetId}`
+      `https://api.logic-design-solutions.com/wp-json/custom/v1/widget-content/${widgetId}`
     )
 
     if (contentResponse.ok) {

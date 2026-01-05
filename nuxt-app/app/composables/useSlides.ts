@@ -22,7 +22,7 @@ export const useSlides = () => {
 
       // Fetch slides from WordPress API
       const slidesResponse = await fetch(
-        'https://logic-design-solutions.com/wp-json/wp/v2/slides?per_page=100'
+        'https://api.logic-design-solutions.com/wp-json/wp/v2/slides?per_page=100'
       )
 
       if (!slidesResponse.ok) {
@@ -42,7 +42,7 @@ export const useSlides = () => {
       if (mediaIds.length > 0) {
         const uniqueMediaIds = Array.from(new Set(mediaIds)) // Remove duplicates
         const mediaResponse = await fetch(
-          `https://logic-design-solutions.com/wp-json/wp/v2/media?include=${uniqueMediaIds.join(',')}`
+          `https://api.logic-design-solutions.com/wp-json/wp/v2/media?include=${uniqueMediaIds.join(',')}`
         )
 
         if (mediaResponse.ok) {

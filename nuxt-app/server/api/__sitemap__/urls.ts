@@ -27,7 +27,7 @@ export default defineSitemapEventHandler(async () => {
   
   // Fetch news posts from WordPress
   try {
-    const newsResponse = await fetch('https://logic-design-solutions.com/wp-json/wp/v2/posts?per_page=100&_fields=slug,modified')
+    const newsResponse = await fetch('https://api.logic-design-solutions.com/wp-json/wp/v2/posts?per_page=100&_fields=slug,modified')
     if (newsResponse.ok) {
       const posts = await newsResponse.json()
       for (const post of posts) {
@@ -45,7 +45,7 @@ export default defineSitemapEventHandler(async () => {
   
   // Fetch products from WordPress
   try {
-    const productsResponse = await fetch('https://logic-design-solutions.com/wp-json/wp/v2/product?per_page=100&_fields=slug,modified')
+    const productsResponse = await fetch('https://api.logic-design-solutions.com/wp-json/wp/v2/product?per_page=100&_fields=slug,modified')
     if (productsResponse.ok) {
       const products = await productsResponse.json()
       for (const product of products) {

@@ -29,7 +29,7 @@ export const useWidgets = () => {
 
       // Fetch widgets from WordPress API
       const widgetsResponse = await fetch(
-        'https://logic-design-solutions.com/wp-json/custom/v1/widgets'
+        'https://api.logic-design-solutions.com/wp-json/custom/v1/widgets'
       )
 
       if (!widgetsResponse.ok) {

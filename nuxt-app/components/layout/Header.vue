@@ -50,7 +50,7 @@ const logoHeight = ref(39)
 
 const fetchLogo = async () => {
   try {
-    const response = await fetch('https://logic-design-solutions.com/wp-json/custom/v1/widgets')
+    const response = await fetch('https://api.logic-design-solutions.com/wp-json/custom/v1/widgets')
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)

@@ -282,7 +282,7 @@ const ogDescription = computed(() => {
 })
 
 const ogImage = computed(() => {
-  return post.value?.featured_media_src_url || 'https://logic-design-solutions.com/wp-content/uploads/2025/12/logo22.png'
+  return post.value?.featured_media_src_url || 'https://api.logic-design-solutions.com/wp-content/uploads/2025/12/logo22.png'
 })
 
 const ogUrl = computed(() => {

@@ -98,11 +98,11 @@ const logoWidth = ref(290)
 const logoHeight = ref(39)
 
 // URL du logo par défaut en cas d'erreur
-const defaultLogoUrl = 'https://logic-design-solutions.com/wp-content/uploads/2025/12/logo22.png'
+const defaultLogoUrl = 'https://api.logic-design-solutions.com/wp-content/uploads/2025/12/logo22.png'
 
 const fetchLogo = async () => {
   try {
-    const response = await fetch('https://logic-design-solutions.com/wp-json/custom/v1/widgets')
+    const response = await fetch('https://api.logic-design-solutions.com/wp-json/custom/v1/widgets')
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)

@@ -20,7 +20,7 @@ export const useProducts = () => {
 
       // Fetch products from WordPress API
       const productsResponse = await fetch(
-        'https://logic-design-solutions.com/wp-json/wp/v2/product?per_page=100'
+        'https://api.logic-design-solutions.com/wp-json/wp/v2/product?per_page=100'
       )
 
       if (!productsResponse.ok) {
@@ -40,7 +40,7 @@ export const useProducts = () => {
       if (mediaIds.length > 0) {
         const uniqueMediaIds = Array.from(new Set(mediaIds))
         const mediaResponse = await fetch(
-          `https://logic-design-solutions.com/wp-json/wp/v2/media?include=${uniqueMediaIds.join(',')}`
+          `https://api.logic-design-solutions.com/wp-json/wp/v2/media?include=${uniqueMediaIds.join(',')}`
         )
 
         if (mediaResponse.ok) {

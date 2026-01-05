@@ -24,7 +24,7 @@ export const useWPPost = async (postId: string) => {
 
   try {
     const response = await fetch(
-      `https://logic-design-solutions.com/wp-json/wp/v2/posts/${postId}?_embed`
+      `https://api.logic-design-solutions.com/wp-json/wp/v2/posts/${postId}?_embed`
     )
 
     if (!response.ok) {

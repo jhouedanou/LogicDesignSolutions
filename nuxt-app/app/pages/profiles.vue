@@ -194,7 +194,7 @@ const closingTags = computed(() => {
 // Fetch profile data from API
 const fetchProfileData = async () => {
   try {
-    const response = await $fetch<{ profile: Array<{ content: ProfileData }> }>('https://logic-design-solutions.com/wp-json/custom/v1/widgets')
+    const response = await $fetch<{ profile: Array<{ content: ProfileData }> }>('https://api.logic-design-solutions.com/wp-json/custom/v1/widgets')
     if (response?.profile && response.profile.length > 0) {
       const profileContent = response.profile[0].content
       Object.assign(profileData.value, profileContent)

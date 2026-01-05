@@ -2,7 +2,7 @@ export const usePosts = () => {
   const fetchPosts = async (page: number = 1, perPage: number = 6) => {
     try {
       const response = await fetch(
-        `https://logic-design-solutions.com/wp-json/wp/v2/posts?page=${page}&per_page=${perPage}&_embed`
+        `https://api.logic-design-solutions.com/wp-json/wp/v2/posts?page=${page}&per_page=${perPage}&_embed`
       )
       
       if (!response.ok) {
@@ -33,7 +33,7 @@ export const usePosts = () => {
   const fetchPost = async (slug: string) => {
     try {
       const response = await fetch(
-        `https://logic-design-solutions.com/wp-json/wp/v2/posts?slug=${slug}&_embed`
+        `https://api.logic-design-solutions.com/wp-json/wp/v2/posts?slug=${slug}&_embed`
       )
       
       if (!response.ok) {
@@ -53,7 +53,7 @@ export const usePosts = () => {
     
     try {
       const tagPromises = tagIds.map(id =>
-        fetch(`https://logic-design-solutions.com/wp-json/wp/v2/tags/${id}`)
+        fetch(`https://api.logic-design-solutions.com/wp-json/wp/v2/tags/${id}`)
           .then(res => res.ok ? res.json() : null)
       )
       const tags = await Promise.all(tagPromises)
@@ -67,7 +67,7 @@ export const usePosts = () => {
   const fetchPostsByTag = async (tagId: number, page: number = 1, perPage: number = 6) => {
     try {
       const response = await fetch(
-        `https://logic-design-solutions.com/wp-json/wp/v2/posts?tags=${tagId}&page=${page}&per_page=${perPage}&_embed`
+        `https://api.logic-design-solutions.com/wp-json/wp/v2/posts?tags=${tagId}&page=${page}&per_page=${perPage}&_embed`
       )
       
       if (!response.ok) {
@@ -98,7 +98,7 @@ export const usePosts = () => {
   const fetchTag = async (slug: string) => {
     try {
       const response = await fetch(
-        `https://logic-design-solutions.com/wp-json/wp/v2/tags?slug=${slug}`
+        `https://api.logic-design-solutions.com/wp-json/wp/v2/tags?slug=${slug}`
       )
       
       if (!response.ok) {

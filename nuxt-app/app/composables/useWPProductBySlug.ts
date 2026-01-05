@@ -32,7 +32,7 @@ export const useWPProductBySlug = async (slug: string) => {
 
   try {
     const response = await fetch(
-      `https://logic-design-solutions.com/wp-json/wp/v2/product?slug=${encodeURIComponent(slug)}&_embed`
+      `https://api.logic-design-solutions.com/wp-json/wp/v2/product?slug=${encodeURIComponent(slug)}&_embed`
     )
 
     if (!response.ok) {
