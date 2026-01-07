@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
 
   devtools: { enabled: true },
-  
+
   // SSR et génération statique
   ssr: true,
 
@@ -16,6 +16,9 @@ export default defineNuxtConfig({
 
   // App Configuration
   app: {
+    // L'app est déployée sur la racine du domaine
+    baseURL: '/',
+    
     head: {
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
@@ -31,7 +34,7 @@ export default defineNuxtConfig({
   // Runtime Configuration
   runtimeConfig: {
     public: {
-      apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api'
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://api.logic-design-solutions.com/wp-json'
     }
   },
 
@@ -59,10 +62,10 @@ export default defineNuxtConfig({
     }
   },
 
-  // Nitro Configuration (Server) - SSR pour PlanetHoster
+  // Nitro Configuration (Server) - Vercel
   nitro: {
     compressPublicAssets: true,
-    // Pas de preset = SSR par défaut, parfait pour Node.js sur PlanetHoster
+    preset: 'vercel'
   },
 
   // Modules
@@ -75,7 +78,7 @@ export default defineNuxtConfig({
   site: {
     url: 'https://logic-design-solutions.com'
   },
-  
+
   sitemap: {
     sources: [
       '/api/__sitemap__/urls'
