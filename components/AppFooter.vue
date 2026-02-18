@@ -51,8 +51,8 @@ import { useFooterData } from '~/composables/useData'
 const fallbackFooter = {
   siteName: 'LogicDesignSolutions',
   copyright: 'Logic Design Solutions',
-  designerName: 'Digital Consulting',
-  designerUrl: '#',
+  designerName: 'E-Digital',
+  designerUrl: 'https://e-digital.fr/',
   menuItems: [],
   socialLinks: []
 }

@@ -62,10 +62,10 @@ export default defineNuxtConfig({
     }
   },
 
-  // Nitro Configuration (Server) - Vercel
+  // Nitro Configuration (Server) - Phusion Passenger / Node.js
   nitro: {
     compressPublicAssets: true,
-    preset: 'vercel'
+    preset: 'node-server'
   },
 
   // Modules

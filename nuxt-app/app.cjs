@@ -1,18 +1,20 @@
-// Entry point for Phusion Passenger - CommonJS version for maximum compatibility
-const http = require('http');
+// Entry point for Phusion Passenger - Loads Nuxt server output
+// Passenger requires a CJS entry point, we dynamically import the ESM Nuxt server
 
-// Minimal Hello World Server to test Passenger
-const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Hello World from Node.js ' + process.version + '\nRunning on PORT: ' + process.env.PORT);
-});
+process.env.NODE_ENV = process.env.NODE_ENV || 'production';
+process.env.HOST = process.env.HOST || '0.0.0.0';
+process.env.PORT = process.env.PORT || '3000';
 
-const port = process.env.PORT || 3000;
+console.log('[Passenger] Starting Nuxt server...');
+console.log('[Passenger] Node.js version:', process.version);
+console.log('[Passenger] PORT:', process.env.PORT);
+console.log('[Passenger] NODE_ENV:', process.env.NODE_ENV);
 
-// Log startup
-console.log('Attempting to listen on port: ' + port);
-
-server.listen(port, () => {
-    console.log('Server running at ' + port);
-});
+import('./.output/server/index.mjs')
+  .then(() => {
+    console.log('[Passenger] Nuxt server started successfully');
+  })
+  .catch((err) => {
+    console.error('[Passenger] Failed to start Nuxt server:', err);
+    process.exit(1);
+  });

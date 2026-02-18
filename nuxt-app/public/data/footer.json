@@ -1,8 +1,8 @@
 {
   "siteName": "LogicDesignSolutions",
   "copyright": "Copyright (c) Logic Design Solution. All rights reserved. Design by",
-  "designerName": "Digital Consulting",
-  "designerUrl": "#",
+  "designerName": "E-Digital",
+  "designerUrl": "https://e-digital.fr/",
   "menuItems": [
     { "label": "Profiles", "path": "/profiles" },
     { "label": "Products", "path": "/products" },

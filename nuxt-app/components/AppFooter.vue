@@ -50,8 +50,8 @@ import { useFetch } from '#imports'
 const fallbackFooter = {
   siteName: 'LogicDesignSolutions',
   copyright: 'Logic Design Solutions',
-  designerName: 'Digital Consulting',
-  designerUrl: '#',
+  designerName: 'E-Digital',
+  designerUrl: 'https://e-digital.fr/',
   menuItems: [] as Array<{ label: string; path: string }>,
   socialLinks: [] as Array<{ name: string; icon: string; url: string }>
 }
