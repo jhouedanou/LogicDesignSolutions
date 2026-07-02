@@ -80,12 +80,12 @@ const fallbackSite = {
   contactButtonText: 'Contact Us'
 }
 
-const { data: menuResponse } = useFetch('/api/menu', {
+const { data: menuResponse } = useFetch('/_api/menu', {
   key: 'app-menu',
   default: () => ({ items: fallbackMenu })
 })
 
-const { data: siteResponse } = useFetch('/api/site-config', {
+const { data: siteResponse } = useFetch('/_api/site-config', {
   key: 'site-config',
   default: () => fallbackSite
 })

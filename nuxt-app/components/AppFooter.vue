@@ -56,7 +56,7 @@ const fallbackFooter = {
   socialLinks: [] as Array<{ name: string; icon: string; url: string }>
 }
 
-const { data: footerResponse } = useFetch('/api/footer')
+const { data: footerResponse } = useFetch('/_api/footer')
 
 const footer = computed(() => {
   const payload = footerResponse.value ?? {}

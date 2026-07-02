@@ -59,7 +59,7 @@ export const useWidgets = () => {
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), 8000) // 8 second timeout
 
-      const response = await fetch(`/api/widget?id=${widgetId}&sidebar=${sidebarId}`, {
+      const response = await fetch(`/_api/widget?id=${widgetId}&sidebar=${sidebarId}`, {
         signal: controller.signal
       })
 

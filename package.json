@@ -4,11 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "build": "cd nuxt-app && npm run build",
+    "dev": "cd nuxt-app && npm run dev",
+    "generate": "cd nuxt-app && npm run generate",
+    "preview": "cd nuxt-app && npm run preview",
+    "postinstall": "cd nuxt-app && npm install"
   },
   "dependencies": {
     "nuxt": "^4.2.0",

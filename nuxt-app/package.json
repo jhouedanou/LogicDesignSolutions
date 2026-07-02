@@ -8,12 +8,14 @@
   "scripts": {
     "build": "npm run merge-assets && npm run convert-images && nuxt build",
     "prebuild": "npm run merge-assets && npm run convert-images",
-    "dev": "nuxt dev",
+    "dev": "CHOKIDAR_USEPOLLING=true CHOKIDAR_INTERVAL=5000 nuxt dev",
+    "dev:safe": "CHOKIDAR_USEPOLLING=true CHOKIDAR_INTERVAL=5000 NODE_OPTIONS='--max-old-space-size=4096' nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "merge-assets": "node merge-assets.cjs",
-    "convert-images": "node convert-images.cjs"
+    "convert-images": "node convert-images.cjs",
+    "start": "node .output/server/index.mjs"
   },
   "dependencies": {
     "@nuxt/image": "^2.0.0",

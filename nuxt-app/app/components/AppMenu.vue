@@ -82,12 +82,12 @@ const fallbackMenu = [
 ]
 
 // Récupération depuis l'API avec valeurs par défaut immédiates (pas de loading visible)
-const { data: siteResponse } = useFetch('/api/site-config', {
+const { data: siteResponse } = useFetch('/_api/site-config', {
   key: 'site-config-menu',
   default: () => fallbackSite
 })
 
-const { data: menuResponse } = useFetch('/api/menu', {
+const { data: menuResponse } = useFetch('/_api/menu', {
   key: 'menu-config',
   default: () => ({ items: fallbackMenu })
 })

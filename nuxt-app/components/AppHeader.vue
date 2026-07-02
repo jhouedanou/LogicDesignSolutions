@@ -81,8 +81,8 @@ const fallbackSite = {
   contactButtonText: 'Contact Us'
 }
 
-const { data: menuResponse } = useFetch('/api/menu', { key: 'menu' })
-const { data: siteResponse, status: siteStatus } = useFetch('/api/site-config', { key: 'site-config' })
+const { data: menuResponse } = useFetch('/_api/menu', { key: 'menu' })
+const { data: siteResponse, status: siteStatus } = useFetch('/_api/site-config', { key: 'site-config' })
 
 const menuItems = computed(() => menuResponse.value?.items ?? fallbackMenu)
 

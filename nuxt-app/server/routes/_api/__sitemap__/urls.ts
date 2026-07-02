@@ -17,6 +17,7 @@ export default defineSitemapEventHandler(async () => {
     { loc: '/services', priority: 0.8, changefreq: 'monthly' },
     { loc: '/products', priority: 0.9, changefreq: 'weekly' },
     { loc: '/news', priority: 0.9, changefreq: 'daily' },
+    { loc: '/blog', priority: 0.9, changefreq: 'daily' },
     { loc: '/references', priority: 0.7, changefreq: 'monthly' },
     { loc: '/profiles', priority: 0.7, changefreq: 'monthly' },
     { loc: '/contact', priority: 0.8, changefreq: 'monthly' },

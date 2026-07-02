@@ -21,6 +21,10 @@
       "path": "/news"
     },
     {
+      "label": "BLOG",
+      "path": "/blog"
+    },
+    {
       "label": "REFERENCES",
       "path": "/references"
     }

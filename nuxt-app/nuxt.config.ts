@@ -62,10 +62,9 @@ export default defineNuxtConfig({
     }
   },
 
-  // Nitro Configuration (Server) - Phusion Passenger / Node.js
+  // Nitro Configuration (Server) — preset auto-détecté (Vercel en prod, node-server via NITRO_PRESET si besoin)
   nitro: {
-    compressPublicAssets: true,
-    preset: 'node-server'
+    compressPublicAssets: true
   },
 
   // Modules
@@ -81,7 +80,7 @@ export default defineNuxtConfig({
 
   sitemap: {
     sources: [
-      '/api/__sitemap__/urls'
+      '/_api/__sitemap__/urls'
     ]
   },
 
