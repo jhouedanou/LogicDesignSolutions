@@ -19,7 +19,6 @@
     <!-- News Detail Start -->
     <section class="news-details">
       <div class="container">
-        <ClientOnly>
           <div v-if="loading" class="text-center" style="padding: 100px 0;">
             <div class="spinner-border" role="status">
               <span class="sr-only">Loading...</span>
@@ -29,34 +28,32 @@
           <div v-else-if="post" class="row">
             <div class="col-xl-8 col-lg-7">
               <div class="news-details__left">
-                <div class="news-details__img">
+                <div v-if="post.featured_media_src_url" class="article-hero">
                   <NuxtImg
-                    v-if="post.featured_media_src_url"
                     :src="post.featured_media_src_url"
                     :alt="post.title.rendered"
-                    width="800"
-                    height="600"
+                    width="1200"
+                    height="675"
                     loading="eager"
-                    style="width: 100%; height: auto;"
+                    class="article-hero__img"
                   />
                 </div>
                 <div class="news-details__content">
-                  <ul class="news-details__meta list-unstyled">
+                  <ul class="article-meta list-unstyled">
                     <li>
                       <span class="icon-calendar"></span>
                       {{ formatDate(post.date) }}
                     </li>
-                    <li>
-                      <span class="icon-user"></span>
-                      By Admin
-                    </li>
-                    <li>
-                      <span class="icon-tag"></span>
-                      Blog
-                    </li>
+                    <li class="article-meta__dot" aria-hidden="true">·</li>
+                    <li>{{ readingTime }} min read</li>
+                    <template v-if="authorName">
+                      <li class="article-meta__dot" aria-hidden="true">·</li>
+                      <li>{{ authorName }}</li>
+                    </template>
+                    <li v-if="categoryName" class="article-meta__badge">{{ categoryName }}</li>
                   </ul>
-                  <h3 class="news-details__title" v-html="post.title.rendered"></h3>
-                  <div class="news-details__text" v-html="post.content.rendered"></div>
+                  <h1 class="article-title" v-html="post.title.rendered"></h1>
+                  <div class="news-details__text article-body" v-html="post.content.rendered"></div>
                 </div>
 
                 <!-- Social Share -->
@@ -97,27 +94,23 @@
                 </div>
 
                 <!-- Navigation -->
-                <div class="news-details__pagenation-box" style="margin-top: 40px;">
-                  <ul class="list-unstyled news-details__pagenation">
-                    <li v-if="previousPost">
-                      <NuxtLink :to="`/blog/${previousPost.slug}`">
-                        <span class="icon-left-arrow"></span> Previous
-                      </NuxtLink>
-                    </li>
-                    <li v-if="nextPost">
-                      <NuxtLink :to="`/blog/${nextPost.slug}`">
-                        Next <span class="icon-right-arrow"></span>
-                      </NuxtLink>
-                    </li>
-                  </ul>
+                <div v-if="previousPost || nextPost" class="article-nav">
+                  <NuxtLink v-if="previousPost" :to="`/blog/${previousPost.slug}`" class="article-nav__card article-nav__card--prev">
+                    <span class="article-nav__label"><span class="icon-left-arrow"></span> Previous article</span>
+                    <span class="article-nav__title" v-html="previousPost.title.rendered"></span>
+                  </NuxtLink>
+                  <NuxtLink v-if="nextPost" :to="`/blog/${nextPost.slug}`" class="article-nav__card article-nav__card--next">
+                    <span class="article-nav__label">Next article <span class="icon-right-arrow"></span></span>
+                    <span class="article-nav__title" v-html="nextPost.title.rendered"></span>
+                  </NuxtLink>
                 </div>
               </div>
             </div>
 
             <div class="col-xl-4 col-lg-5">
-              <div class="sidebar">
+              <div class="sidebar article-sidebar">
                 <!-- Recent Posts -->
-                <div class="sidebar__single sidebar__post">
+                <div v-if="recentPosts.length" class="sidebar__single sidebar__post">
                   <h3 class="sidebar__title">Latest Articles</h3>
                   <ul class="sidebar__post-list list-unstyled">
                     <li v-for="recentPost in recentPosts" :key="recentPost.id">
@@ -157,7 +150,6 @@
             <p>The article you're looking for doesn't exist.</p>
             <NuxtLink to="/blog" class="thm-btn">Back to Blog</NuxtLink>
           </div>
-        </ClientOnly>
       </div>
     </section>
     <!-- News Detail End -->
@@ -168,19 +160,33 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useRoute, useHead, useSeoMeta } from '#imports'
+import { ref, computed, onMounted } from 'vue'
+import { useRoute, useSeoMeta, useAsyncData } from '#imports'
 
 const route = useRoute()
 const { fetchPost, fetchTags } = usePosts()
-const { fetchBlogPosts } = useBlogPosts()
+const { fetchBlogPosts, fetchBlogCategory } = useBlogPosts()
 
-const post = ref<any>(null)
+const slug = route.params.slug as string
+
+// Article principal rendu côté serveur (SSR) : indispensable pour l'indexation
+// et pour que le JSON-LD/style contenus dans le corps sortent dans le HTML initial.
+// Restreint à la catégorie Blog tant qu'elle existe côté WordPress.
+const { data: post, pending: loading } = await useAsyncData(
+  `blog-post-${slug}`,
+  async () => {
+    const postData = await fetchPost(slug)
+    if (!postData) return null
+    const category = await fetchBlogCategory()
+    if (category && !postData.categories?.includes(category.id)) return null
+    return postData
+  }
+)
+
 const recentPosts = ref<any[]>([])
 const previousPost = ref<any>(null)
 const nextPost = ref<any>(null)
 const tags = ref<any[]>([])
-const loading = ref(true)
 
 // Social sharing URLs
 const currentUrl = computed(() => {
@@ -234,44 +240,47 @@ const formatDate = (dateString: string) => {
   return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
 }
 
-// Load post data immediately (not in onMounted)
-const slug = route.params.slug as string
+const readingTime = computed(() => {
+  const text = (post.value?.content?.rendered || '').replace(/<[^>]*>/g, ' ')
+  const words = text.trim().split(/\s+/).filter(Boolean).length
+  return Math.max(1, Math.round(words / 220))
+})
 
-if (slug) {
+const authorName = computed(() => post.value?._embedded?.author?.[0]?.name || null)
+
+const categoryName = computed(() => {
+  const terms = post.value?._embedded?.['wp:term']?.[0]
+  return terms && terms.length > 0 ? terms[0].name : null
+})
+
+// Données secondaires (sidebar, tags, navigation) chargées côté client :
+// pas de valeur SEO, on garde le TTFB serveur minimal
+onMounted(async () => {
+  const postData = post.value
+  if (!postData) return
+
   try {
-    // Charger l'article principal
-    const postData = await fetchPost(slug)
-    
-    if (postData) {
-      post.value = postData
-      
-      // Charger les tags
-      if (postData.tags && postData.tags.length > 0) {
-        tags.value = await fetchTags(postData.tags)
-      }
-      
-      // Charger les articles récents
-      const recentData = await fetchBlogPosts(1, 5)
-      recentPosts.value = recentData.posts.filter((p: any) => p.id !== postData.id).slice(0, 4)
-      
-      // Charger tous les posts pour la navigation
-      const allPostsData = await fetchBlogPosts(1, 100)
-      const allPosts = allPostsData.posts
-      const currentIndex = allPosts.findIndex((p: any) => p.id === postData.id)
-      
-      if (currentIndex > 0) {
-        previousPost.value = allPosts[currentIndex - 1]
-      }
-      if (currentIndex < allPosts.length - 1) {
-        nextPost.value = allPosts[currentIndex + 1]
-      }
+    if (postData.tags && postData.tags.length > 0) {
+      tags.value = await fetchTags(postData.tags)
+    }
+
+    const recentData = await fetchBlogPosts(1, 5)
+    recentPosts.value = recentData.posts.filter((p: any) => p.id !== postData.id).slice(0, 4)
+
+    const allPostsData = await fetchBlogPosts(1, 100)
+    const allPosts = allPostsData.posts
+    const currentIndex = allPosts.findIndex((p: any) => p.id === postData.id)
+
+    if (currentIndex > 0) {
+      previousPost.value = allPosts[currentIndex - 1]
+    }
+    if (currentIndex >= 0 && currentIndex < allPosts.length - 1) {
+      nextPost.value = allPosts[currentIndex + 1]
     }
   } catch (error) {
-    console.error('Error loading post:', error)
-  } finally {
-    loading.value = false
+    console.error('Error loading sidebar data:', error)
   }
-}
+})
 
 // Computed for Open Graph
 const ogTitle = computed(() => {
@@ -282,13 +291,11 @@ const ogDescription = computed(() => {
   return post.value ? post.value.excerpt.rendered.replace(/<[^>]*>/g, '').substring(0, 160) : 'Logic Design Solutions - Blog Article'
 })
 
-const ogImage = computed(() => {
-  return post.value?.featured_media_src_url || 'https://api.logic-design-solutions.com/wp-content/uploads/2025/12/logo22.png'
-})
+// Canonical + image OG pilotables par article (ACF/meta/Yoast, fallback featured image)
+// + injection du champ JSON-LD dédié (seo_jsonld) dans le <head>
+const { canonical, ogImage } = useArticleSeo(post, '/blog', slug)
 
-const ogUrl = computed(() => {
-  return `https://logic-design-solutions.com/blog/${slug}`
-})
+const ogUrl = computed(() => canonical.value)
 
 // SEO Meta tags
 useSeoMeta({
@@ -308,65 +315,347 @@ useSeoMeta({
 </script>
 
 <style scoped>
-.news-details__text {
-  font-size: 16px;
-  line-height: 1.8;
+/* ---- En-tête d'article ---- */
+.article-hero {
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.article-hero__img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+.article-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+  font-size: 14px;
   color: #6e7387;
+  padding: 0;
 }
 
-.news-details__text :deep(p) {
-  margin-bottom: 20px;
+.article-meta li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.news-details__text :deep(ul),
-.news-details__text :deep(ol) {
+.article-meta__dot {
+  color: #c3c8d4;
+}
+
+.article-meta__badge {
+  background-color: #ff6b35;
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-left: 8px;
+}
+
+.article-title {
+  font-size: 34px;
+  line-height: 1.2;
+  color: #0a1f44;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+/* ---- Corps d'article (v-html WordPress) ---- */
+.article-body {
+  font-size: 17px;
+  line-height: 1.75;
+  color: #4a5065;
+  max-width: 740px;
+}
+
+.article-body :deep(p) {
+  margin-bottom: 22px;
+}
+
+.article-body :deep(a) {
+  color: #ff6b35;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.article-body :deep(a:hover) {
+  border-bottom-color: #ff6b35;
+}
+
+.article-body :deep(h2),
+.article-body :deep(h3),
+.article-body :deep(h4) {
+  color: #0a1f44;
+  font-weight: 700;
+  line-height: 1.3;
+  scroll-margin-top: 110px; /* ancres du sommaire sous le header sticky */
+}
+
+.article-body :deep(h2) {
+  font-size: 26px;
+  margin: 48px 0 18px;
+  padding-bottom: 12px;
+  position: relative;
+}
+
+.article-body :deep(h2)::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 32px;
+  height: 3px;
+  background-color: #ff6b35;
+  border-radius: 2px;
+}
+
+.article-body :deep(h3) {
+  font-size: 21px;
+  margin: 36px 0 14px;
+}
+
+.article-body :deep(h4) {
+  font-size: 18px;
+  margin: 28px 0 12px;
+}
+
+.article-body :deep(ul),
+.article-body :deep(ol) {
   margin: 20px 0;
   padding-left: 40px;
   list-style-position: outside;
-  overflow: hidden; /* Empêche le float de casser l'indentation */
+  overflow: hidden;
 }
 
-.news-details__text :deep(ul) {
+.article-body :deep(ul) {
   list-style-type: disc;
 }
 
-.news-details__text :deep(ol) {
+.article-body :deep(ol) {
   list-style-type: decimal;
 }
 
-.news-details__text :deep(ul ul),
-.news-details__text :deep(ol ul) {
+.article-body :deep(ul ul),
+.article-body :deep(ol ul) {
   list-style-type: disc;
   margin: 10px 0;
   padding-left: 25px;
 }
 
-.news-details__text :deep(ul ul ul),
-.news-details__text :deep(ol ul ul) {
-  list-style-type: disc;
-}
-
-.news-details__text :deep(li) {
+.article-body :deep(li) {
   margin-bottom: 10px;
-  display: list-item; /* Force le comportement de liste */
+  display: list-item;
   list-style-position: outside;
 }
 
-.news-details__text :deep(strong) {
+.article-body :deep(strong) {
   color: #0a1f44;
   font-weight: 600;
 }
 
-.news-details__text :deep(sup) {
+.article-body :deep(sup) {
   font-size: 12px;
 }
 
+/* Tableaux (specs, comparatifs) */
+.article-body :deep(table) {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 28px 0;
+  font-size: 15px;
+}
+
+.article-body :deep(table th) {
+  background-color: #0a1f44;
+  color: #ffffff;
+  font-weight: 600;
+  text-align: left;
+  padding: 12px 16px;
+  white-space: nowrap;
+}
+
+.article-body :deep(table td) {
+  padding: 11px 16px;
+  border-bottom: 1px solid #e8eaf0;
+  color: #4a5065;
+}
+
+.article-body :deep(table tbody tr:nth-child(even)) {
+  background-color: #f7f8fb;
+}
+
+/* Encadrés / citations */
+.article-body :deep(blockquote) {
+  background-color: #f4f5f8;
+  border-left: 3px solid #ff6b35;
+  border-radius: 0 6px 6px 0;
+  padding: 20px 24px;
+  margin: 28px 0;
+  color: #0a1f44;
+}
+
+.article-body :deep(blockquote p:last-child) {
+  margin-bottom: 0;
+}
+
+/* Code (public ingénieurs) */
+.article-body :deep(code) {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  font-size: 14px;
+  background-color: #f4f5f8;
+  color: #0a1f44;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.article-body :deep(pre) {
+  background-color: #0a1f44;
+  color: #e8eaf0;
+  padding: 20px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 28px 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.article-body :deep(pre code) {
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+
+/* Images du contenu */
+.article-body :deep(figure) {
+  margin: 28px 0;
+}
+
+.article-body :deep(img) {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.article-body :deep(figcaption) {
+  text-align: center;
+  font-size: 13px;
+  color: #8a90a3;
+  margin-top: 10px;
+}
+
+/* FAQ en <details> */
+.article-body :deep(details) {
+  border: 1px solid #e8eaf0;
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin: 12px 0;
+}
+
+.article-body :deep(summary) {
+  color: #0a1f44;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.article-body :deep(hr) {
+  border: 0;
+  border-top: 1px solid #e8eaf0;
+  margin: 36px 0;
+}
+
 /* Fix pour les listes à côté des images flottantes */
-.news-details__text :deep(img[style*="float"]) + ul,
-.news-details__text :deep(img[style*="float"]) + ol,
-.news-details__text :deep(.wp-block-image) + ul,
-.news-details__text :deep(.wp-block-image) + ol {
+.article-body :deep(img[style*="float"]) + ul,
+.article-body :deep(img[style*="float"]) + ol,
+.article-body :deep(.wp-block-image) + ul,
+.article-body :deep(.wp-block-image) + ol {
   overflow: hidden;
+}
+
+.article-body :deep(::selection) {
+  background-color: rgba(255, 107, 53, 0.2);
+}
+
+/* ---- Navigation précédent / suivant ---- */
+.article-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.article-nav__card {
+  display: block;
+  border: 1px solid #e8eaf0;
+  border-radius: 8px;
+  padding: 18px 20px;
+  text-decoration: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.article-nav__card:hover {
+  border-color: #ff6b35;
+  box-shadow: 0 4px 14px rgba(10, 31, 68, 0.08);
+}
+
+.article-nav__card--next {
+  text-align: right;
+  grid-column: 2;
+}
+
+.article-nav__card--prev {
+  grid-column: 1;
+}
+
+.article-nav__label {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #8a90a3;
+  margin-bottom: 6px;
+}
+
+.article-nav__title {
+  display: block;
+  color: #0a1f44;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+@media (max-width: 575px) {
+  .article-nav {
+    grid-template-columns: 1fr;
+  }
+  .article-nav__card--next {
+    grid-column: auto;
+    text-align: left;
+  }
+  .article-title {
+    font-size: 26px;
+  }
+}
+
+/* ---- Sidebar sticky ---- */
+@media (min-width: 992px) {
+  .article-sidebar {
+    position: sticky;
+    top: 100px;
+  }
 }
 
 .sidebar__post-list {
@@ -426,66 +715,47 @@ useSeoMeta({
   }
 }
 
-/* Social Share Buttons */
+/* Social Share Buttons : sobres par défaut, couleur de la marque au survol */
 .share-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  color: #ffffff;
-  font-size: 16px;
+  background: #eef1f6;
+  color: #0a1f44;
+  font-size: 14px;
   text-decoration: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
 }
 
 .share-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
   color: #ffffff;
 }
 
-.share-btn--facebook {
+.share-btn--facebook:hover {
   background: #1877f2;
 }
-.share-btn--facebook:hover {
-  background: #0d65d9;
-}
 
-.share-btn--twitter {
+.share-btn--twitter:hover {
   background: #000000;
 }
-.share-btn--twitter:hover {
-  background: #333333;
-}
 
-.share-btn--linkedin {
+.share-btn--linkedin:hover {
   background: #0a66c2;
 }
-.share-btn--linkedin:hover {
-  background: #084d93;
-}
 
-.share-btn--whatsapp {
+.share-btn--whatsapp:hover {
   background: #25d366;
 }
-.share-btn--whatsapp:hover {
-  background: #1da851;
-}
 
-.share-btn--email {
+.share-btn--email:hover {
   background: #ff6b35;
 }
-.share-btn--email:hover {
-  background: #e55a2b;
-}
 
-.share-btn--copy {
-  background: #6c757d;
-}
 .share-btn--copy:hover {
-  background: #5a6268;
+  background: #6c757d;
 }
 </style>

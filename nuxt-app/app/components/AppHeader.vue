@@ -70,6 +70,7 @@ const fallbackMenu = [
   { label: 'PRODUCTS', path: '/products' },
   { label: 'SERVICES', path: '/services' },
   { label: 'NEWS', path: '/news' },
+  { label: 'BLOG', path: '/blog' },
   { label: 'REFERENCES', path: '/references' }
 ]
 

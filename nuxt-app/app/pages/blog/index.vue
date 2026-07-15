@@ -27,7 +27,6 @@
               <h2 class="section-title__title">From Our Blog</h2>
             </div>
 
-            <ClientOnly>
               <div v-if="loading" class="text-center" style="padding: 50px;">
                 <div class="spinner-border" role="status">
                   <span class="sr-only">Loading...</span>
@@ -106,7 +105,6 @@
                 </li>
               </ul>
             </div>
-            </ClientOnly>
           </div>
 
           <div class="col-xl-4 col-lg-5">
@@ -131,26 +129,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
-import { useHead, useRoute, useRouter } from '#imports'
+import { computed, watch } from 'vue'
+import { useHead, useRoute, useRouter, useAsyncData } from '#imports'
 
 const route = useRoute()
 const router = useRouter()
 const { fetchBlogPosts } = useBlogPosts()
 
-const posts = ref<any[]>([])
-const currentPage = ref(1)
-const totalPages = ref(1)
-const loading = ref(true)
+const currentPage = computed(() => {
+  const page = parseInt(route.query.page as string)
+  return Number.isNaN(page) || page < 1 ? 1 : page
+})
 
-const loadPosts = async (page: number) => {
-  loading.value = true
-  const result = await fetchBlogPosts(page, 6)
-  posts.value = result.posts
-  totalPages.value = result.totalPages
-  currentPage.value = result.currentPage
-  loading.value = false
-}
+// Listing rendu côté serveur (SSR) pour l'indexation, re-fetch au changement de page
+const { data: blogData, pending: loading } = await useAsyncData(
+  'blog-list',
+  () => fetchBlogPosts(currentPage.value, 6),
+  { watch: [currentPage] }
+)
+
+const posts = computed(() => blogData.value?.posts || [])
+const totalPages = computed(() => blogData.value?.totalPages || 1)
 
 const goToPage = (page: number) => {
   if (page < 1 || page > totalPages.value) return
@@ -172,23 +171,19 @@ const getCategoryName = (post: any) => {
   return terms && terms.length > 0 ? terms[0].name : null
 }
 
-onMounted(async () => {
-  const pageQuery = route.query.page
-  const page = pageQuery ? parseInt(pageQuery as string) : 1
-  currentPage.value = page
-  await loadPosts(page)
-})
-
-watch(() => route.query.page, async (newPage) => {
-  const page = newPage ? parseInt(newPage as string) : 1
-  await loadPosts(page)
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+watch(currentPage, () => {
+  if (typeof window !== 'undefined') {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 })
 
 useHead({
   title: 'Blog - Logic Design Solutions',
   meta: [
     { name: 'description', content: 'Logic Design Solutions - Blog, Insights & Articles' }
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://logic-design-solutions.com/blog' }
   ]
 })
 </script>

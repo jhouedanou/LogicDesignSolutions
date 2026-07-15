@@ -25,10 +25,43 @@ export default defineSitemapEventHandler(async () => {
   ]
   
   urls.push(...staticPages)
-  
-  // Fetch news posts from WordPress
+
+  // Résoudre la catégorie "Blog" pour séparer blog et news
+  let blogCategoryId: number | null = null
   try {
-    const newsResponse = await fetch('https://api.logic-design-solutions.com/wp-json/wp/v2/posts?per_page=100&_fields=slug,modified')
+    const catResponse = await fetch('https://api.logic-design-solutions.com/wp-json/wp/v2/categories?slug=blog&_fields=id')
+    if (catResponse.ok) {
+      const categories = await catResponse.json()
+      blogCategoryId = categories[0]?.id ?? null
+    }
+  } catch (error) {
+    console.error('Error fetching blog category for sitemap:', error)
+  }
+
+  // Fetch blog posts (catégorie Blog) from WordPress
+  if (blogCategoryId) {
+    try {
+      const blogResponse = await fetch(`https://api.logic-design-solutions.com/wp-json/wp/v2/posts?per_page=100&categories=${blogCategoryId}&_fields=slug,modified`)
+      if (blogResponse.ok) {
+        const posts = await blogResponse.json()
+        for (const post of posts) {
+          urls.push({
+            loc: `/blog/${post.slug}`,
+            lastmod: post.modified,
+            priority: 0.8,
+            changefreq: 'weekly'
+          })
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching blog posts for sitemap:', error)
+    }
+  }
+
+  // Fetch news posts from WordPress (hors catégorie Blog pour éviter les doublons)
+  try {
+    const excludeFilter = blogCategoryId ? `&categories_exclude=${blogCategoryId}` : ''
+    const newsResponse = await fetch(`https://api.logic-design-solutions.com/wp-json/wp/v2/posts?per_page=100${excludeFilter}&_fields=slug,modified`)
     if (newsResponse.ok) {
       const posts = await newsResponse.json()
       for (const post of posts) {

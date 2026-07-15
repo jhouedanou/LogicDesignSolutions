@@ -1,15 +1,4 @@
-import { readFileSync } from 'fs'
-import { join } from 'path'
+// JSON importé au build : bundlé dans le serveur, indépendant du cwd au runtime
+import footer from '../../../public/data/footer.json'
 
-export default defineEventHandler(() => {
-  try {
-    const filePath = join(process.cwd(), 'public/data/footer.json')
-    const data = readFileSync(filePath, 'utf-8')
-    return JSON.parse(data)
-  } catch (error) {
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Failed to load footer data'
-    })
-  }
-})
+export default defineEventHandler(() => footer)

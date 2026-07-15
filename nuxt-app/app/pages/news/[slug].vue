@@ -239,8 +239,17 @@ const slug = route.params.slug as string
 if (slug) {
   try {
     // Charger l'article principal
-    const postData = await fetchPost(slug)
-    
+    let postData = await fetchPost(slug)
+
+    // Les articles de la catégorie Blog vivent sous /blog, pas sous /news
+    if (postData) {
+      const { fetchBlogCategory } = useBlogPosts()
+      const blogCategory = await fetchBlogCategory()
+      if (blogCategory && postData.categories?.includes(blogCategory.id)) {
+        postData = null
+      }
+    }
+
     if (postData) {
       post.value = postData
       
@@ -281,13 +290,11 @@ const ogDescription = computed(() => {
   return post.value ? post.value.excerpt.rendered.replace(/<[^>]*>/g, '').substring(0, 160) : 'Logic Design Solutions - News Article'
 })
 
-const ogImage = computed(() => {
-  return post.value?.featured_media_src_url || 'https://api.logic-design-solutions.com/wp-content/uploads/2025/12/logo22.png'
-})
+// Canonical + image OG pilotables par article (ACF/meta/Yoast, fallback featured image)
+// + injection du champ JSON-LD dédié (seo_jsonld) dans le <head>
+const { canonical, ogImage } = useArticleSeo(post, '/news', slug)
 
-const ogUrl = computed(() => {
-  return `https://logic-design-solutions.com/news/${slug}`
-})
+const ogUrl = computed(() => canonical.value)
 
 // SEO Meta tags
 useSeoMeta({

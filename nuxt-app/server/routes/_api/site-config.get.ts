@@ -1,15 +1,4 @@
-import { readFileSync } from 'fs'
-import { join } from 'path'
+// JSON importé au build : bundlé dans le serveur, indépendant du cwd au runtime
+import siteConfig from '../../../public/data/site-config.json'
 
-export default defineEventHandler(() => {
-  try {
-    const filePath = join(process.cwd(), 'public/data/site-config.json')
-    const data = readFileSync(filePath, 'utf-8')
-    return JSON.parse(data)
-  } catch (error) {
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Failed to load site configuration'
-    })
-  }
-})
+export default defineEventHandler(() => siteConfig)

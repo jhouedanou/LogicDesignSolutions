@@ -1,8 +1,13 @@
 export const usePosts = () => {
   const fetchPosts = async (page: number = 1, perPage: number = 6) => {
     try {
+      // Les articles de la catégorie Blog vivent sous /blog : on les exclut de News
+      const { fetchBlogCategory } = useBlogPosts()
+      const blogCategory = await fetchBlogCategory()
+      const excludeFilter = blogCategory ? `&categories_exclude=${blogCategory.id}` : ''
+
       const response = await fetch(
-        `https://api.logic-design-solutions.com/wp-json/wp/v2/posts?page=${page}&per_page=${perPage}&_embed`
+        `https://api.logic-design-solutions.com/wp-json/wp/v2/posts?page=${page}&per_page=${perPage}&_embed${excludeFilter}`
       )
       
       if (!response.ok) {
