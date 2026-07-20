@@ -7,6 +7,21 @@ interface SitemapUrl {
   changefreq?: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never'
 }
 
+const WP_API = 'https://api.logic-design-solutions.com/wp-json/wp/v2'
+
+/**
+ * Le cache LiteSpeed de WordPress indexe les réponses REST sur la query string exacte.
+ * Sans paramètre variable, le sitemap reçoit indéfiniment une réponse figée
+ * (ex : 1 article de blog au lieu de 20). Le paramètre `_cb` force une lecture fraîche
+ * à chaque régénération du sitemap.
+ */
+async function wpFetch(path: string) {
+  const separator = path.includes('?') ? '&' : '?'
+  return fetch(`${WP_API}${path}${separator}_cb=${Date.now()}`, {
+    headers: { 'Cache-Control': 'no-cache' }
+  })
+}
+
 export default defineSitemapEventHandler(async () => {
   const urls: SitemapUrl[] = []
   
@@ -29,7 +44,7 @@ export default defineSitemapEventHandler(async () => {
   // Résoudre la catégorie "Blog" pour séparer blog et news
   let blogCategoryId: number | null = null
   try {
-    const catResponse = await fetch('https://api.logic-design-solutions.com/wp-json/wp/v2/categories?slug=blog&_fields=id')
+    const catResponse = await wpFetch('/categories?slug=blog&_fields=id')
     if (catResponse.ok) {
       const categories = await catResponse.json()
       blogCategoryId = categories[0]?.id ?? null
@@ -41,7 +56,7 @@ export default defineSitemapEventHandler(async () => {
   // Fetch blog posts (catégorie Blog) from WordPress
   if (blogCategoryId) {
     try {
-      const blogResponse = await fetch(`https://api.logic-design-solutions.com/wp-json/wp/v2/posts?per_page=100&categories=${blogCategoryId}&_fields=slug,modified`)
+      const blogResponse = await wpFetch(`/posts?per_page=100&categories=${blogCategoryId}&_fields=slug,modified`)
       if (blogResponse.ok) {
         const posts = await blogResponse.json()
         for (const post of posts) {
@@ -61,7 +76,7 @@ export default defineSitemapEventHandler(async () => {
   // Fetch news posts from WordPress (hors catégorie Blog pour éviter les doublons)
   try {
     const excludeFilter = blogCategoryId ? `&categories_exclude=${blogCategoryId}` : ''
-    const newsResponse = await fetch(`https://api.logic-design-solutions.com/wp-json/wp/v2/posts?per_page=100${excludeFilter}&_fields=slug,modified`)
+    const newsResponse = await wpFetch(`/posts?per_page=100${excludeFilter}&_fields=slug,modified`)
     if (newsResponse.ok) {
       const posts = await newsResponse.json()
       for (const post of posts) {
@@ -79,7 +94,7 @@ export default defineSitemapEventHandler(async () => {
   
   // Fetch products from WordPress
   try {
-    const productsResponse = await fetch('https://api.logic-design-solutions.com/wp-json/wp/v2/product?per_page=100&_fields=slug,modified')
+    const productsResponse = await wpFetch('/product?per_page=100&_fields=slug,modified')
     if (productsResponse.ok) {
       const products = await productsResponse.json()
       for (const product of products) {

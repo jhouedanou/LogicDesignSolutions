@@ -454,11 +454,9 @@
     dynamicCurrentMenuClass(mainNavUL);
   }
 
-  if ($(".main-menu__list").length && $(".mobile-nav__container").length) {
-    let navContent = document.querySelector(".main-menu__list").outerHTML;
-    let mobileNavContainer = document.querySelector(".mobile-nav__container");
-    mobileNavContainer.innerHTML = navContent;
-  }
+  // Le contenu de .mobile-nav__container est rendu par Vue (AppMobileNav.vue).
+  // Le clone jQuery historique écrasait ce rendu, et copiait souvent une liste
+  // encore vide car le menu est chargé de façon asynchrone via /_api/menu.
   if ($(".sticky-header__content").length) {
     let navContent = document.querySelector(".main-menu").innerHTML;
     let mobileNavContainer = document.querySelector(".sticky-header__content");
@@ -487,19 +485,16 @@
     });
   }
 
-  if ($(".mobile-nav__toggler").length) {
-    $(".mobile-nav__toggler").on("click", function (e) {
-      e.preventDefault();
-      $(".mobile-nav__wrapper").toggleClass("expanded");
-      $("body").toggleClass("locked");
-    });
-  }
+  // L'ouverture/fermeture du menu mobile est pilotée par Vue (useMobileNav).
+  // Ce bind jQuery était unique et posé au DOMReady d'un script chargé en `async` :
+  // il disparaissait dès que Vue réhydratait ou remplaçait les noeuds du header,
+  // ce qui rendait le bouton hamburger inopérant sur plusieurs pages.
 
   if ($(".search-toggler").length) {
     $(".search-toggler").on("click", function (e) {
       e.preventDefault();
       $(".search-popup").toggleClass("active");
-      $(".mobile-nav__wrapper").removeClass("expanded");
+      // La fermeture du menu mobile est faite côté Vue, pour garder l'état synchronisé.
       $("body").toggleClass("locked");
     });
   }

@@ -19,49 +19,7 @@
       <AppFooter />
     </div>
 
-    <div class="mobile-nav__wrapper">
-      <div class="mobile-nav__overlay mobile-nav__toggler"></div>
-      <div class="mobile-nav__content">
-        <span class="mobile-nav__close mobile-nav__toggler">
-          <i class="fa fa-times"></i>
-        </span>
-
-        <div class="logo-box">
-          <NuxtLink
-            to="/"
-            style="font-size: 24px; font-weight: 700; font-style: italic; color: #000;"
-          >
-            {{ site?.siteName }}
-          </NuxtLink>
-        </div>
-
-        <div class="mobile-nav__container"></div>
-
-        <ul class="mobile-nav__contact list-unstyled">
-          <li>
-            <i class="fa fa-envelope"></i>
-            <a :href="`mailto:${site?.email}`">{{ site?.email }}</a>
-          </li>
-          <li>
-            <i class="fa fa-phone-alt"></i>
-            <a :href="`tel:${site?.phone?.replace(/\s/g, '')}`">
-              {{ site?.phone }}
-            </a>
-          </li>
-        </ul>
-
-        <div class="mobile-nav__top">
-          <div class="mobile-nav__social">
-            <a
-              v-for="social in socialLinks"
-              :key="social.name"
-              :href="social.url"
-              :class="`fab fa-${social.icon}`"
-            ></a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <AppMobileNav />
 
     <SearchPopup />
 
@@ -72,12 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import { useHead } from '#imports'
-
-const { site, footer } = useContent()
-
-const socialLinks = computed(() => footer.value?.socialLinks ?? [])
 
 useHead({
   titleTemplate: (titleChunk) => {

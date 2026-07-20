@@ -10,7 +10,12 @@
             </a>
           </div>
           <div class="main-menu-two__main-menu-box">
-            <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
+            <a
+              href="#"
+              class="mobile-nav__toggler"
+              aria-label="Ouvrir le menu"
+              @click.prevent="toggle"
+            ><i class="fa fa-bars"></i></a>
             <ul class="main-menu__list">
               <li v-for="item in menuItems" :key="item.path">
                 <a :href="item.path">{{ item.label }}</a>
@@ -20,7 +25,12 @@
         </div>
         <div class="main-menu-two__right">
           <div class="main-menu-two__search-box">
-            <a href="#" class="main-menu-two__search search-toggler" aria-label="Rechercher">
+            <a
+              href="#"
+              class="main-menu-two__search search-toggler"
+              aria-label="Rechercher"
+              @click="closeMobileNav"
+            >
               <i class="icon-search"></i>
             </a>
           </div>
@@ -72,15 +82,8 @@ const fallbackSite = {
   contactButtonText: 'Contact Us'
 }
 
-const fallbackMenu = [
-  { label: 'HOME', path: '/' },
-  { label: 'PROFILES', path: '/profiles' },
-  { label: 'PRODUCTS', path: '/products' },
-  { label: 'SERVICES', path: '/services' },
-  { label: 'NEWS', path: '/news' },
-  { label: 'BLOG', path: '/blog' },
-  { label: 'REFERENCES', path: '/references' }
-]
+// Ouverture/fermeture du menu mobile : pilotées par Vue (voir AppMobileNav.vue)
+const { toggle, close: closeMobileNav } = useMobileNav()
 
 // Récupération depuis l'API avec valeurs par défaut immédiates (pas de loading visible)
 const { data: siteResponse } = useFetch('/_api/site-config', {
@@ -88,16 +91,12 @@ const { data: siteResponse } = useFetch('/_api/site-config', {
   default: () => fallbackSite
 })
 
-const { data: menuResponse } = useFetch('/_api/menu', {
-  key: 'menu-config',
-  default: () => ({ items: fallbackMenu })
-})
+// Source de menu partagée avec AppMobileNav.vue
+const menuItems = useMenuItems()
 
 // Computed qui fusionne les valeurs par défaut avec celles de l'API
 const siteData = computed(() => ({
   ...fallbackSite,
   ...(siteResponse.value ?? {})
 }))
-
-const menuItems = computed(() => menuResponse.value?.items ?? fallbackMenu)
 </script>
