@@ -24,7 +24,31 @@ SetEnv NODE_ENV production
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
-  
+
+  # ============================================
+  # NORMALISATION CANONIQUE DES URL (301)
+  # ============================================
+  # Une seule URL indexable par page : https://logic-design-solutions.com/chemin
+  # Couvre les trois écarts, et les cumule en UN SEUL saut :
+  #   http://          -> https://
+  #   www.             -> non-www
+  #   /chemin/         -> /chemin   (la barre oblique finale renvoyait une 404)
+  # Ainsi http://www.logic-design-solutions.com/about/ ne fait qu'une redirection.
+
+  # 1. Cas général — normalise protocole, hôte et barre oblique finale.
+  #    Le !-d exclut les répertoires réels : sans lui, mod_dir réajouterait la
+  #    barre oblique après notre retrait et créerait une boucle de redirection.
+  RewriteCond %{HTTPS} !=on [OR]
+  RewriteCond %{HTTP_HOST} ^www\.logic-design-solutions\.com$ [NC] [OR]
+  RewriteCond %{REQUEST_URI} ^.+/$
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*?)/*$ https://logic-design-solutions.com/$1 [L,R=301]
+
+  # 2. Répertoires réels — normalise protocole et hôte, conserve la barre oblique.
+  RewriteCond %{HTTPS} !=on [OR]
+  RewriteCond %{HTTP_HOST} ^www\.logic-design-solutions\.com$ [NC]
+  RewriteRule ^ https://logic-design-solutions.com%{REQUEST_URI} [L,R=301]
+
   # Ne pas rediriger les fichiers réels
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
