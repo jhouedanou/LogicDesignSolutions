@@ -84,9 +84,11 @@ export default defineNuxtConfig({
     ],
     // Anciennes pages qui redirigent (301) vers /news/[slug] et /products/[slug] :
     // le module les découvre dans app/pages, mais un sitemap ne doit lister que des URL finales.
+    // /test : page technique de vérification du routage, non destinée à l'indexation.
     exclude: [
       '/news-detail',
-      '/product-detail'
+      '/product-detail',
+      '/test'
     ]
   },
 
